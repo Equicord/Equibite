@@ -4,8 +4,22 @@ import {
     faLock,
     faCheck,
 } from '@fortawesome/free-solid-svg-icons'
+import { Urls } from '~/constants'
 
-const NavData = {}
+const NavData: { text: string; href: string }[] = [
+    {
+        text: 'Plugins',
+        href: '/plugins',
+    },
+    {
+        text: 'Discord',
+        href: Urls.DISCORD_URL,
+    },
+    {
+        text: 'GitHub',
+        href: Urls.GITHUB_URL,
+    },
+]
 
 const FeatureData: Feature[] = [
     {

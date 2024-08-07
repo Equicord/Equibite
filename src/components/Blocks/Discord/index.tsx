@@ -1,4 +1,5 @@
 import Button from '~/components/Button'
+import { Urls } from '~/constants'
 
 const DiscordBlock = () => {
     return (
@@ -12,9 +13,9 @@ const DiscordBlock = () => {
                 </p>
             </div>
 
-            <a href="https://discord.gg/hC5VG9FzMG" target="_blank">
+            <a href={Urls.DISCORD_URL} target="_blank">
                 <Button style="secondary" customClass="text-sm">
-                    Accept
+                    Join
                 </Button>
             </a>
         </div>

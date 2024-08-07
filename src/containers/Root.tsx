@@ -1,6 +1,12 @@
 import type { ParentProps } from 'solid-js'
+import Navbar from '~/components/Layout/Navbar'
 
 // TODO: Add a layout navbar
 export default function Root({ children }: ParentProps) {
-    return <div>{children}</div>
+    return (
+        <>
+            <Navbar />
+            {children}
+        </>
+    )
 }

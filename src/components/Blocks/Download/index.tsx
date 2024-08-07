@@ -12,9 +12,11 @@ const DownloadBlock = () => {
                 </p>
             </div>
 
-            <Button style="accept" customClass="text-sm">
-                Download
-            </Button>
+            <a href="/download">
+                <Button style="accept" customClass="text-sm">
+                    Download
+                </Button>
+            </a>
         </div>
     )
 }
