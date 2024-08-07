@@ -1,7 +1,6 @@
-import { createSignal, type JSXElement, onCleanup, onMount } from 'solid-js'
+import { type ParentProps, createSignal, onCleanup, onMount } from 'solid-js'
 
-interface Props {
-    children: JSXElement
+interface Props extends ParentProps {
     // Custom Class
     customClass?: string
     // Direction
@@ -28,7 +27,7 @@ const Animate = ({
     ignoreReducedMotion = false,
 }: Props) => {
     const [animate, setAnimate] = createSignal(false)
-    let ref: HTMLDivElement | undefined
+    let ref!: HTMLDivElement
 
     const prefersReducedMotion = window.matchMedia(
         '(prefers-reduced-motion: reduce)',

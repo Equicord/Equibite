@@ -5,6 +5,8 @@ import { Router, Route } from '@solidjs/router'
 import { warn } from '~/utils/warn'
 import '~/utils/index.css'
 
+import Root from '~/containers/Root'
+
 // Pages
 import Fallback from '~/pages/Fallback'
 import Home from '~/pages/Home'
@@ -14,7 +16,7 @@ warn()
 const root = document.getElementById('app') as HTMLDivElement
 render(
     () => (
-        <Router>
+        <Router root={Root}>
             <Route path="*" component={Fallback} />
             <Route path="/" component={Home} />
         </Router>
