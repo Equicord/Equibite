@@ -1,0 +1,29 @@
+{
+    "name": "equibite",
+    "private": true,
+    "version": "1.0.0",
+    "author": "Alex Naibuu <me@naibuu.dev>",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "lint": "eslint .",
+        "format": "prettier --write ."
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.20",
+        "postcss": "^8.4.40",
+        "prettier": "^3.3.3",
+        "tailwindcss": "^3.4.7",
+        "typescript": "^5.5.3",
+        "vite": "^5.3.5",
+        "vite-plugin-solid": "^2.10.2",
+        "vite-tsconfig-paths": "^4.3.2"
+    },
+    "dependencies": {
+        "@fortawesome/free-solid-svg-icons": "^6.6.0",
+        "classnames": "^2.5.1",
+        "solid-fa": "^0.2.0",
+        "solid-js": "^1.8.18"
+    }
+}
