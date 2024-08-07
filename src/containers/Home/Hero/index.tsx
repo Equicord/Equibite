@@ -45,7 +45,7 @@ export default function HomeHero() {
                 </div>
             </div>
 
-            <Animate customClass="max-w-lg" delay={0.5}>
+            <Animate direction="left" customClass="max-w-lg">
                 <img src={_Laptop} draggable={false} />
             </Animate>
         </div>

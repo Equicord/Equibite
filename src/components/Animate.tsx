@@ -12,6 +12,8 @@ interface Props {
     duration?: number
     // Delay
     delay?: number
+    // Ignore reduced motion
+    ignoreReducedMotion?: boolean
 }
 
 export type Direction = 'up' | 'down' | 'left' | 'right'
@@ -23,9 +25,14 @@ const Animate = ({
     offset = 50,
     duration = 0.5,
     delay = 0,
+    ignoreReducedMotion = false,
 }: Props) => {
     const [animate, setAnimate] = createSignal(false)
     let ref: HTMLDivElement | undefined
+
+    const prefersReducedMotion = window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+    ).matches
 
     const observer = new IntersectionObserver(
         ([entry]) => {
@@ -39,6 +46,8 @@ const Animate = ({
 
     // When mounted start the observer
     onMount(() => {
+        if (prefersReducedMotion && !ignoreReducedMotion) return
+
         if (ref) observer.observe(ref)
     })
 
