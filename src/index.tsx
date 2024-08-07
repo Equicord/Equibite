@@ -3,7 +3,7 @@ import { render } from 'solid-js/web'
 import { Router, Route } from '@solidjs/router'
 
 import { warn } from '~/utils/warn'
-import '~/utils/index.css'
+import '~/styles.css'
 
 import Root from '~/containers/Root'
 
