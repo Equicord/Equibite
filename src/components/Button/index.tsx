@@ -10,7 +10,7 @@ interface Props extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
     full?: boolean
 }
 
-export type Button = 'primary' | 'secondary'
+export type Button = 'primary' | 'secondary' | 'accept'
 
 const Button = ({ children, customClass, style, full, ...rest }: Props) => {
     return (
@@ -24,6 +24,8 @@ const Button = ({ children, customClass, style, full, ...rest }: Props) => {
                         style === 'primary',
                     'text-neutral-200 bg-neutral-800 hover:bg-neutral-700':
                         style === 'secondary',
+                    'text-white bg-green-600 hover:bg-green-500':
+                        style === 'accept',
                 },
             )}
             {...rest}

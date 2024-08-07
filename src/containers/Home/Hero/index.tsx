@@ -5,9 +5,9 @@ import _Laptop from '~/assets/laptop.png'
 import Fa from 'solid-fa'
 import { faPuzzlePiece } from '@fortawesome/free-solid-svg-icons'
 
-const HomeHero = () => {
+export default function HomeHero() {
     return (
-        <section class="relative py-32 flex max-md:flex-col justify-between items-center gap-6">
+        <div class="relative py-36 flex max-md:flex-col justify-between items-center gap-6">
             <div class="flex-grow flex flex-col gap-3">
                 <Animate direction="up">
                     <h1 class="text-white text-4xl md:text-6xl font-semibold leading-tight">
@@ -48,8 +48,6 @@ const HomeHero = () => {
             <Animate customClass="max-w-lg" delay={0.5}>
                 <img src={_Laptop} draggable={false} />
             </Animate>
-        </section>
+        </div>
     )
 }
-
-export default HomeHero

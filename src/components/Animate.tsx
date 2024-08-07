@@ -30,25 +30,12 @@ const Animate = ({
     const observer = new IntersectionObserver(
         ([entry]) => {
             if (entry.isIntersecting) {
-                observer.disconnect()
-                console.log('[Observer] Entry is in view, animating...')
                 setAnimate(true)
+                observer.disconnect()
             }
         },
         { threshold: 0.5 },
     )
-
-    // TODO: Refactor this
-    // const observer = new IntersectionObserver(
-    //     (entries) =>
-    //         entries.forEach((entry) => {
-    //             if (entry.isIntersecting) {
-    //                 setAnimate(true)
-    //                 observer.disconnect()
-    //             }
-    //         }),
-    //     { threshold: 0.1 },
-    // )
 
     // When mounted start the observer
     onMount(() => {
@@ -74,7 +61,7 @@ const Animate = ({
     const styles = () => ({
         opacity: animate() ? 1 : 0,
         transform: animate() && direction ? 'translate(0, 0)' : initial(),
-        transition: `all ${duration}s ease ${delay}s`,
+        transition: `opacity ${duration}s ease ${delay}s, transform ${duration}s ease ${delay}s`,
     })
 
     return (

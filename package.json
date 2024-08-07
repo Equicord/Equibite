@@ -22,6 +22,7 @@
     },
     "dependencies": {
         "@fortawesome/free-solid-svg-icons": "^6.6.0",
+        "@solidjs/router": "^0.14.1",
         "classnames": "^2.5.1",
         "solid-fa": "^0.2.0",
         "solid-js": "^1.8.18"

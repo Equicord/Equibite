@@ -1,13 +1,23 @@
 /* @refresh reload */
 import { render } from 'solid-js/web'
-import { consoleWarn } from './utils/warn'
+import { Router, Route } from '@solidjs/router'
 
-import './index.css'
-import Page from './page'
+import { warn } from '~/utils/warn'
+import '~/utils/index.css'
 
-consoleWarn()
+// Pages
+import Fallback from '~/pages/Fallback'
+import Home from '~/pages/Home'
 
-const app = () => <Page />
+warn()
 
 const root = document.getElementById('app') as HTMLDivElement
-render(app, root)
+render(
+    () => (
+        <Router>
+            <Route path="*" component={Fallback} />
+            <Route path="/" component={Home} />
+        </Router>
+    ),
+    root,
+)
