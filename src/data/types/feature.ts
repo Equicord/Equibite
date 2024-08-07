@@ -1,6 +1,8 @@
 export interface Feature {
-    // Is there an IconProp similar to React but for Solid?
+    // Icon
     icon: any
+    // Title
     title: string
+    // Excerpt
     excerpt: string
 }

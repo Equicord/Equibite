@@ -2,16 +2,23 @@ import { createSignal, type JSXElement, onCleanup, onMount } from 'solid-js'
 
 interface Props {
     children: JSXElement
+    // Custom Class
+    customClass?: string
+    // Direction
     direction?: Direction
+    // Offset
     offset?: number
+    // Duration
     duration?: number
+    // Delay
     delay?: number
 }
 
-type Direction = 'up' | 'down' | 'left' | 'right'
+export type Direction = 'up' | 'down' | 'left' | 'right'
 
 const Animate = ({
     children,
+    customClass,
     direction,
     offset = 50,
     duration = 0.5,
@@ -71,7 +78,7 @@ const Animate = ({
     })
 
     return (
-        <div ref={ref} style={styles()}>
+        <div ref={ref} style={styles()} class={customClass}>
             {children}
         </div>
     )

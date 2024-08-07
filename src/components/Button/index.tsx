@@ -2,8 +2,11 @@ import type { JSX } from 'solid-js'
 import classNames from 'classnames'
 
 interface Props extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
+    // Custom Class
     customClass?: string
+    // Button Style
     style: Button
+    // Use extended width
     full?: boolean
 }
 
