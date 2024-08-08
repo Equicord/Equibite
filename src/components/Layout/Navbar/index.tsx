@@ -2,9 +2,6 @@ import { NavData } from '~/data'
 import Button from '~/components/Button'
 import _Logo from '~/assets/logo.svg'
 
-import Fa from 'solid-fa'
-import { faDownload } from '@fortawesome/free-solid-svg-icons'
-
 const Navbar = () => {
     return (
         <nav class="max-w-read mx-auto px-6 py-8 flex justify-between items-center">
@@ -25,7 +22,6 @@ const Navbar = () => {
 
             <a href="/download">
                 <Button style="secondary" customClass="text-sm">
-                    <Fa icon={faDownload} class="size-4" />
                     Download
                 </Button>
             </a>

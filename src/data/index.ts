@@ -1,25 +1,29 @@
 import type { Feature } from './types/feature'
+import { isMS, isSafari } from '~/utils/browser'
+
+// FontAwesome
 import {
     faPuzzlePiece,
     faLock,
     faCheck,
 } from '@fortawesome/free-solid-svg-icons'
-import { Urls } from '~/constants'
+import { faWindows, faApple, faLinux } from '@fortawesome/free-brands-svg-icons'
+import { Download } from './types/download'
 
-const NavData: { text: string; href: string }[] = [
-    {
-        text: 'Plugins',
-        href: '/plugins',
-    },
-    {
-        text: 'Discord',
-        href: Urls.DISCORD_URL,
-    },
-    {
-        text: 'GitHub',
-        href: Urls.GITHUB_URL,
-    },
-]
+// const NavData: { text: string; href: string }[] = [
+//     {
+//         text: 'Plugins',
+//         href: '/plugins',
+//     },
+//     {
+//         text: 'Discord',
+//         href: Urls.DISCORD_URL,
+//     },
+//     {
+//         text: 'GitHub',
+//         href: Urls.GITHUB_URL,
+//     },
+// ]
 
 const FeatureData: Feature[] = [
     {
@@ -42,4 +46,24 @@ const FeatureData: Feature[] = [
     },
 ]
 
-export { NavData, FeatureData }
+const DownloadData: Download[] = [
+    {
+        recommend: isMS(),
+        icon: faWindows,
+        platform: 'Windows',
+        href: 'https://github.com/Equicord/Equilotl/releases/latest/download/Equilotl.exe',
+    },
+    {
+        recommend: isSafari(),
+        icon: faApple,
+        platform: 'MacOS',
+        href: 'https://github.com/Equicord/Equilotl/releases/latest/download/Equilotl.MacOS.zip',
+    },
+    {
+        icon: faLinux,
+        platform: 'Linux',
+        href: 'https://github.com/Equicord/Equilotl/releases/latest/download/EquilotlCli-linux',
+    },
+]
+
+export { FeatureData, DownloadData }

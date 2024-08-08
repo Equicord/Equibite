@@ -31,6 +31,7 @@
         "vite-tsconfig-paths": "^4.3.2"
     },
     "dependencies": {
+        "@fortawesome/free-brands-svg-icons": "^6.6.0",
         "@fortawesome/free-solid-svg-icons": "^6.6.0",
         "@solidjs/router": "^0.14.1",
         "classnames": "^2.5.1",

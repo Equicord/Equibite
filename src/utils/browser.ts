@@ -4,7 +4,7 @@ const getVendor = (): string => window.navigator.vendor
 
 const isIE = (): boolean => /MSIE |Trident\//.test(getUserAgent())
 
-const isEdge = (): boolean => /Edge\//.test(getUserAgent())
+const isEdge = (): boolean => /Edg\//.test(getUserAgent())
 
 const isMS = (): boolean => isIE() || isEdge()
 

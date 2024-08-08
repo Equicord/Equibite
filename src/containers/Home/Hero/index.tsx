@@ -7,7 +7,7 @@ import { faPuzzlePiece } from '@fortawesome/free-solid-svg-icons'
 
 export default function HomeHero() {
     return (
-        <div class="relative pt-18 pb-36 flex max-md:flex-col justify-between items-center gap-6">
+        <div class="relative py-36 flex max-md:flex-col justify-between items-center gap-6">
             <div class="flex-grow flex flex-col gap-3">
                 <Animate direction="up">
                     <h1 class="text-white text-4xl md:text-6xl font-semibold leading-tight">
@@ -28,7 +28,7 @@ export default function HomeHero() {
                     offset={20}
                     delay={0.3}
                 >
-                    <a href="/download">
+                    <a href="/#download">
                         <Button style="primary">Download</Button>
                     </a>
 
