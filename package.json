@@ -2,8 +2,18 @@
     "name": "equibite",
     "private": true,
     "version": "1.0.0",
-    "author": "Alex Naibuu <me@naibuu.dev>",
+    "description": "The cutest website repository",
     "type": "module",
+    "homepage": "https://github.com/Equicord/Equibite#readme",
+    "bugs": {
+        "url": "https://github.com/Equicord/Equibite/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Equicord/Equibite.git"
+    },
+    "license": "GPL-3.0-only",
+    "author": "Alex Naibuu <me@naibuu.dev>",
     "scripts": {
         "dev": "vite",
         "build": "tsc && vite build",
