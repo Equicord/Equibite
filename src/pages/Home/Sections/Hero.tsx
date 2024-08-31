@@ -7,15 +7,15 @@ import { faPuzzlePiece } from '@fortawesome/free-solid-svg-icons'
 
 export default function HomeHero() {
     return (
-        <div class="relative py-36 flex max-md:flex-col justify-between items-center gap-6">
+        <div class="relative max-w-page-sm mx-auto py-36 flex max-md:flex-col justify-between items-center gap-6">
             <div class="flex-grow flex flex-col gap-3">
-                <Animate direction="up">
+                <Animate direction="down">
                     <h1 class="text-white text-4xl md:text-6xl font-semibold leading-tight">
                         An enhanced version of Vencord
                     </h1>
                 </Animate>
 
-                <Animate direction="up" delay={0.1}>
+                <Animate direction="down" delay={0.1}>
                     <p class="text-neutral-400 text-lg md:text-xl font-medium">
                         A fork that has everything you need, third-party plugins
                         and more.
@@ -23,18 +23,17 @@ export default function HomeHero() {
                 </Animate>
 
                 <Animate
-                    direction="up"
+                    direction="down"
                     customClass="mt-4 flex items-center gap-4"
-                    offset={20}
-                    delay={0.3}
+                    delay={0.2}
                 >
-                    <a href="/#download">
+                    <a href="/download">
                         <Button style="primary">Download</Button>
                     </a>
 
                     <a href="/plugins">
                         <Button style="secondary">
-                            <Fa icon={faPuzzlePiece} class="size-4" />
+                            <Fa icon={faPuzzlePiece} />
                             Plugins
                         </Button>
                     </a>
@@ -45,7 +44,7 @@ export default function HomeHero() {
                 </div>
             </div>
 
-            <Animate direction="left" customClass="max-w-lg">
+            <Animate direction="down" delay={0.3} customClass="max-w-lg">
                 <img src={_Laptop} draggable={false} />
             </Animate>
         </div>

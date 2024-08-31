@@ -4,9 +4,7 @@
 
 @layer base {
     * {
-        @apply select-none scroll-smooth;
-        -webkit-font-smoothing: antialiased;
-        text-rendering: optimizeLegibility;
+        @apply scroll-smooth;
     }
 
     body {

@@ -7,7 +7,8 @@ export default {
         },
         extend: {
             spacing: {
-                read: '1100px',
+                'page-sm': '1100px',
+                page: '1440px',
             },
         },
     },

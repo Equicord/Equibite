@@ -1,4 +1,5 @@
 import { type ParentProps, createSignal, onCleanup, onMount } from 'solid-js'
+import { useIsReducedMotion } from '~/hooks/useIsReducedMotion'
 
 interface Props extends ParentProps {
     // Custom Class
@@ -29,9 +30,7 @@ const Animate = ({
     const [animate, setAnimate] = createSignal(false)
     let ref!: HTMLDivElement
 
-    const prefersReducedMotion = window.matchMedia(
-        '(prefers-reduced-motion: reduce)',
-    ).matches
+    const prefersReducedMotion = useIsReducedMotion()
 
     const observer = new IntersectionObserver(
         ([entry]) => {
@@ -45,7 +44,7 @@ const Animate = ({
 
     // When mounted start the observer
     onMount(() => {
-        if (prefersReducedMotion && !ignoreReducedMotion) return
+        if (prefersReducedMotion() && !ignoreReducedMotion) return
 
         if (ref) observer.observe(ref)
     })

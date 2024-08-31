@@ -18,7 +18,7 @@ const Button = ({ children, customClass, style, full, ...rest }: Props) => {
             class={classNames(
                 customClass,
                 full ? 'w-full' : 'w-fit',
-                'px-6 py-3 flex justify-center items-center gap-1 text-md max-md:text-sm font-bold rounded-xl transition-all',
+                'px-6 py-3 flex justify-center items-center gap-1 max-md:text-sm font-bold rounded-xl transition-all',
                 {
                     'text-neutral-800 bg-white hover:bg-neutral-200':
                         style === 'primary',

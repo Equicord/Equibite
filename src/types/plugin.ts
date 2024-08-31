@@ -18,13 +18,15 @@ export interface Plugin {
     // Default?
     enabledByDefault: boolean
     // Target
-    target:
-        | 'discordDesktop'
-        | 'vencordDesktop'
-        | 'equicordDesktop'
-        | 'desktop'
-        | 'web'
-        | 'dev'
+    target: Target
     // File path
     filePath: string
 }
+
+type Target =
+    | 'discordDesktop'
+    | 'vencordDesktop'
+    | 'equicordDesktop'
+    | 'desktop'
+    | 'web'
+    | 'dev'
