@@ -1,12 +1,11 @@
 import { onMount, onCleanup } from 'solid-js'
 
-// TODO: do not let me cook
 export const useOutsideClick = (
-    ref: { current: HTMLDivElement | null },
+    ref: HTMLDivElement | null,
     callback: () => void,
 ) => {
     const listener = (event: MouseEvent) => {
-        if (ref.current && !ref.current.contains(event.target as Node)) {
+        if (ref && !ref.contains(event.target as Node)) {
             callback()
         }
     }

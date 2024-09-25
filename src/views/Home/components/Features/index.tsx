@@ -1,11 +1,23 @@
-import Feature from '~/components/Feature'
+import { For } from 'solid-js'
+import Card from '@/components/UI/Card'
+
 import {
+    type IconDefinition,
     faPuzzlePiece,
     faCheck,
     faLock,
 } from '@fortawesome/free-solid-svg-icons'
 
-const Features = [
+interface Feature {
+    // Icon
+    icon: IconDefinition
+    // Title
+    title: string
+    // Excerpt
+    excerpt: string
+}
+
+const features: Feature[] = [
     {
         icon: faPuzzlePiece,
         title: 'Third-party Plugins',
@@ -28,10 +40,16 @@ const Features = [
 
 export default function HomeFeatures() {
     return (
-        <div class="mt-24 flex justify-between gap-8 max-md:flex-col">
-            {Features.map((item) => (
-                <Feature {...item} />
-            ))}
+        <div class="flex justify-between gap-3">
+            <For each={features}>
+                {(item) => (
+                    <Card
+                        icon={item.icon}
+                        title={item.title}
+                        excerpt={item.excerpt}
+                    />
+                )}
+            </For>
         </div>
     )
 }
