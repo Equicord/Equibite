@@ -9,20 +9,20 @@ interface Props {
 export default function HomeHero({ ondownload }: Props) {
     return (
         <section class="relative pt-24 pb-36">
-            <div class="flex items-center justify-between gap-6 max-md:flex-col">
-                <div class="flex flex-col gap-3 max-md:items-center max-md:text-center">
+            <div class="flex items-center justify-between gap-24 max-lg:flex-col">
+                <div class="flex flex-col gap-3 max-lg:items-center max-lg:text-center">
                     {/* Text */}
-                    <h1 class="text-white text-4xl lg:text-6xl font-semibold">
+                    <h1 class="text-white text-4xl lg:text-5xl font-semibold">
                         An enhanced version of Vencord
                     </h1>
 
-                    <p class="text-neutral-400 text-lg lg:text-xl font-medium">
+                    <p class="text-neutral-400 text-lg font-medium">
                         A fork that has everything you need, third-party plugins
                         and more.
                     </p>
 
                     {/* Buttons */}
-                    <div class="flex gap-2 max-md:mx-auto">
+                    <div class="mt-4 flex gap-2">
                         <Button
                             style="primary"
                             customClass="max-lg:text-sm"
@@ -42,13 +42,10 @@ export default function HomeHero({ ondownload }: Props) {
                     </div>
                 </div>
 
-                {/* Laptop */}
-                <img
-                    class="max-w-lg"
-                    src={Laptop}
-                    alt="Laptop"
-                    draggable={false}
-                />
+                {/* Laptop - had to wrap it around a div otherwise it wouldnt resize properly. */}
+                <div class="max-w-lg">
+                    <img src={Laptop} alt="Laptop" draggable={false} />
+                </div>
             </div>
         </section>
     )

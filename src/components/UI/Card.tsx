@@ -2,8 +2,11 @@ import type { IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import Fa from 'solid-fa'
 
 interface Props {
+    // Icon
     icon: IconDefinition
+    // Title
     title: string
+    // Excerpt
     excerpt: string
 }
 

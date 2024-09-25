@@ -40,7 +40,7 @@ const features: Feature[] = [
 
 export default function HomeFeatures() {
     return (
-        <div class="flex justify-between gap-3">
+        <div class="flex justify-between gap-3 max-md:flex-col">
             <For each={features}>
                 {(item) => (
                     <Card

@@ -6,7 +6,6 @@ interface Props extends ParentProps {
     onclose: () => void
 }
 
-// TODO(naibuu): Will improve this component when I have time.
 export default function Modal({ children, onclose }: Props) {
     let ref!: HTMLDivElement
 

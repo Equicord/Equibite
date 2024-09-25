@@ -1,34 +1,31 @@
-import type { JSX } from 'solid-js'
+import type { ParentProps } from 'solid-js'
 import classNames from 'classnames'
 
-interface Props extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
+interface Props extends ParentProps {
     // Custom Class
     customClass?: string
     // Button Style
     style: Button
-    // Use extended width
-    full?: boolean
+    // Click
+    onclick?: () => void
 }
 
-export type Button = 'primary' | 'secondary' | 'accept'
+export type Button = 'primary' | 'secondary'
 
-const Button = ({ children, customClass, style, full, ...rest }: Props) => {
+function Button({ children, customClass, style, onclick }: Props) {
     return (
         <button
             class={classNames(
                 customClass,
-                full ? 'w-full' : 'w-fit',
-                'px-6 py-3 flex justify-center items-center gap-1 max-md:text-sm font-bold rounded-xl transition-all',
+                'px-6 py-3 flex justify-center items-center font-bold rounded-xl transition-colors',
                 {
                     'text-neutral-800 bg-white hover:bg-neutral-200':
                         style === 'primary',
                     'text-neutral-200 bg-neutral-800 hover:bg-neutral-700':
                         style === 'secondary',
-                    'text-white bg-green-600 hover:bg-green-500':
-                        style === 'accept',
                 },
             )}
-            {...rest}
+            onclick={onclick}
         >
             {children}
         </button>
