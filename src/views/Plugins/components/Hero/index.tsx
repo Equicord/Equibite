@@ -10,7 +10,7 @@ export default function PluginsHero() {
     };
 
     return (
-        <section class="relative pt-24 pb-36">
+        <section class="relative pb-36">
             <h2 class="text-3xl font-bold text-neutral-300">Plugins</h2>
             <div class="flex items-center justify-between gap-24 max-lg:flex-col">
                 <div class="flex flex-col gap-3 max-lg:items-center max-lg:text-center">
