@@ -16,7 +16,7 @@ export default function Navbar() {
             )}
 
             <A href="/">
-                <img src={Logo} draggable={false} class="size-10" />
+                <img src={Logo} draggable={false} class="size-10 m-1" />
             </A>
 
             <div class="flex items-center gap-6">
