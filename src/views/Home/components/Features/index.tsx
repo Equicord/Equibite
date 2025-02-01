@@ -28,7 +28,7 @@ const features: Feature[] = [
         icon: faCheck,
         title: 'Trusted by Many',
         excerpt:
-            'Equicord is trusted by many users. Our source code is public and available for viewing, with over 100 stars on GitHub.',
+            'Equicord is trusted by many users. Our source code is public and available for viewing, with over 400 stars on GitHub.',
     },
     {
         icon: faLock,
