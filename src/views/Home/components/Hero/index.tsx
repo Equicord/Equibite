@@ -8,7 +8,7 @@ interface Props {
 
 export default function HomeHero({ ondownload }: Props) {
     return (
-        <section class="relative pt-24 pb-36">
+        <section class="relative pb-36">
             <div class="flex items-center justify-between gap-24 max-lg:flex-col">
                 <div class="flex flex-col gap-3 max-lg:items-center max-lg:text-center">
                     {/* Text */}
