@@ -22,7 +22,7 @@ const features: Feature[] = [
         icon: faPuzzlePiece,
         title: 'Third-party Plugins',
         excerpt:
-            'Equicord offers an additional 120 plugins alongside the existing ones in Vencord.',
+            'Equicord offers an additional 150+ plugins alongside the existing ones in Vencord.',
     },
     {
         icon: faCheck,
