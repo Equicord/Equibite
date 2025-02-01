@@ -15,7 +15,7 @@ export default function PluginsHero() {
     };
 
     return (
-        <section class="relative pt-24 pb-36">
+        <section class="relative pb-36">
             <h2 class="text-3xl font-bold text-neutral-300">Plugins</h2>
 
             <div class="mt-4 mb-6 w-full">
