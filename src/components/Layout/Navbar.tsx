@@ -24,10 +24,6 @@ export default function Navbar() {
                     Plugins
                 </A>
 
-                <A href="/faq" class="font-semibold text-neutral-200">
-                    FAQ
-                </A>
-
                 <Button
                     style="primary"
                     customClass="!rounded-full text-sm"
