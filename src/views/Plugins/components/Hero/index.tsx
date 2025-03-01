@@ -96,7 +96,7 @@ export default function PluginsHero() {
                             <button
                                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                                 disabled={currentPage() === 1}
-                                class="px-4 py-2 rounded-md border border-neutral-600 bg-neutral-800 text-white disabled:opacity-50"
+                                class="px-4 py-2 rounded-md border border-neutral-600 bg-neutral-800 text-white disabled:opacity-50 transition-all duration-200 hover:bg-neutral-700 hover:scale-105 disabled:hover:scale-100 disabled:hover:bg-neutral-800"
                             >
                                 <Fa icon={faArrowLeft} />
                             </button>
@@ -106,7 +106,7 @@ export default function PluginsHero() {
                             <button
                                 onClick={() => setCurrentPage(p => Math.min(totalPages(), p + 1))}
                                 disabled={currentPage() === totalPages()}
-                                class="px-4 py-2 rounded-md border border-neutral-600 bg-neutral-800 text-white disabled:opacity-50"
+                                class="px-4 py-2 rounded-md border border-neutral-600 bg-neutral-800 text-white disabled:opacity-50 transition-all duration-200 hover:bg-neutral-700 hover:scale-105 disabled:hover:scale-100 disabled:hover:bg-neutral-800"
                             >
                                 <Fa icon={faArrowRight} />
                             </button>

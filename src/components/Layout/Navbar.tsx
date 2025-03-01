@@ -17,11 +17,15 @@ export default function Navbar() {
             )}
 
             <A href="/">
-                <img src={Logo} draggable={false} class="size-10 m-1 user-select-none" />
+                <img 
+                    src={Logo} 
+                    draggable={false} 
+                    class="size-11 m-1 user-select-none transition-transform duration-500 hover:rotate-180 hover:scale-110" 
+                />
             </A>
 
             <div class="flex items-center gap-6">
-                <A href={location.pathname === '/plugins' ? '/' : '/plugins'}>
+                <A href={location.pathname === '/plugins' ? '/' : '/plugins'} class="hover:text-gray-300 transition-colors">
                     {location.pathname === '/plugins' ? 'Home' : 'Plugins'}
                 </A>
 

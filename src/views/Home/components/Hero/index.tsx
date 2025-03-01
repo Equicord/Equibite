@@ -25,7 +25,7 @@ export default function HomeHero({ ondownload }: Props) {
                     <div class="mt-4 flex gap-2">
                         <Button
                             style="primary"
-                            customClass="max-lg:text-sm"
+                            customClass="max-lg:text-sm transition-transform duration-200 hover:scale-105"
                             onclick={ondownload}
                         >
                             Download
@@ -34,7 +34,7 @@ export default function HomeHero({ ondownload }: Props) {
                         <A href="https://github.com/Equicord/Equicord">
                             <Button
                                 style="secondary"
-                                customClass="max-lg:text-sm"
+                                customClass="max-lg:text-sm transition-transform duration-200 hover:scale-105"
                             >
                                 Source
                             </Button>
