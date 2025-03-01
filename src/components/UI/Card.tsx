@@ -9,6 +9,8 @@ interface Props {
     title: string
     // Excerpt
     excerpt: string
+    // Class
+    class?: string
 }
 
 type Commands = {
@@ -16,16 +18,21 @@ type Commands = {
     description: string;
 };
 
+interface Author {
+    name: string;
+}
+
 interface PluginProps {
     title: string
     excerpt: string
     hasCommands: boolean;
     commands: Commands[];
+    authors: Author[];
 }
 
-export default function Card({ icon, title, excerpt }: Props) {
+export default function Card({ icon, title, excerpt, class: className }: Props) {
     return (
-        <div class="w-full p-6 flex flex-col gap-1 bg-neutral-900 rounded-2xl">
+        <div class={`w-full p-6 flex flex-col gap-1 bg-neutral-900 rounded-2xl transition-transform duration-300 hover:bg-neutral-800 hover:outline hover:outline-dashed hover:outline-1 hover:outline-neutral-600 hover:-translate-y-1 ${className || ''}`}>
             <div class="flex items-center gap-3">
                 <div class="size-12 p-0.5 bg-gradient-to-t from-neutral-900 to-neutral-600 rounded-full">
                     <div class="size-full flex justify-center items-center bg-neutral-950 rounded-full">
@@ -40,10 +47,19 @@ export default function Card({ icon, title, excerpt }: Props) {
     )
 }
 
-export function PluginCard({ title, excerpt, hasCommands, commands }: PluginProps) {
+export function PluginCard({ title, excerpt, hasCommands, commands, authors }: PluginProps) {
+    const formatAuthors = (authors: Author[]) => {
+        const names = authors.map(author => author.name);
+        if (names.length === 0) return '';
+        if (names.length === 1) return names[0];
+        if (names.length === 2) return `${names[0]} & ${names[1]}`;
+        return `${names.slice(0, -1).join(', ')} & ${names[names.length - 1]}`;
+    };
+
     return (
-        <div class="w-full p-6 flex flex-col gap-1 bg-neutral-900 rounded-2xl">
+        <div class="w-full p-6 flex flex-col gap-1 bg-neutral-900 rounded-2xl transition-transform duration-200 hover:outline-2 hover:bg-neutral-800 hover:outline-neutral-700 hover:-translate-y-0.5">
             <h3 class="text-lg text-neutral-300 font-bold">{title}</h3>
+            <p class="text-xs text-neutral-500">by {formatAuthors(authors)}</p>
             <p class="text-sm text-neutral-400 font-medium">{excerpt}</p>
 
             <Show when={hasCommands && commands.length > 0}>

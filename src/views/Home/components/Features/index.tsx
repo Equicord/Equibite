@@ -6,6 +6,8 @@ import {
     faPuzzlePiece,
     faCheck,
     faLock,
+    faCloud,
+    faUsers,
 } from '@fortawesome/free-solid-svg-icons'
 
 interface Feature {
@@ -22,31 +24,44 @@ const features: Feature[] = [
         icon: faPuzzlePiece,
         title: 'Third-party Plugins',
         excerpt:
-            'Equicord offers a big variety of plugins, including 150+ plugins alongside the existing ones in Vencord.',
+            'Access a wide variety of plugins, including 150+ plugins alongside the existing ones in Vencord.',
     },
     {
         icon: faCheck,
         title: 'Trusted by Many',
         excerpt:
-            'Equicord is trusted by many users. Our source code is public and available for viewing, with over 400 stars on GitHub.',
+            'Trusted by many users with public source code available for viewing, garnering over 400 stars on GitHub.',
     },
     {
         icon: faLock,
         title: 'Actively Maintained',
         excerpt:
-            'Equicord is actively maintained, ensuring every plugin is safe and updated to remain compatible with any changes.',
+            'Active maintenance ensures every plugin remains safe and compatible with any Discord changes.',
+    },
+    {
+        icon: faCloud,
+        title: 'Cloud Based',
+        excerpt:
+            'Sync your settings anytime with our dedicated Vencord cloud instance for seamless experience across devices.',
+    },
+    {
+        icon: faUsers,
+        title: 'Community Support',
+        excerpt:
+            'Most submitted plugins are accepted, with plugin requests actively handled to continuously expand the collection.',
     },
 ]
 
 export default function HomeFeatures() {
     return (
-        <div class="flex justify-between gap-3 max-md:flex-col">
+        <div class="flex flex-wrap justify-center gap-4">
             <For each={features}>
                 {(item) => (
                     <Card
                         icon={item.icon}
                         title={item.title}
                         excerpt={item.excerpt}
+                        class="w-full md:w-[calc(33.33%-1rem)]"
                     />
                 )}
             </For>

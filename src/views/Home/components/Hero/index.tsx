@@ -31,12 +31,12 @@ export default function HomeHero({ ondownload }: Props) {
                             Download
                         </Button>
 
-                        <A href="/plugins">
+                        <A href="https://github.com/Equicord/Equicord">
                             <Button
                                 style="secondary"
                                 customClass="max-lg:text-sm"
                             >
-                                Plugins
+                                Source
                             </Button>
                         </A>
                     </div>
