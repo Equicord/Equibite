@@ -1,10 +1,14 @@
 import { createResource, createSignal, Show, For } from "solid-js";
 import { fetchPlugins } from "../Features";
 import { PluginCard } from "@/components/UI/Card";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import Fa from "solid-fa";
 
 export default function PluginsHero() {
     const [plugins] = createResource(fetchPlugins);
     const [search, setSearch] = createSignal("");
+    const [currentPage, setCurrentPage] = createSignal(1);
+    const itemsPerPage = 5;
 
     const sortedPlugins = () => {
         return plugins()
@@ -13,6 +17,15 @@ export default function PluginsHero() {
                 plugin.name.toLowerCase().includes(search().toLowerCase())
             ) || [];
     };
+
+    const paginatedPlugins = () => {
+        const filtered = sortedPlugins();
+        const start = (currentPage() - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        return filtered.slice(start, end);
+    };
+
+    const totalPages = () => Math.ceil(sortedPlugins().length / itemsPerPage);
 
     return (
         <section class="relative pb-36">
@@ -29,7 +42,7 @@ export default function PluginsHero() {
 
             <div class="flex flex-col gap-3 max-lg:items-center max-lg:text-center mt-8 w-full">
                 <Show when={plugins()} fallback={<p>Loading plugins...</p>}>
-                    <For each={sortedPlugins()}>
+                    <For each={paginatedPlugins()}>
                         {(plugin) => (
                             <div class="w-full">
                                 <PluginCard
@@ -43,6 +56,28 @@ export default function PluginsHero() {
                     </For>
                     <Show when={sortedPlugins().length === 0}>
                         <p class="text-neutral-500 mt-4">No plugins found.</p>
+                    </Show>
+                    
+                    <Show when={sortedPlugins().length > 0}>
+                        <div class="flex justify-center gap-2 mt-6">
+                            <button
+                                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                                disabled={currentPage() === 1}
+                                class="px-4 py-2 rounded-md border border-neutral-600 bg-neutral-800 text-white disabled:opacity-50"
+                            >
+                                <Fa icon={faArrowLeft} />
+                            </button>
+                            <span class="px-4 py-2 text-neutral-300">
+                                Page {currentPage()} of {totalPages()}
+                            </span>
+                            <button
+                                onClick={() => setCurrentPage(p => Math.min(totalPages(), p + 1))}
+                                disabled={currentPage() === totalPages()}
+                                class="px-4 py-2 rounded-md border border-neutral-600 bg-neutral-800 text-white disabled:opacity-50"
+                            >
+                                <Fa icon={faArrowRight} />
+                            </button>
+                        </div>
                     </Show>
                 </Show>
             </div>

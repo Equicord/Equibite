@@ -3,6 +3,7 @@ import DownloadModal from '@/containers/DownloadModal'
 
 import HomeHero from './components/Hero'
 import HomeFeatures from './components/Features'
+import HomeFooter from './components/Footer'
 
 export default function Home() {
     const [showModal, setShowModal] = createSignal<boolean>(false)
@@ -15,6 +16,7 @@ export default function Home() {
 
             <HomeHero ondownload={() => setShowModal(true)} />
             <HomeFeatures />
+            <HomeFooter />
         </>
     )
 }
