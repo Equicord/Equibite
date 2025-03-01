@@ -1,36 +1,42 @@
-import { createResource, createSignal, Show, For } from "solid-js";
-import { fetchPlugins } from "../Features";
-import { PluginCard } from "@components/UI/Card";
-import { faArrowLeft, faArrowRight, faSearch } from "@fortawesome/free-solid-svg-icons";
-import Fa from "solid-fa";
+import { createResource, createSignal, Show, For } from 'solid-js'
+import { fetchPlugins } from '../Features'
+import { PluginCard } from '@components/UI/Card'
+import {
+    faArrowLeft,
+    faArrowRight,
+    faSearch,
+} from '@fortawesome/free-solid-svg-icons'
+import Fa from 'solid-fa'
 
 export default function PluginsHero() {
-    const [plugins, { refetch }] = createResource(fetchPlugins);
-    const [search, setSearch] = createSignal("");
-    const [currentPage, setCurrentPage] = createSignal(1);
-    const itemsPerPage = 9;
+    const [plugins, { refetch }] = createResource(fetchPlugins)
+    const [search, setSearch] = createSignal('')
+    const [currentPage, setCurrentPage] = createSignal(1)
+    const itemsPerPage = 9
 
     const updateSearch = (value: string) => {
-        setSearch(value);
-        setCurrentPage(1);
-    };
+        setSearch(value)
+        setCurrentPage(1)
+    }
 
     const sortedPlugins = () => {
-        return plugins()
-            ?.sort((a, b) => a.name.localeCompare(b.name))
-            .filter((plugin) =>
-                plugin.name.toLowerCase().includes(search().toLowerCase())
-            ) || [];
-    };
+        return (
+            plugins()
+                ?.sort((a, b) => a.name.localeCompare(b.name))
+                .filter((plugin) =>
+                    plugin.name.toLowerCase().includes(search().toLowerCase()),
+                ) || []
+        )
+    }
 
     const paginatedPlugins = () => {
-        const filtered = sortedPlugins();
-        const start = (currentPage() - 1) * itemsPerPage;
-        const end = start + itemsPerPage;
-        return filtered.slice(start, end);
-    };
+        const filtered = sortedPlugins()
+        const start = (currentPage() - 1) * itemsPerPage
+        const end = start + itemsPerPage
+        return filtered.slice(start, end)
+    }
 
-    const totalPages = () => Math.ceil(sortedPlugins().length / itemsPerPage);
+    const totalPages = () => Math.ceil(sortedPlugins().length / itemsPerPage)
 
     return (
         <section class="relative pb-36">
@@ -51,17 +57,17 @@ export default function PluginsHero() {
             </div>
 
             <div class="mt-8 w-full">
-                <Show 
-                    when={!plugins.loading && !plugins.error} 
+                <Show
+                    when={!plugins.loading && !plugins.error}
                     fallback={
                         <div class="text-center text-neutral-400">
-                            <Show 
-                                when={!plugins.error} 
+                            <Show
+                                when={!plugins.error}
                                 fallback={
                                     <div>
                                         <p>Failed to load plugins.</p>
-                                        <button 
-                                            onClick={() => refetch()} 
+                                        <button
+                                            onClick={() => refetch()}
                                             class="mt-2 px-4 py-2 rounded-md border border-neutral-600 bg-neutral-800 text-white hover:bg-neutral-700"
                                         >
                                             Retry
@@ -90,12 +96,14 @@ export default function PluginsHero() {
                     <Show when={sortedPlugins().length === 0}>
                         <p class="text-neutral-500 mt-4">No plugins found.</p>
                     </Show>
-                    
+
                     <Show when={sortedPlugins().length > 0}>
                         <div class="flex justify-center gap-2 mt-6">
                             <button
                                 title="Previous"
-                                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                                onClick={() =>
+                                    setCurrentPage((p) => Math.max(1, p - 1))
+                                }
                                 disabled={currentPage() === 1}
                                 class="px-4 py-2 rounded-md border border-neutral-600 bg-neutral-800 text-white disabled:opacity-50 transition-all duration-200 hover:bg-neutral-700 hover:scale-105 disabled:hover:scale-100 disabled:hover:bg-neutral-800"
                             >
@@ -106,7 +114,11 @@ export default function PluginsHero() {
                             </span>
                             <button
                                 title="Next"
-                                onClick={() => setCurrentPage(p => Math.min(totalPages(), p + 1))}
+                                onClick={() =>
+                                    setCurrentPage((p) =>
+                                        Math.min(totalPages(), p + 1),
+                                    )
+                                }
                                 disabled={currentPage() === totalPages()}
                                 class="px-4 py-2 rounded-md border border-neutral-600 bg-neutral-800 text-white disabled:opacity-50 transition-all duration-200 hover:bg-neutral-700 hover:scale-105 disabled:hover:scale-100 disabled:hover:bg-neutral-800"
                             >
@@ -117,5 +129,5 @@ export default function PluginsHero() {
                 </Show>
             </div>
         </section>
-    );
+    )
 }

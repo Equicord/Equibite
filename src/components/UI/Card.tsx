@@ -14,25 +14,32 @@ interface Props {
 }
 
 type Commands = {
-    name: string;
-    description: string;
-};
+    name: string
+    description: string
+}
 
 interface Author {
-    name: string;
+    name: string
 }
 
 interface PluginProps {
     title: string
     excerpt: string
-    hasCommands: boolean;
-    commands: Commands[];
-    authors: Author[];
+    hasCommands: boolean
+    commands: Commands[]
+    authors: Author[]
 }
 
-export default function Card({ icon, title, excerpt, class: className }: Props) {
+export default function Card({
+    icon,
+    title,
+    excerpt,
+    class: className,
+}: Props) {
     return (
-        <div class={`w-full p-6 flex flex-col gap-1 bg-neutral-900 rounded-2xl transition-transform duration-300 hover:bg-neutral-800 hover:outline hover:outline-dashed hover:outline-1 hover:outline-neutral-600 hover:-translate-y-1 ${className || ''}`}>
+        <div
+            class={`w-full p-6 flex flex-col gap-1 bg-neutral-900 rounded-2xl transition-transform duration-300 hover:bg-neutral-800 hover:outline hover:outline-dashed hover:outline-1 hover:outline-neutral-600 hover:-translate-y-1 ${className || ''}`}
+        >
             <div class="flex items-center gap-3">
                 <div class="size-12 p-0.5 bg-gradient-to-t from-neutral-900 to-neutral-600 rounded-full">
                     <div class="size-full flex justify-center items-center bg-neutral-950 rounded-full">
@@ -47,14 +54,20 @@ export default function Card({ icon, title, excerpt, class: className }: Props) 
     )
 }
 
-export function PluginCard({ title, excerpt, hasCommands, commands, authors }: PluginProps) {
+export function PluginCard({
+    title,
+    excerpt,
+    hasCommands,
+    commands,
+    authors,
+}: PluginProps) {
     const formatAuthors = (authors: Author[]) => {
-        const names = authors.map(author => author.name);
-        if (names.length === 0) return '';
-        if (names.length === 1) return names[0];
-        if (names.length === 2) return `${names[0]} & ${names[1]}`;
-        return `${names.slice(0, -1).join(', ')} & ${names[names.length - 1]}`;
-    };
+        const names = authors.map((author) => author.name)
+        if (names.length === 0) return ''
+        if (names.length === 1) return names[0]
+        if (names.length === 2) return `${names[0]} & ${names[1]}`
+        return `${names.slice(0, -1).join(', ')} & ${names[names.length - 1]}`
+    }
 
     return (
         <div class="w-full p-6 flex flex-col gap-1 bg-neutral-900 rounded-2xl transition-transform duration-200 hover:outline-2 hover:bg-neutral-800 hover:outline-neutral-700 hover:-translate-y-0.5">
@@ -63,13 +76,14 @@ export function PluginCard({ title, excerpt, hasCommands, commands, authors }: P
             <p class="text-sm text-neutral-400 font-medium">{excerpt}</p>
 
             <Show when={hasCommands && commands.length > 0}>
-                <div style={{ "color": "#A1A1A1" }}>
+                <div style={{ color: '#A1A1A1' }}>
                     <span>Commands:</span>
                     <ul class="list-disc pl-5">
                         <For each={commands}>
                             {(command) => (
-                                <li style={{ "color": "#A1A1A1" }}>
-                                    <span>{command.name}:</span> {command.description.toLowerCase()}
+                                <li style={{ color: '#A1A1A1' }}>
+                                    <span>{command.name}:</span>{' '}
+                                    {command.description.toLowerCase()}
                                 </li>
                             )}
                         </For>
@@ -77,5 +91,5 @@ export function PluginCard({ title, excerpt, hasCommands, commands, authors }: P
                 </div>
             </Show>
         </div>
-    );
+    )
 }

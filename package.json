@@ -17,7 +17,6 @@
     "scripts": {
         "dev": "vite",
         "build": "tsc && vite build",
-        "lint": "eslint .",
         "format": "prettier --write ."
     },
     "devDependencies": {

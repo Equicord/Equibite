@@ -27,7 +27,7 @@
             "@hooks/*": ["./hooks/*"],
             "@router/*": ["./router/*"],
             "@utils/*": ["./utils/*"],
-            "@views/*": ["./views/*"],
+            "@views/*": ["./views/*"]
         },
 
         "strict": true,
