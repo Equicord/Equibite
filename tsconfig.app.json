@@ -7,6 +7,7 @@
         "module": "ESNext",
         "lib": ["ES2020", "DOM", "DOM.Iterable"],
         "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
 
         "moduleResolution": "bundler",
         "allowImportingTsExtensions": true,
@@ -19,7 +20,14 @@
 
         "baseUrl": "src",
         "paths": {
-            "@/*": ["*"]
+            "@index": ["./index"],
+            "@assets/*": ["./assets/*"],
+            "@components/*": ["./components/*"],
+            "@containers/*": ["./containers/*"],
+            "@hooks/*": ["./hooks/*"],
+            "@router/*": ["./router/*"],
+            "@utils/*": ["./utils/*"],
+            "@views/*": ["./views/*"],
         },
 
         "strict": true,

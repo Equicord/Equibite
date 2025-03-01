@@ -1,5 +1,5 @@
 import type { ParentProps } from 'solid-js'
-import Navbar from '@/components/Layout/Navbar'
+import Navbar from '@components/Layout/Navbar'
 
 export default function RootLayout({ children }: ParentProps) {
     return (

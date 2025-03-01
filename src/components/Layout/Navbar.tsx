@@ -1,10 +1,10 @@
 import { createSignal } from 'solid-js'
 import { A, useLocation } from '@solidjs/router'
 
-import Logo from '@/assets/logo.svg'
-import Button from '@/components/UI/Button'
+import Logo from '@assets/logo.svg'
+import Button from '@components/UI/Button'
 
-import DownloadModal from '@/containers/DownloadModal'
+import DownloadModal from '@containers/DownloadModal'
 
 export default function Navbar() {
     const [showModal, setShowModal] = createSignal<boolean>(false)
@@ -18,6 +18,7 @@ export default function Navbar() {
 
             <A href="/">
                 <img 
+                    alt="Equicord-Logo"
                     src={Logo} 
                     draggable={false} 
                     class="size-11 m-1 user-select-none transition-transform duration-500 hover:rotate-180 hover:scale-110" 

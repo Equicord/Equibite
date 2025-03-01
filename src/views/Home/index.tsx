@@ -1,5 +1,5 @@
 import { createSignal } from 'solid-js'
-import DownloadModal from '@/containers/DownloadModal'
+import DownloadModal from '@containers/DownloadModal'
 
 import HomeHero from './components/Hero'
 import HomeFeatures from './components/Features'

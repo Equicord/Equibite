@@ -1,6 +1,6 @@
 import { A } from '@solidjs/router'
-import Button from '@/components/UI/Button'
-import Laptop from '@/assets/laptop.png'
+import Button from '@components/UI/Button'
+import Laptop from '@assets/laptop.png'
 
 interface Props {
     ondownload: () => void

@@ -1,3 +1,5 @@
+import { Urls } from "@utils/index";
+
 type Author = {
     name: string;
     id: string;
@@ -16,7 +18,6 @@ type Plugin = {
     authors: Author[];
 };
 
-import { Urls } from "@/constants";
 
 export const fetchPlugins = async (): Promise<Plugin[]> => {
     const response = await fetch(Urls.PLUGINS_URL);

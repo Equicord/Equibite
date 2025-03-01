@@ -1,8 +1,8 @@
+import RootLayout from '@containers/RootLayout'
 import { Router, Route } from '@solidjs/router'
-import RootLayout from '@/containers/RootLayout'
 
-import Home from '@/views/Home'
-import Plugins from '@/views/Plugins'
+import Home from '@views/Home'
+import Plugins from '@views/Plugins'
 
 const Routes = () => {
     return (

@@ -2,7 +2,7 @@ import { createSignal, For } from 'solid-js'
 import { A } from '@solidjs/router'
 import classNames from 'classnames'
 
-import { isWindows, isMac, isLinux } from '@/utils/navigator'
+import { isWindows, isMac, isLinux } from '@utils/navigator'
 import Fa from 'solid-fa'
 import {
     type IconDefinition,
@@ -11,8 +11,8 @@ import {
     faLinux,
 } from '@fortawesome/free-brands-svg-icons'
 
-import Modal from '@/components/UI/Modal'
-import Button from '@/components/UI/Button'
+import Modal from '@components/UI/Modal'
+import Button from '@components/UI/Button'
 
 interface Props {
     onclose: () => void

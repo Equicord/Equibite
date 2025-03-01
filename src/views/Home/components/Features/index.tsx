@@ -1,5 +1,5 @@
 import { For } from 'solid-js'
-import Card from '@/components/UI/Card'
+import Card from '@components/UI/Card'
 
 import {
     type IconDefinition,

@@ -1,6 +1,6 @@
 import { onMount, type ParentProps } from 'solid-js'
 import { Portal } from 'solid-js/web'
-import { useOutsideClick } from '@/hooks/use-outside-click'
+import { useOutsideClick } from '@hooks/use-outside-click'
 
 interface Props extends ParentProps {
     onclose: () => void
