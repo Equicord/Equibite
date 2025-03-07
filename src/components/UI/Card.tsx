@@ -61,12 +61,19 @@ export function PluginCard({
     commands,
     authors,
 }: PluginProps) {
-    const formatAuthors = (authors: Author[]) => {
-        const names = authors.map((author) => author.name)
-        if (names.length === 0) return ''
-        if (names.length === 1) return names[0]
-        if (names.length === 2) return `${names[0]} & ${names[1]}`
-        return `${names.slice(0, -1).join(', ')} & ${names[names.length - 1]}`
+    const formatAuthors = (authors: Author[]): string => {
+        const names = authors.map(author => author.name);
+    
+        switch (names.length) {
+            case 0:
+                return "";
+            case 1:
+                return names[0];
+            case 2:
+                return names.join(" & ");
+            default:
+                return names.join(", ");
+        }
     }
 
     return (
