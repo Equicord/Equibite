@@ -4,12 +4,14 @@ import { Router, Route } from '@solidjs/router'
 import Home from '@views/Home'
 import Plugins from '@views/Plugins'
 
+const NotFound = () => <h1>404 - Page Not Found</h1>;
+
 const Routes = () => {
     return (
         <Router root={RootLayout}>
-            <Route path="*404" />
             <Route path="/" component={Home} />
             <Route path="/plugins" component={Plugins} />
+            <Route path="*" component={NotFound}/>
         </Router>
     )
 }
