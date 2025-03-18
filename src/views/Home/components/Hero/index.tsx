@@ -44,7 +44,12 @@ export default function HomeHero({ ondownload }: Props) {
 
                 {/* Laptop - had to wrap it around a div otherwise it wouldnt resize properly. */}
                 <div class="max-w-lg">
-                    <img src={Laptop} alt="Laptop" draggable={false} />
+                    <img 
+                        src={Laptop} 
+                        alt="Laptop" 
+                        draggable={false} 
+                        class="transition-all duration-300 hover:-translate-y-2"
+                    />
                 </div>
             </div>
         </section>

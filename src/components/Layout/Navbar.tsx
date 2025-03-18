@@ -26,6 +26,14 @@ export default function Navbar() {
             </A>
 
             <div class="flex items-center gap-6">
+            <a
+                    href="https://docs.equicord.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="hover:text-gray-300 transition-colors"
+                >
+                    Docs
+                </a>
                 <A
                     href={location.pathname === '/plugins' ? '/' : '/plugins'}
                     class="hover:text-gray-300 transition-colors"
