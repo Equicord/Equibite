@@ -1,11 +1,29 @@
 import { createSignal, createEffect, For } from 'solid-js'
 
-const teamIDS = [
+const teamIds = [
+    921098159348924457n,
+    1207087393929171095n,
+    929208515883569182n,
+    400111022901559298n,
+    1120045713867423835n,
+].map(String)
+
+const helperIds = [
+    516750892372852754n,
+    209830981060788225n,
+    1273447359417942128n,
+].map(String)
+
+const teamMembers = [
     848339671629299742n,
     921098159348924457n,
     1207087393929171095n,
     929208515883569182n,
     400111022901559298n,
+    1120045713867423835n,
+    516750892372852754n,
+    209830981060788225n,
+    1273447359417942128n,
 ].map(String)
 
 type AvatarDecoration = {
@@ -40,12 +58,12 @@ export default function Teams() {
 
     createEffect(() => {
         Promise.all(
-            teamIDS.map(async (id) => {
+            teamMembers.map(async (id) => {
                 const res = await fetch(`https://lanyard.equicord.org/v1/users/${id}`)
                 if (!res.ok) return null
                 const json = await res.json()
                 return json.success ? [id, json.data as LanyardUser] : null
-            })
+            }),
         ).then((entries) => {
             const filtered = entries.filter(Boolean) as [string, LanyardUser][]
             setUsers(Object.fromEntries(filtered))
@@ -67,8 +85,11 @@ export default function Teams() {
                             ? `https://cdn.discordapp.com/avatar-decoration-presets/${u.avatar_decoration_data.asset}.png`
                             : null
                         const customActivity = userData.activities.find(a => a.type === 4)
-    
+                        const username = u.global_name ?? u.username
+                        const status = customActivity?.state ?? userData.discord_status
                         const isOwner = u.id === '848339671629299742'
+                        const isTeamMember = teamIds.includes(u.id)
+                        const isHelper = helperIds.includes(u.id)
     
                         return (
                             <div class="flex items-center gap-5 p-5 bg-neutral-900 rounded-2xl shadow-md">
@@ -88,15 +109,25 @@ export default function Teams() {
                                 </div>
                                 <div class="flex flex-col">
                                     <div class="text-white font-semibold text-xl leading-tight">
-                                        {u.global_name ?? u.username}
+                                        {username}
                                         {isOwner && (
                                             <span class="ml-2 text-sm font-medium text-indigo-400 bg-indigo-900 bg-opacity-40 px-2 py-0.5 rounded-md">
                                                 Owner
                                             </span>
                                         )}
+                                        {isTeamMember && (
+                                            <span class="ml-2 text-sm font-medium text-indigo-400 bg-indigo-900 bg-opacity-40 px-2 py-0.5 rounded-md">
+                                                Team
+                                            </span>
+                                        )}
+                                        {isHelper && (
+                                            <span class="ml-2 text-sm font-medium text-indigo-400 bg-indigo-900 bg-opacity-40 px-2 py-0.5 rounded-md">
+                                                Helper
+                                            </span>
+                                        )}
                                     </div>
                                     <div class="text-base text-gray-400">
-                                        {customActivity?.state ?? userData.discord_status}
+                                        {status}
                                     </div>
                                 </div>
                             </div>
