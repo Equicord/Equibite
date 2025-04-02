@@ -40,6 +40,12 @@ export default function Navbar() {
                 >
                     {location.pathname === '/plugins' ? 'Home' : 'Plugins'}
                 </A>
+                <A
+                    href={location.pathname === '/team' ? '/' : '/team'}
+                    class="hover:text-gray-300 transition-colors"
+                >
+                    {location.pathname === '/team' ? 'Home' : 'Team'}
+                </A>
 
                 <Button
                     style="primary"
