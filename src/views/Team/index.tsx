@@ -71,10 +71,10 @@ export default function Teams() {
     })
 
     return (
-        <div class="p-6">
-            <h2 class="text-2xl font-bold text-white mb-4">Meet the Team</h2>
-    
-            <div class="grid grid-cols-2 gap-6">
+        <div class="p-4 sm:p-6">
+            <h2 class="text-xl sm:text-2xl font-bold text-white mb-4">Meet the Team</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <For each={Object.values(users())}>
                     {(userData) => {
                         const u = userData.discord_user
@@ -90,43 +90,41 @@ export default function Teams() {
                         const isOwner = u.id === '848339671629299742'
                         const isTeamMember = teamIds.includes(u.id)
                         const isHelper = helperIds.includes(u.id)
-    
+
                         return (
-                            <div class="flex items-center gap-5 p-5 bg-neutral-900 rounded-2xl shadow-md">
-                                <div class="grid place-items-center w-[90px] h-[90px]">
-                                    <div class="absolute -mt-1">
-                                        {decoration && (
-                                            <img
-                                                src={decoration}
-                                                class="w-[66px] h-[66px] z-20 pointer-events-none rounded-full"
-                                            />
-                                        )}
-                                    </div>
+                            <div class="flex items-center gap-4 p-4 sm:p-5 bg-neutral-900 rounded-2xl shadow-md">
+                                <div class="relative w-[72px] h-[72px] sm:w-[90px] sm:h-[90px] grid place-items-center shrink-0">
+                                    {decoration && (
+                                        <img
+                                            src={decoration}
+                                            class="w-[60px] h-[60px] sm:w-[66px] sm:h-[66px] z-20 pointer-events-none rounded-full absolute"
+                                        />
+                                    )}
                                     <img
                                         src={avatar}
-                                        class="w-14 h-14 rounded-full z-5 border-2 border-zinc-900"
+                                        class="w-12 h-12 sm:w-14 sm:h-14 rounded-full z-5 border-2 border-zinc-900"
                                     />
                                 </div>
                                 <div class="flex flex-col">
-                                    <div class="text-white font-semibold text-xl leading-tight">
+                                    <div class="text-white font-semibold text-lg sm:text-xl leading-tight">
                                         {username}
                                         {isOwner && (
-                                            <span class="ml-2 text-sm font-medium text-indigo-400 bg-indigo-900 bg-opacity-40 px-2 py-0.5 rounded-md">
+                                            <span class="ml-2 text-xs sm:text-sm font-medium text-indigo-400 bg-indigo-900 bg-opacity-40 px-2 py-0.5 rounded-md">
                                                 Owner
                                             </span>
                                         )}
                                         {isTeamMember && (
-                                            <span class="ml-2 text-sm font-medium text-indigo-400 bg-indigo-900 bg-opacity-40 px-2 py-0.5 rounded-md">
+                                            <span class="ml-2 text-xs sm:text-sm font-medium text-indigo-400 bg-indigo-900 bg-opacity-40 px-2 py-0.5 rounded-md">
                                                 Team
                                             </span>
                                         )}
                                         {isHelper && (
-                                            <span class="ml-2 text-sm font-medium text-indigo-400 bg-indigo-900 bg-opacity-40 px-2 py-0.5 rounded-md">
+                                            <span class="ml-2 text-xs sm:text-sm font-medium text-pink-400 bg-pink-900 bg-opacity-40 px-2 py-0.5 rounded-md">
                                                 Helper
                                             </span>
                                         )}
                                     </div>
-                                    <div class="text-base text-gray-400">
+                                    <div class="text-sm sm:text-base text-gray-400">
                                         {status}
                                     </div>
                                 </div>
