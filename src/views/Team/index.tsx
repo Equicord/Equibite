@@ -16,6 +16,7 @@ const teamIds = [
 const helperIds = [
     516750892372852754n,
     1273447359417942128n,
+    376637472588824587n,
 ].map(String)
 
 const teamMembers = [
