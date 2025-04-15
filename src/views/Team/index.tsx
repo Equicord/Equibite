@@ -1,30 +1,28 @@
 import { createSignal, createEffect, For } from 'solid-js'
 
+const ownerIds = [
+     848339671629299742,
+].map(String)
+
 const teamIds = [
     840854894881538079n,
     1207087393929171095n,
     929208515883569182n,
     400111022901559298n,
     1120045713867423835n,
+    209830981060788225,
 ].map(String)
 
 const helperIds = [
     516750892372852754n,
-    209830981060788225n,
     1273447359417942128n,
 ].map(String)
 
 const teamMembers = [
-    848339671629299742n,
-    840854894881538079n,
-    1207087393929171095n,
-    929208515883569182n,
-    400111022901559298n,
-    1120045713867423835n,
-    516750892372852754n,
-    209830981060788225n,
-    1273447359417942128n,
-].map(String)
+    ...ownerIds,
+    ...teamIds,
+    ...helperIds,
+]
 
 type AvatarDecoration = {
     sku_id: string
@@ -87,7 +85,7 @@ export default function Teams() {
                         const customActivity = userData.activities.find(a => a.type === 4)
                         const username = u.global_name ?? u.username
                         const status = customActivity?.state ?? userData.discord_status
-                        const isOwner = u.id === '848339671629299742'
+                        const isOwner = ownerIds.includes(u.id)
                         const isTeamMember = teamIds.includes(u.id)
                         const isHelper = helperIds.includes(u.id)
 
