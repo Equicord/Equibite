@@ -1,7 +1,7 @@
 import { createSignal, createEffect, For } from 'solid-js'
 
 const ownerIds = [
-     848339671629299742,
+     848339671629299742n,
 ].map(String)
 
 const teamIds = [
