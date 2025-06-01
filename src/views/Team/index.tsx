@@ -1,28 +1,5 @@
 import { createSignal, createEffect, For } from 'solid-js'
-
-const ownerIds = [
-     848339671629299742n,
-].map(String)
-
-const teamIds = [
-    840854894881538079n,
-    1207087393929171095n,
-    929208515883569182n,
-    400111022901559298n,
-    209830981060788225n,
-].map(String)
-
-const helperIds = [
-    516750892372852754n,
-    1273447359417942128n,
-    376637472588824587n,
-].map(String)
-
-const teamMembers = [
-    ...ownerIds,
-    ...teamIds,
-    ...helperIds,
-]
+import { teamMembers, ownerIds, teamIds, helperIds } from '../../utils/constants'
 
 type AvatarDecoration = {
     sku_id: string
@@ -112,7 +89,7 @@ export default function Teams() {
                                             </span>
                                         )}
                                         {isTeamMember && (
-                                            <span class="ml-2 text-xs sm:text-sm font-medium text-indigo-400 bg-indigo-900 bg-opacity-40 px-2 py-0.5 rounded-md">
+                                            <span class="ml-2 text-xs sm:text-sm font-medium text-[#e10600] bg-[#e10600]/20 px-2 py-0.5 rounded-md">
                                                 Team
                                             </span>
                                         )}
