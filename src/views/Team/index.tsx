@@ -1,5 +1,5 @@
 import { createSignal, createEffect, For } from 'solid-js'
-import { teamMembers, ownerIds, teamIds, helperIds } from '../../utils/constants'
+import { teamMembers, ownerIds, teamIds, helperIds, colors } from '../../utils/constants'
 
 type AvatarDecoration = {
     sku_id: string
@@ -71,11 +71,13 @@ export default function Teams() {
                                 <div class="relative w-[72px] h-[72px] sm:w-[90px] sm:h-[90px] grid place-items-center shrink-0">
                                     {decoration && (
                                         <img
+                                            alt="Avatar Decoration"
                                             src={decoration}
                                             class="w-[60px] h-[60px] sm:w-[66px] sm:h-[66px] z-20 pointer-events-none rounded-full absolute"
                                         />
                                     )}
                                     <img
+                                        alt="User Avatar"
                                         src={avatar}
                                         class="w-12 h-12 sm:w-14 sm:h-14 rounded-full z-5 border-2 border-zinc-900"
                                     />
@@ -84,17 +86,17 @@ export default function Teams() {
                                     <div class="text-white font-semibold text-lg sm:text-xl leading-tight">
                                         {username}
                                         {isOwner && (
-                                            <span class="ml-2 text-xs sm:text-sm font-medium text-indigo-400 bg-indigo-900 bg-opacity-40 px-2 py-0.5 rounded-md">
+                                            <span class={`ml-2 text-xs sm:text-sm font-medium text-[#${colors.ownerText}] bg-[#${colors.ownerBG}] bg-opacity-40 px-2 py-0.5 rounded-md`}>
                                                 Owner
                                             </span>
                                         )}
                                         {isTeamMember && (
-                                            <span class="ml-2 text-xs sm:text-sm font-medium text-[#e10600] bg-[#e10600]/20 px-2 py-0.5 rounded-md">
+                                            <span class={`ml-2 text-xs sm:text-sm font-medium text-[#${colors.teamText}] bg-[#${colors.teamBG}] bg-opacity-40 px-2 py-0.5 rounded-md`}>
                                                 Team
                                             </span>
                                         )}
                                         {isHelper && (
-                                            <span class="ml-2 text-xs sm:text-sm font-medium text-pink-400 bg-pink-900 bg-opacity-40 px-2 py-0.5 rounded-md">
+                                            <span class={`ml-2 text-xs sm:text-sm font-medium text-[#${colors.helperText}] bg-[#${colors.helperBG}] bg-opacity-40 px-2 py-0.5 rounded-md`}>
                                                 Helper
                                             </span>
                                         )}

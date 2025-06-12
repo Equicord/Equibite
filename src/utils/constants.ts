@@ -8,7 +8,7 @@ export const Urls = {
 }
 
 export const ownerIds = [
-     848339671629299742n, // thor
+    848339671629299742n, // thor
 ].map(String)
 
 export const teamIds = [
@@ -16,8 +16,7 @@ export const teamIds = [
     209830981060788225n, // creations
     929208515883569182n, //indi 
     1207087393929171095n, // nyx
-    848339671629299742n, // thor
-    840854894881538079n, // mohh
+    840854894881538079n, // vmohammad 
 ].map(String)
 
 export const helperIds = [
@@ -29,3 +28,12 @@ export const teamMembers = [
     ...teamIds,
     ...helperIds,
 ]
+
+export const colors = {
+    ownerText: "b11919",
+    ownerBG: "850f0f",
+    teamText: "2a64d8",
+    teamBG: "21448a",
+    helperText: "86298d",
+    helperBG: "5d2161",
+}
