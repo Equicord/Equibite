@@ -28,12 +28,3 @@ export const teamMembers = [
     ...teamIds,
     ...helperIds,
 ]
-
-export const colors = {
-    ownerText: "b11919",
-    ownerBG: "850f0f",
-    teamText: "2a64d8",
-    teamBG: "21448a",
-    helperText: "86298d",
-    helperBG: "5d2161",
-}
