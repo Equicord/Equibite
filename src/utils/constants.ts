@@ -21,6 +21,7 @@ export const teamIds = [
 
 export const helperIds = [
     516750892372852754n, // aspy
+    755144413411410060n, // DrWhoFan13
 ].map(String)
 
 export const teamMembers = [
