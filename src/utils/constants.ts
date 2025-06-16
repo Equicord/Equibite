@@ -12,7 +12,7 @@ export const ownerIds = [
 ].map(String)
 
 export const teamIds = [
-    400111022901559298n, // cortex
+    913205935319691335n, // cortex
     209830981060788225n, // creations
     929208515883569182n, //indi 
     1207087393929171095n, // nyx
