@@ -199,7 +199,7 @@ export default function EquicordColors() {
                                 data-b={b}
                             >
                                 <img
-                                    src={"/public/logo.png"}
+                                    src={"/logo.png"}
                                     class="logo"
                                     loading="lazy"
                                     alt=""
