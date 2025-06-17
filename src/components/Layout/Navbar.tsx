@@ -26,7 +26,7 @@ export default function Navbar() {
             </A>
 
             <div class="flex items-center gap-6">
-            <a
+                <a
                     href="https://docs.equicord.org"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -45,6 +45,18 @@ export default function Navbar() {
                     class="hover:text-gray-300 transition-colors"
                 >
                     {location.pathname === '/team' ? 'Home' : 'Team'}
+                </A>
+                <A
+                    href={location.pathname === '/icons' ? '/' : '/icons'}
+                    class="hover:text-gray-300 transition-colors"
+                >
+                    {location.pathname === '/icons' ? 'Home' : 'Icons'}
+                </A>
+                <A
+                    href={location.pathname === '/colorgen' ? '/' : '/colorgen'}
+                    class="hover:text-gray-300 transition-colors"
+                >
+                    {location.pathname === '/colorgen' ? 'Home' : 'Color Gen'}
                 </A>
 
                 <Button
