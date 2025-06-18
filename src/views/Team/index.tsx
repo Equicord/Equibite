@@ -1,5 +1,5 @@
 import { createSignal, createEffect, For } from 'solid-js'
-import { teamMembers, ownerIds, teamIds, helperIds } from '../../utils/constants'
+import { teamMembers, ownerIds, teamIds, helperIds, artistIds } from '../../utils/constants'
 
 type AvatarDecoration = {
     sku_id: string
@@ -65,6 +65,7 @@ export default function Teams() {
                         const isOwner = ownerIds.includes(u.id)
                         const isTeamMember = teamIds.includes(u.id)
                         const isHelper = helperIds.includes(u.id)
+                        const isArtist = artistIds.includes(u.id) // Hello world
 
                         return (
                             <div class="flex items-center gap-4 p-4 sm:p-5 bg-neutral-900 rounded-2xl shadow-md">
@@ -86,18 +87,23 @@ export default function Teams() {
                                     <div class="text-white font-semibold text-lg sm:text-xl leading-tight">
                                         {username}
                                         {isOwner && (
-                                            <span class={`ml-2 text-xs sm:text-sm font-medium text-[#b11919] bg-[#850f0f] bg-opacity-40 px-2 py-0.5 rounded-md`}>
+                                            <span class="ml-2 text-xs sm:text-sm font-medium text-[#b11919] bg-[#850f0f] bg-opacity-40 px-2 py-0.5 rounded-md">
                                                 Owner
                                             </span>
                                         )}
                                         {isTeamMember && (
-                                            <span class={`ml-2 text-xs sm:text-sm font-medium text-[#2a64d8] bg-[#21448a] bg-opacity-40 px-2 py-0.5 rounded-md`}>
+                                            <span class="ml-2 text-xs sm:text-sm font-medium text-[#2a64d8] bg-[#21448a] bg-opacity-40 px-2 py-0.5 rounded-md">
                                                 Team
                                             </span>
                                         )}
                                         {isHelper && (
-                                            <span class={`ml-2 text-xs sm:text-sm font-medium text-[#86298d] bg-[#5d2161] bg-opacity-40 px-2 py-0.5 rounded-md`}>
+                                            <span class="ml-2 text-xs sm:text-sm font-medium text-[#86298d] bg-[#5d2161] bg-opacity-40 px-2 py-0.5 rounded-md">
                                                 Helper
+                                            </span>
+                                        )}
+                                        {isArtist && (
+                                            <span class="ml-2 text-xs sm:text-sm font-medium text-[#24a148] bg-[#165c2f] bg-opacity-40 px-2 py-0.5 rounded-md">
+                                                Artist
                                             </span>
                                         )}
                                     </div>
@@ -112,4 +118,4 @@ export default function Teams() {
             </div>
         </div>
     )
-}    
+}

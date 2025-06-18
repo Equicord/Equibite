@@ -14,7 +14,7 @@ export const ownerIds = [
 export const teamIds = [
     913205935319691335n, // cortex
     209830981060788225n, // creations
-    929208515883569182n, //indi 
+    929208515883569182n, // indi 
     1207087393929171095n, // nyx
     840854894881538079n, // vmohammad 
 ].map(String)
@@ -29,3 +29,11 @@ export const teamMembers = [
     ...teamIds,
     ...helperIds,
 ]
+
+export const artistIds = [
+    789872551731527690n, // FoxStorm1
+    1120045713867423835n, // Naibuu
+    989197238687387709n, // Zunne
+    1124341362955919371n, // Blade0
+    1344190786476183643n, // stealtech
+].map(String)
