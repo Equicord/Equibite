@@ -24,12 +24,6 @@ export const helperIds = [
     755144413411410060n, // DrWhoFan13
 ].map(String)
 
-export const teamMembers = [
-    ...ownerIds,
-    ...teamIds,
-    ...helperIds,
-]
-
 export const artistIds = [
     789872551731527690n, // FoxStorm1
     1120045713867423835n, // Naibuu
@@ -37,3 +31,10 @@ export const artistIds = [
     1124341362955919371n, // Blade0
     1344190786476183643n, // stealtech
 ].map(String)
+
+export const teamMembers = [
+    ...ownerIds,
+    ...teamIds,
+    ...helperIds,
+    ...artistIds,
+]

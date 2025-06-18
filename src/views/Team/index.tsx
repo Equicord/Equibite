@@ -65,7 +65,7 @@ export default function Teams() {
                         const isOwner = ownerIds.includes(u.id)
                         const isTeamMember = teamIds.includes(u.id)
                         const isHelper = helperIds.includes(u.id)
-                        const isArtist = artistIds.includes(u.id) // Hello world
+                        const isArtist = artistIds.includes(u.id)
 
                         return (
                             <div class="flex items-center gap-4 p-4 sm:p-5 bg-neutral-900 rounded-2xl shadow-md">
@@ -102,7 +102,7 @@ export default function Teams() {
                                             </span>
                                         )}
                                         {isArtist && (
-                                            <span class="ml-2 text-xs sm:text-sm font-medium text-[#24a148] bg-[#165c2f] bg-opacity-40 px-2 py-0.5 rounded-md">
+                                            <span class="ml-2 text-xs sm:text-sm font-medium text-[#1f8543] bg-[#165c2f] bg-opacity-40 px-2 py-0.5 rounded-md">
                                                 Artist
                                             </span>
                                         )}
