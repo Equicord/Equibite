@@ -30,7 +30,7 @@ const features: Feature[] = [
         icon: faCheck,
         title: 'Trusted by Many',
         excerpt:
-            'Trusted by many users with public source code available for viewing, garnering over 400 stars on GitHub.',
+            'Trusted by many users with public source code available for viewing, garnering over 600 stars on GitHub.',
     },
     {
         icon: faLock,
