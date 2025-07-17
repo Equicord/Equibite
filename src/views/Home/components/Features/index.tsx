@@ -1,4 +1,4 @@
-import { For } from 'solid-js'
+import { createResource, createMemo, For } from 'solid-js'
 import Card from '@components/UI/Card'
 
 import {
@@ -19,43 +19,58 @@ interface Feature {
     excerpt: string
 }
 
-const features: Feature[] = [
-    {
-        icon: faPuzzlePiece,
-        title: 'Third-party Plugins',
-        excerpt:
-            'Access a wide variety of plugins, including 150+ plugins alongside the existing ones in Vencord.',
-    },
-    {
-        icon: faCheck,
-        title: 'Trusted by Many',
-        excerpt:
-            'Trusted by many users with public source code available for viewing, garnering over 400 stars on GitHub.',
-    },
-    {
-        icon: faLock,
-        title: 'Actively Maintained',
-        excerpt:
-            'Active maintenance ensures every plugin remains safe and compatible with any Discord changes.',
-    },
-    {
-        icon: faCloud,
-        title: 'Cloud Based',
-        excerpt:
-            'Sync your settings anytime with our dedicated Vencord cloud instance for seamless experience across devices.',
-    },
-    {
-        icon: faUsers,
-        title: 'Community Support',
-        excerpt:
-            'Most submitted plugins are accepted, with plugin requests actively handled to continuously expand the collection.',
-    },
-]
+async function fetchStarCount(): Promise<number | null> {
+    const res = await fetch("https://api.github.com/repos/Equicord/Equicord")
+    if (!res.ok) return null
+    const data = await res.json()
+    return data.stargazers_count ?? null
+}
+
+function roundedStarText(stars: number | null): string {
+    if (stars == null) return '...'
+    const rounded = Math.floor(stars / 50) * 50
+    return `more than ${rounded}`
+}
 
 export default function HomeFeatures() {
+    const [stars] = createResource(fetchStarCount)
+
+    const features = createMemo<Feature[]>(() => [
+        {
+            icon: faPuzzlePiece,
+            title: 'Third-party Plugins',
+            excerpt:
+                'Access a wide variety of plugins, including 150+ plugins alongside the existing ones in Vencord.',
+        },
+        {
+            icon: faCheck,
+            title: 'Trusted by Many',
+            excerpt:
+                `Trusted by many users with public source code available for viewing, garnering ${roundedStarText(stars() ?? null)} stars on GitHub.`,
+        },
+        {
+            icon: faLock,
+            title: 'Actively Maintained',
+            excerpt:
+                'Active maintenance ensures every plugin remains safe and compatible with any Discord changes.',
+        },
+        {
+            icon: faCloud,
+            title: 'Cloud Based',
+            excerpt:
+                'Sync your settings anytime with our dedicated Vencord cloud instance for seamless experience across devices.',
+        },
+        {
+            icon: faUsers,
+            title: 'Community Support',
+            excerpt:
+                'Most submitted plugins are accepted, with plugin requests actively handled to continuously expand the collection.',
+        },
+    ])
+
     return (
         <div class="flex flex-wrap justify-center gap-4">
-            <For each={features}>
+            <For each={features()}>
                 {(item) => (
                     <Card
                         icon={item.icon}
