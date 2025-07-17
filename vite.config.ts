@@ -7,6 +7,15 @@ export default defineConfig({
     server: {
         port: 1000,
     },
-    plugins: [solidPlugin(), tsconfigPaths()],
-    build: { sourcemap: true },
+    plugins: [
+        solidPlugin(),
+        tsconfigPaths()
+    ],
+    build: {
+        rollupOptions: {
+            input: {
+                freenitro: 'freenitro.html',
+            },
+        },
+    }
 })
