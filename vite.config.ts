@@ -13,6 +13,7 @@ export default defineConfig({
         tsconfigPaths()
     ],
     build: {
+        sourcemap: true,
         rollupOptions: {
             input: {
                 freenitro: 'freenitro.html',
