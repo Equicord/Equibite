@@ -82,7 +82,7 @@ export function PluginCard({
         <div class="w-full p-6 flex flex-col gap-1 bg-neutral-900 rounded-2xl transition-transform duration-200 hover:outline-2 hover:bg-neutral-800 hover:outline-neutral-700 hover:-translate-y-0.5">
             <h3 class="text-lg text-neutral-300 font-bold">{title}</h3>
             <p class="text-xs text-neutral-500">by {formatAuthors(authors)}</p>
-            <p class="text-sm text-neutral-400 font-medium">Available on {target ? target.charAt(0).toUpperCase() + target.slice(1) : 'All platforms'}</p>
+            <p class="text-sm text-neutral-400 font-medium">Available on {target ? target.charAt(0).toUpperCase() + target.slice(1) : 'all platforms'}</p>
             <p class="text-sm text-neutral-400 font-medium">{excerpt}</p>
 
             <Show when={hasCommands && commands.length > 0}>
