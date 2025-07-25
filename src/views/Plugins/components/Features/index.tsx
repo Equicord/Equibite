@@ -17,6 +17,7 @@ type Plugin = {
     name: string;
     description: string;
     authors: Author[];
+    target?: string;
 };
 
 
