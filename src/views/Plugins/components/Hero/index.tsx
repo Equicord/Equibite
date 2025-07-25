@@ -89,6 +89,7 @@ export default function PluginsHero() {
                                     hasCommands={plugin.hasCommands}
                                     commands={plugin.commands}
                                     authors={plugin.authors}
+                                    target={plugin.target}
                                 />
                             )}
                         </For>
