@@ -23,13 +23,13 @@ export interface PluginData {
     required: boolean
     enabledByDefault: boolean
     target:
-        | 'discordDesktop'
-        | 'vesktop'
-        | 'equibop'
-        | 'desktop'
-        | 'web'
-        | 'dev'
-        | undefined
+    | 'discordDesktop'
+    | 'vesktop'
+    | 'equibop'
+    | 'desktop'
+    | 'web'
+    | 'dev'
+    | undefined
     filePath: string
 }
 
@@ -60,9 +60,9 @@ export function formatAuthors(authors: Dev[]): string {
 export function formatTarget(target: PluginData['target']) {
     return target
         ? target
-              .replace(/([A-Z])/g, ' $1')
-              .toLowerCase()
-              .trim()
+            .replace(/([A-Z])/g, ' $1')
+            .toLowerCase()
+            .trim()
         : 'all platforms'
 }
 
@@ -109,7 +109,7 @@ export function PluginCard({
                         <For each={commands}>
                             {(command) => (
                                 <li class="text-sm text-neutral-300 py-1">
-                                    <span class="font-semibold text-neutral-300 bg-neutral-400/30 p-1 rounded">
+                                    <span class="font-semibold text-neutral-300 bg-neutral-700 p-1 rounded">
                                         {command.name}:
                                     </span>{' '}
                                     {command.description.toLowerCase()}
