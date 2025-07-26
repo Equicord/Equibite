@@ -17,18 +17,18 @@ export const teamIds = [
     929208515883569182n, // indi
     1207087393929171095n, // nyx
     840854894881538079n, // vmohammad
+    1120045713867423835n, // naibuu
 ].map(String)
 
 export const helperIds = [
     516750892372852754n, // aspy
-    755144413411410060n, // DrWhoFan13
+    755144413411410060n, // drwhofan13
 ].map(String)
 
 export const artistIds = [
-    789872551731527690n, // FoxStorm1
-    1120045713867423835n, // Naibuu
-    989197238687387709n, // Zunne
-    1124341362955919371n, // Blade0
+    789872551731527690n, // foxstorm1
+    989197238687387709n, // zunne
+    1124341362955919371n, // blade0
     1344190786476183643n, // stealtech
 ].map(String)
 
