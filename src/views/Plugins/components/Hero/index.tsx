@@ -22,10 +22,15 @@ export default function PluginsHero() {
 
     function sortedPlugins() {
         let result = plugins() || []
+        const query = search().toLowerCase()
 
-        result = result.filter((plugin) =>
-            plugin.name.toLowerCase().includes(search().toLowerCase()),
-        )
+        result = result.filter((plugin) => {
+            const nameMatch = plugin.name.toLowerCase().includes(query)
+            const authorMatch = plugin.authors?.some((author) =>
+                author.name.toLowerCase().includes(query)
+            )
+            return nameMatch || authorMatch
+        })
 
         if (pluginFilter() === 'equicord') {
             result = result.filter((plugin) =>
