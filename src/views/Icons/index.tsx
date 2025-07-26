@@ -1,11 +1,11 @@
 import { createSignal, onMount, For } from 'solid-js'
 
-type DisplayImage = {
+interface DisplayImage {
     title: string
     url: string
 }
 
-type FolderImages = {
+interface FolderImages {
     folder: string
     images: DisplayImage[]
 }
@@ -32,102 +32,113 @@ function capitalizeArtist(str: string): string {
 }
 
 function formatTitle(name: string): string {
-    if (/^hue_\d+\.(png|gif)$/.test(name)) {
-        const num = parseInt(name.match(/^hue_(\d+)\.(png|gif)$/)?.[1] || '', 10)
+    const base = name.replace(/\.[^/.]+$/, '')
+
+    if (/^hue_\d+$/.test(base)) {
+        const num = parseInt(base.split('_')[1], 10)
         return `Hue ${num}`
-    } else if (/^[^-]+\-[^.]+\.(png|gif)$/.test(name)) {
-        const [part1, part2WithExt] = name.split('-', 2)
-        const part2 = part2WithExt.replace(/\.[^/.]+$/, '')
-        const formattedPart1 = capitalizeWords(splitCamelCase(part1))
-        const formattedPart2 = capitalizeArtist(part2)
-        return `${formattedPart1} by ${formattedPart2}`
-    } else {
-        return capitalizeWords(splitCamelCase(name.replace(/\.[^/.]+$/, '')))
     }
+
+    const parts = base.split('-')
+    if (parts.length === 2) {
+        return `${capitalizeWords(splitCamelCase(parts[0]))} by ${capitalizeArtist(parts[1])}`
+    }
+
+    return capitalizeWords(splitCamelCase(base))
 }
 
 function formatFolderName(name: string): string {
     return capitalizeWords(splitCamelCase(name))
 }
 
-async function fetchImagesRecursive(apiUrl: string, currentFolder = ''): Promise<FolderImages[]> {
+async function fetchImagesRecursive(
+    apiUrl: string,
+    currentFolder = '',
+): Promise<FolderImages[]> {
     const res = await fetch(apiUrl)
     if (!res.ok) return []
 
     const data = await res.json()
-    let result: FolderImages[] = []
+    let folders = new Map<string, DisplayImage[]>()
 
     for (const item of data) {
-        if (item.type === 'file') {
+        if (item.type === 'file' && item.download_url) {
             const isHue = /^hue_\d+\.png$/.test(item.name)
             const title = formatTitle(item.name)
-            const folderName = isHue ? 'Hue Variations' : currentFolder
+            const folder = isHue ? 'Hue Variations' : currentFolder
 
-            let folderEntry = result.find((entry) => entry.folder === folderName)
-            if (!folderEntry) {
-                folderEntry = { folder: folderName, images: [] }
-                result.push(folderEntry)
+            if (!folders.has(folder)) {
+                folders.set(folder, [])
             }
 
-            folderEntry.images.push({ title, url: item.download_url })
+            folders.get(folder)!.push({ title, url: item.download_url })
         } else if (item.type === 'dir') {
-            const subResults = await fetchImagesRecursive(item.url, item.name)
-            result = result.concat(subResults)
+            const subFolders = await fetchImagesRecursive(item.url, item.name)
+            subFolders.forEach(({ folder, images }) => {
+                if (!folders.has(folder)) {
+                    folders.set(folder, [])
+                }
+                folders.get(folder)!.push(...images)
+            })
         }
     }
 
-    result = result.map((entry) => {
-        if (entry.folder === 'Hue Variations') {
-            entry.images.sort((a, b) => {
-                const aNum = parseInt(a.title.replace('Hue ', ''), 10)
-                const bNum = parseInt(b.title.replace('Hue ', ''), 10)
-                return aNum - bNum
-            })
-        }
-        return entry
-    })
+    if (folders.has('Hue Variations')) {
+        folders.get('Hue Variations')!.sort((a, b) => {
+            const aNum = parseInt(a.title.replace('Hue ', ''), 10)
+            const bNum = parseInt(b.title.replace('Hue ', ''), 10)
+            return aNum - bNum
+        })
+    }
 
-    return result
+    return Array.from(folders.entries()).map(([folder, images]) => ({
+        folder,
+        images,
+    }))
 }
 
 export default function Icons() {
     const [folders, setFolders] = createSignal<FolderImages[]>([])
 
     onMount(async () => {
-        const images = await fetchImagesRecursive('https://api.github.com/repos/Equicord/Equibored/contents/images')
+        const images = await fetchImagesRecursive(
+            'https://api.github.com/repos/Equicord/Equibored/contents/images',
+        )
 
         images.sort((a, b) => {
-            if (a.folder === 'Hue Variations') return 1;
-            if (b.folder === 'Hue Variations') return -1;
-            return a.folder.localeCompare(b.folder);
-        });
-
+            if (a.folder === 'Hue Variations') return 1
+            if (b.folder === 'Hue Variations') return -1
+            return a.folder.localeCompare(b.folder)
+        })
 
         setFolders(images)
     })
 
-
     return (
-        <div class="bg-black text-white min-h-screen px-4 py-6">
+        <div class="flex flex-col justify-center gap-12">
             <For each={folders()}>
-                {(folder) => (
-                    <div class="mb-10">
-                        <h2 class="text-center text-xl font-semibold mb-4">
-                            {formatFolderName(folder.folder)}
+                {({ folder, images }) => (
+                    <div class="flex flex-col gap-12">
+                        <h2 class="text-center text-xl font-semibold">
+                            {formatFolderName(folder)}
                         </h2>
-                        <div class="flex flex-wrap justify-center gap-4">
-                            <For each={folder.images}>
-                                {(img) => (
-                                    <div class="text-center flex flex-col items-center">
-                                        <span class="block text-sm mb-2">{img.title}</span>
+
+                        <div class="flex flex-wrap gap-4 justify-center">
+                            <For each={images}>
+                                {({ title, url }) => (
+                                    <div class="p-4 w-full sm:max-w-[180px] flex flex-col gap-3 items-center bg-neutral-800 rounded-lg">
                                         <img
-                                            src={img.url}
-                                            alt={img.title}
+                                            src={url}
+                                            alt={title}
                                             width={100}
                                             class="rounded cursor-pointer"
-                                            onClick={() => window.open(img.url, '_blank')}
+                                            onClick={() =>
+                                                window.open(url, '_blank')
+                                            }
                                         />
-
+                                        <span class="text-xs font-medium text-center">
+                                            {title}
+                                        </span>
                                     </div>
                                 )}
                             </For>
