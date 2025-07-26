@@ -1,7 +1,6 @@
 export const Urls = {
-    ALL_PLUGINS_URL: 'https://raw.githubusercontent.com/Equicord/Equibored/main/plugins.json',
-    EQUICORD_PLUGINS_URL: "https://raw.githubusercontent.com/Equicord/Equibored/main/equicordplugins.json",
-    VENCORD_PLUGINS_URL: "https://raw.githubusercontent.com/Equicord/Equibored/main/vencordplugins.json",
+    ALL_PLUGINS_URL:
+        'https://raw.githubusercontent.com/Equicord/Equibored/main/plugins.json',
     DISCORD_URL: 'https://discord.gg/equicord-1173279886065029291',
     GITHUB_URL: 'https://github.com/equicord',
     DISCORD_API: 'https://discord.com/api/v10',
@@ -15,9 +14,9 @@ export const ownerIds = [
 export const teamIds = [
     913205935319691335n, // cortex
     209830981060788225n, // creations
-    929208515883569182n, // indi 
+    929208515883569182n, // indi
     1207087393929171095n, // nyx
-    840854894881538079n, // vmohammad 
+    840854894881538079n, // vmohammad
 ].map(String)
 
 export const helperIds = [
@@ -33,9 +32,4 @@ export const artistIds = [
     1344190786476183643n, // stealtech
 ].map(String)
 
-export const teamMembers = [
-    ...ownerIds,
-    ...teamIds,
-    ...helperIds,
-    ...artistIds,
-]
+export const teamMembers = [...ownerIds, ...teamIds, ...helperIds, ...artistIds]
