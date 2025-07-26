@@ -26,10 +26,17 @@ export default function PluginsHero() {
 
         result = result.filter((plugin) => {
             const nameMatch = plugin.name.toLowerCase().includes(query)
-            const authorMatch = plugin.authors?.some((author) =>
-                author.name.toLowerCase().includes(query)
+            const authorMatch = plugin.authors?.some((author) => author.name.toLowerCase().includes(query))
+            let platform = plugin.target ? plugin.target.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase() : 'all platforms'
+            const platformMatch = platform.includes(query) || 'all platforms'.startsWith(query) && platform === 'all platforms'
+            const requiredMatch = 'required'.startsWith(query) && plugin.required
+
+            return (
+                nameMatch ||
+                authorMatch ||
+                platformMatch ||
+                requiredMatch
             )
-            return nameMatch || authorMatch
         })
 
         if (pluginFilter() === 'equicord') {
