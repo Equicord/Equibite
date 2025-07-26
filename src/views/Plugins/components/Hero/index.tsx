@@ -7,55 +7,57 @@ import CustomDropdown from '../Features/CustomDropdown'
 export default function PluginsHero() {
     const [plugins, { refetch }] = createResource(fetchPlugins)
     const [search, setSearch] = createSignal('')
-    const [pluginFilter, setPluginFilter] = createSignal<'all' | 'equicord' | 'vencord'>('all');
-    const [visibleCount, setVisibleCount] = createSignal(18);
+    const [pluginFilter, setPluginFilter] = createSignal<
+        'all' | 'equicord' | 'vencord'
+    >('all')
+    const [visibleCount, setVisibleCount] = createSignal(18)
 
     function updateSearch(value: string) {
         setSearch(value)
     }
 
     function visiblePlugins() {
-        return sortedPlugins().slice(0, visibleCount());
-    }
-
-    function filteredByFilePath() {
-        return (
-            plugins()?.filter(plugin => {
-                if (pluginFilter() === 'equicord') {
-                    return plugin.filePath?.includes('equicordplugins');
-                }
-                if (pluginFilter() === 'vencord') {
-                    return plugin.filePath?.includes('plugins') && !plugin.filePath?.includes('equicordplugins');
-                }
-                return true;
-            }) || []
-        );
+        return sortedPlugins().slice(0, visibleCount())
     }
 
     function sortedPlugins() {
-        return (
-            filteredByFilePath()
-                .filter(plugin =>
-                    plugin.name.toLowerCase().includes(search().toLowerCase())
-                )
-                .sort((a, b) => a.name.localeCompare(b.name)) || []
-        );
-    };
+        let result = plugins() || []
+
+        result = result.filter((plugin) =>
+            plugin.name.toLowerCase().includes(search().toLowerCase()),
+        )
+
+        if (pluginFilter() === 'equicord') {
+            result = result.filter((plugin) =>
+                plugin.filePath.toLowerCase().startsWith('src/equicordplugins'),
+            )
+        } else if (pluginFilter() === 'vencord') {
+            result = result.filter((plugin) =>
+                plugin.filePath.toLowerCase().startsWith('src/plugins'),
+            )
+        }
+
+        return result.sort((a, b) => a.name.localeCompare(b.name))
+    }
 
     function onScroll() {
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 300) {
-            setVisibleCount((count) => count + 9);
+        if (
+            window.innerHeight + window.scrollY >=
+            document.body.offsetHeight - 300
+        ) {
+            setVisibleCount((count) => count + 9)
         }
     }
 
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener('scroll', onScroll)
 
     return (
         <section class="relative pb-36">
             <div class="text-center mt-2">
                 <h2 class="text-3xl font-bold text-neutral-300">Plugins</h2>
                 <p class="text-neutral-400">
-                    {sortedPlugins().length} plugin{sortedPlugins().length !== 1 ? 's' : ''} found
+                    {sortedPlugins().length} plugin
+                    {sortedPlugins().length !== 1 ? 's' : ''} found
                 </p>
             </div>
 
@@ -73,10 +75,12 @@ export default function PluginsHero() {
                 </div>
 
                 <div class="flex justify-center">
-                    <CustomDropdown selected={pluginFilter} setSelected={setPluginFilter} />
+                    <CustomDropdown
+                        selected={pluginFilter}
+                        setSelected={setPluginFilter}
+                    />
                 </div>
             </div>
-
 
             <div class="mt-8 w-full">
                 <Show

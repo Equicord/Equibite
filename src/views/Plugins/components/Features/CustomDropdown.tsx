@@ -1,32 +1,36 @@
-import { createSignal, For } from "solid-js";
+import { createSignal, For } from 'solid-js'
 
 const options = [
-    { value: "all", label: "Show All Plugins" },
-    { value: "equicord", label: "Show Equicord Plugins" },
-    { value: "vencord", label: "Show Vencord Plugins" },
-];
+    { value: 'all', label: 'Show All Plugins' },
+    { value: 'equicord', label: 'Show Equicord Plugins' },
+    { value: 'vencord', label: 'Show Vencord Plugins' },
+]
 
 interface CustomDropdownProps {
-    selected: () => string;
-    setSelected: (value: string) => void;
+    selected: () => string
+    setSelected: (value: string) => void
 }
 
-export default function CustomDropdown({ selected, setSelected }: CustomDropdownProps) {
-    const [open, setOpen] = createSignal(false);
+export default function CustomDropdown({
+    selected,
+    setSelected,
+}: CustomDropdownProps) {
+    const [open, setOpen] = createSignal(false)
 
-    const toggle = () => setOpen(o => !o);
+    const toggle = () => setOpen((o) => !o)
     const selectOption = (value: string) => {
-        setSelected(value);
-        setOpen(false);
-    };
+        setSelected(value)
+        setOpen(false)
+    }
 
     return (
-        <div class="relative w-fit min-w-[200px]">
+        <div class="relative w-fit">
             <button
                 onClick={toggle}
                 class="
                     w-full
-                    px-6 py-3 
+                    px-6
+                    h-[48px]
                     rounded-lg 
                     bg-neutral-800
                     text-neutral-300 
@@ -40,15 +44,29 @@ export default function CustomDropdown({ selected, setSelected }: CustomDropdown
                     whitespace-nowrap
                 "
             >
-                {options.find(o => o.value === selected())?.label}
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                <span class="max-md:hidden">
+                    {options.find((o) => o.value === selected())?.label}
+                </span>
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 9l-7 7-7-7"
+                    />
                 </svg>
             </button>
 
             {open() && (
                 <ul
                     class="
+                        max-md:right-0
+                        min-w-[200px]
                         absolute 
                         mt-1 
                         w-full 
@@ -86,5 +104,5 @@ export default function CustomDropdown({ selected, setSelected }: CustomDropdown
                 </ul>
             )}
         </div>
-    );
+    )
 }

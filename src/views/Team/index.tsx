@@ -1,5 +1,11 @@
 import { createSignal, createEffect, For } from 'solid-js'
-import { teamMembers, ownerIds, teamIds, helperIds, artistIds } from '../../utils/constants'
+import {
+    teamMembers,
+    ownerIds,
+    teamIds,
+    helperIds,
+    artistIds,
+} from '../../utils/constants'
 
 type AvatarDecoration = {
     sku_id: string
@@ -34,7 +40,9 @@ export default function Teams() {
     createEffect(() => {
         Promise.all(
             teamMembers.map(async (id) => {
-                const res = await fetch(`https://lanyard.equicord.org/v1/users/${id}`)
+                const res = await fetch(
+                    `https://lanyard.equicord.org/v1/users/${id}`,
+                )
                 if (!res.ok) return null
                 const json = await res.json()
                 return json.success ? [id, json.data as LanyardUser] : null
@@ -47,7 +55,9 @@ export default function Teams() {
 
     return (
         <div class="p-4 sm:p-6">
-            <h2 class="text-xl sm:text-2xl font-bold text-white mb-4">Meet the Team</h2>
+            <h2 class="text-xl sm:text-2xl font-bold text-white mb-4">
+                Meet the Team
+            </h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <For each={Object.values(users())}>
@@ -59,9 +69,12 @@ export default function Teams() {
                         const decoration = u.avatar_decoration_data
                             ? `https://cdn.discordapp.com/avatar-decoration-presets/${u.avatar_decoration_data.asset}.png`
                             : null
-                        const customActivity = userData.activities.find(a => a.type === 4)
+                        const customActivity = userData.activities.find(
+                            (a) => a.type === 4,
+                        )
                         const username = u.global_name ?? u.username
-                        const status = customActivity?.state ?? userData.discord_status
+                        const status =
+                            customActivity?.state ?? userData.discord_status
                         const isOwner = ownerIds.includes(u.id)
                         const isTeamMember = teamIds.includes(u.id)
                         const isHelper = helperIds.includes(u.id)
@@ -74,7 +87,7 @@ export default function Teams() {
                                         <img
                                             alt="Avatar Decoration"
                                             src={decoration}
-                                            class="w-[60px] h-[60px] sm:w-[66px] sm:h-[66px] z-20 pointer-events-none rounded-full absolute"
+                                            class="w-[60px] h-[60px] sm:w-[66px] sm:h-[66px] pointer-events-none rounded-full absolute"
                                         />
                                     )}
                                     <img
