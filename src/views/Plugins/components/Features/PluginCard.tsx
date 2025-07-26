@@ -109,7 +109,7 @@ export function PluginCard({
                         <For each={commands}>
                             {(command) => (
                                 <li class="text-sm text-neutral-300 py-1">
-                                    <span class="font-semibold text-blue-300 bg-blue-400/30 p-1 rounded">
+                                    <span class="font-semibold text-neutral-300 bg-neutral-400/30 p-1 rounded">
                                         {command.name}:
                                     </span>{' '}
                                     {command.description.toLowerCase()}
