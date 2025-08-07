@@ -18,7 +18,7 @@ export default function HomeFooter() {
                         GitHub
                     </a>
                     <a
-                        href="https://discord.gg/equicord-1173279886065029291"
+                        href="https://equicord.org/discord"
                         class="text-sm text-neutral-400 hover:text-neutral-200 transition-colors"
                     >
                         Discord

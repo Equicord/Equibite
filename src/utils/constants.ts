@@ -1,7 +1,6 @@
 export const Urls = {
-    ALL_PLUGINS_URL:
-        'https://raw.githubusercontent.com/Equicord/Equibored/main/plugins.json',
-    DISCORD_URL: 'https://discord.gg/equicord-1173279886065029291',
+    ALL_PLUGINS_URL: 'https://raw.githubusercontent.com/Equicord/Equibored/main/plugins.json',
+    DISCORD_URL: 'https://equicord.org/discord',
     GITHUB_URL: 'https://github.com/equicord',
     DISCORD_API: 'https://discord.com/api/v10',
     DISCORD_CDN: 'https://cdn.discordapp.com',
