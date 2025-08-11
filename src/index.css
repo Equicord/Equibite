@@ -10,4 +10,10 @@
 
 body {
     @apply max-w-page mx-auto bg-neutral-950 text-zinc-100;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
