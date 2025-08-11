@@ -8,12 +8,12 @@
     --spacing-page: 1100px;
 }
 
-body {
+body, div {
     @apply max-w-page mx-auto bg-neutral-950 text-zinc-100;
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
 
-body::-webkit-scrollbar {
+body::-webkit-scrollbar, div::-webkit-scrollbar {
     display: none;
 }
