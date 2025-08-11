@@ -16,7 +16,7 @@ import { PluginCard } from './components/PluginCard'
 import Button from '@components/UI/Button'
 
 export default function Plugins() {
-    const [plugins, { refetch }] = createResource(() => fetchPlugins(true))
+    const [plugins, { refetch }] = createResource(() => fetchPlugins('all'))
     const [search, setSearch] = createSignal('')
     const [pluginFilter, setPluginFilter] = createSignal<
         'all' | 'equicord' | 'vencord'

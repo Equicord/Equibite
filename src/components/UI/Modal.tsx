@@ -15,7 +15,7 @@ export default function Modal({ children, onclose }: Props) {
 
     return (
         <Portal>
-            <div class="fixed inset-0 w-full h-screen flex justify-center items-center bg-black/20 backdrop-blur-lg">
+            <div class="fixed inset-0 flex h-screen w-full items-center justify-center bg-black/20 backdrop-blur-lg">
                 <div ref={ref} class="z-10">
                     {children}
                 </div>

@@ -123,20 +123,20 @@ export default function Icons() {
                             {formatFolderName(folder)}
                         </h2>
 
-                        <div class="flex flex-wrap gap-4 justify-center">
+                        <div class="flex flex-wrap justify-center gap-4">
                             <For each={images}>
                                 {({ title, url }) => (
-                                    <div class="p-4 w-full sm:max-w-[180px] flex flex-col gap-3 items-center bg-neutral-800 rounded-lg">
+                                    <div class="flex w-full flex-col items-center gap-3 rounded-lg bg-neutral-800 p-4 sm:max-w-[180px]">
                                         <img
                                             src={url}
                                             alt={title}
                                             width={100}
-                                            class="rounded cursor-pointer"
+                                            class="cursor-pointer rounded"
                                             onClick={() =>
                                                 window.open(url, '_blank')
                                             }
                                         />
-                                        <span class="text-xs font-medium text-center">
+                                        <span class="text-center text-xs font-medium">
                                             {title}
                                         </span>
                                     </div>

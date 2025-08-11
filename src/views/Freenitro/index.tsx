@@ -1,4 +1,4 @@
-import { onMount } from "solid-js"
+import { onMount } from 'solid-js'
 
 export default function FreeNitro() {
     onMount(() => {

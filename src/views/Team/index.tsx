@@ -55,11 +55,11 @@ export default function Teams() {
 
     return (
         <div class="p-4 sm:p-6">
-            <h2 class="text-xl sm:text-2xl font-bold text-white mb-4">
+            <h2 class="mb-4 text-xl font-bold text-white sm:text-2xl">
                 Meet the Team
             </h2>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
                 <For each={Object.values(users())}>
                     {(userData) => {
                         const u = userData.discord_user
@@ -81,46 +81,46 @@ export default function Teams() {
                         const isArtist = artistIds.includes(u.id)
 
                         return (
-                            <div class="flex items-center gap-4 p-4 sm:p-5 bg-neutral-900 rounded-2xl shadow-md">
-                                <div class="relative w-[72px] h-[72px] sm:w-[90px] sm:h-[90px] grid place-items-center shrink-0">
+                            <div class="flex items-center gap-4 rounded-2xl bg-neutral-900 p-4 shadow-md sm:p-5">
+                                <div class="relative grid h-[72px] w-[72px] shrink-0 place-items-center sm:h-[90px] sm:w-[90px]">
                                     {decoration && (
                                         <img
                                             alt="Avatar Decoration"
                                             src={decoration}
-                                            class="w-[60px] h-[60px] sm:w-[66px] sm:h-[66px] pointer-events-none rounded-full absolute"
+                                            class="pointer-events-none absolute h-[60px] w-[60px] rounded-full sm:h-[66px] sm:w-[66px]"
                                         />
                                     )}
                                     <img
                                         alt="User Avatar"
                                         src={avatar}
-                                        class="w-12 h-12 sm:w-14 sm:h-14 rounded-full z-5 border-2 border-zinc-900"
+                                        class="z-5 h-12 w-12 rounded-full border-2 border-zinc-900 sm:h-14 sm:w-14"
                                     />
                                 </div>
                                 <div class="flex flex-col">
-                                    <div class="text-white font-semibold text-lg sm:text-xl leading-tight">
+                                    <div class="text-lg leading-tight font-semibold text-white sm:text-xl">
                                         {username}
                                         {isOwner && (
-                                            <span class="ml-2 text-xs sm:text-sm font-medium text-[#b11919] bg-[#850f0f] bg-opacity-40 px-2 py-0.5 rounded-md">
+                                            <span class="bg-opacity-40 ml-2 rounded-md bg-[#850f0f] px-2 py-0.5 text-xs font-medium text-[#b11919] sm:text-sm">
                                                 Owner
                                             </span>
                                         )}
                                         {isTeamMember && (
-                                            <span class="ml-2 text-xs sm:text-sm font-medium text-[#2a64d8] bg-[#21448a] bg-opacity-40 px-2 py-0.5 rounded-md">
+                                            <span class="bg-opacity-40 ml-2 rounded-md bg-[#21448a] px-2 py-0.5 text-xs font-medium text-[#2a64d8] sm:text-sm">
                                                 Team
                                             </span>
                                         )}
                                         {isHelper && (
-                                            <span class="ml-2 text-xs sm:text-sm font-medium text-[#86298d] bg-[#5d2161] bg-opacity-40 px-2 py-0.5 rounded-md">
+                                            <span class="bg-opacity-40 ml-2 rounded-md bg-[#5d2161] px-2 py-0.5 text-xs font-medium text-[#86298d] sm:text-sm">
                                                 Helper
                                             </span>
                                         )}
                                         {isArtist && (
-                                            <span class="ml-2 text-xs sm:text-sm font-medium text-[#1f8543] bg-[#165c2f] bg-opacity-40 px-2 py-0.5 rounded-md">
+                                            <span class="bg-opacity-40 ml-2 rounded-md bg-[#165c2f] px-2 py-0.5 text-xs font-medium text-[#1f8543] sm:text-sm">
                                                 Artist
                                             </span>
                                         )}
                                     </div>
-                                    <div class="text-sm sm:text-base text-gray-400">
+                                    <div class="text-sm text-gray-400 sm:text-base">
                                         {status}
                                     </div>
                                 </div>

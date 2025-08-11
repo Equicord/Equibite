@@ -34,16 +34,34 @@ export interface Plugin {
     filePath: string
 }
 
+export interface PluginUrlFetchType {
+    all: 'ALL_PLUGINS_URL'
+    equicord: 'EQUICORD_PLUGINS_URL'
+    vencord: 'VENCORD_PLUGINS_URL'
+}
+
+export const PluginUrlKeys: PluginUrlFetchType = {
+    all: 'ALL_PLUGINS_URL',
+    equicord: 'EQUICORD_PLUGINS_URL',
+    vencord: 'VENCORD_PLUGINS_URL',
+}
+
 /**
  * Fetches plugins from github.
  * @param all - Whether to fetch all plugins or only equicord plugins.
  */
-export const fetchPlugins = async (all: boolean): Promise<Plugin[]> => {
-    const url = Urls.ALL_PLUGINS_URL
+export const fetchPlugins = async (
+    type: keyof PluginUrlFetchType,
+): Promise<Plugin[]> => {
+    const urlKey = PluginUrlKeys[type]
+
+    const url = Urls[urlKey as keyof typeof Urls]
     const response = await fetch(url)
+
     if (!response.ok) {
-        throw new Error(`Failed to fetch ${all ? 'all' : 'equicord'} plugins`)
+        throw new Error(`Failed to fetch ${type} plugins`)
     }
+
     return response.json() as Promise<Plugin[]>
 }
 
