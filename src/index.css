@@ -1,9 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-@layer base {
-    body {
-        @apply bg-black text-white;
-    }
+@theme {
+    /* Fonts */
+    --font-sans: 'Satoshi', sans-serif;
+
+    /* Spacing */
+    --spacing-page: 1100px;
+}
+
+body {
+    @apply max-w-page mx-auto bg-neutral-950 text-zinc-100;
 }

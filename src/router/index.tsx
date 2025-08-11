@@ -7,8 +7,9 @@ import Plugins from '@views/Plugins'
 import Team from '@views/Team'
 import ColorGen from '@views/Colorgen'
 import FreeNitro from '@views/Freenitro'
+import Download from '@views/Download'
 
-const NotFound = () => <h1>404 - Page Not Found</h1>;
+const NotFound = () => <h1>404 - Page Not Found</h1>
 
 const Routes = () => {
     return (
@@ -19,6 +20,7 @@ const Routes = () => {
             <Route path="/icons" component={Icons} />
             <Route path="/colorgen" component={ColorGen} />
             <Route path="/freenitro" component={FreeNitro} />
+            <Route path="/download" component={Download} />
             <Route path="*" component={NotFound} />
         </Router>
     )

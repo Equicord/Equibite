@@ -1,57 +1,77 @@
+import { onMount } from 'solid-js'
 import { A } from '@solidjs/router'
-import Button from '@components/UI/Button'
+import gsap from 'gsap'
+
 import Laptop from '@assets/laptop.png'
+import { Download, Github } from 'lucide-solid'
+import Button from '@components/UI/Button'
 
-interface Props {
-    ondownload: () => void
-}
+export default function HomeHero() {
+    let textRef: HTMLDivElement | undefined
+    let laptopRef: HTMLDivElement | undefined
 
-export default function HomeHero({ ondownload }: Props) {
+    onMount(() => {
+        const tl = gsap.timeline({
+            defaults: { ease: 'power3.out', duration: 0.8 },
+        })
+
+        tl.from(textRef!.children, {
+            opacity: 0,
+            y: 40,
+            filter: 'blur(6px)',
+            stagger: 0.15,
+        })
+
+        tl.from(
+            laptopRef!,
+            {
+                opacity: 0,
+                scale: 0.9,
+                filter: 'blur(6px)',
+            },
+            '-=0.4',
+        ) // overlap a bit
+    })
+
     return (
-        <section class="relative pb-36">
-            <div class="flex items-center justify-between gap-24 max-lg:flex-col">
-                <div class="flex flex-col gap-3 max-lg:items-center max-lg:text-center">
-                    {/* Text */}
-                    <h1 class="text-white text-4xl lg:text-5xl font-semibold">
-                        An enhanced version of Vencord
-                    </h1>
+        <div class="flex items-center justify-between gap-24 pt-12 pb-36 max-lg:flex-col">
+            <div
+                class="flex flex-col gap-3 max-lg:items-center max-lg:text-center"
+                ref={textRef}
+            >
+                {/* Text */}
+                <h1 class="text-4xl font-semibold text-white lg:text-5xl">
+                    An enhanced version of Vencord
+                </h1>
 
-                    <p class="text-neutral-400 text-lg font-medium">
-                        A fork that has everything you need, third-party plugins
-                        and more.
-                    </p>
+                <p class="text-lg font-medium text-neutral-400">
+                    A fork that has everything you need, third-party plugins and
+                    more.
+                </p>
 
-                    {/* Buttons */}
-                    <div class="mt-4 flex gap-2">
-                        <Button
-                            style="primary"
-                            customClass="max-lg:text-sm transition-transform duration-200 hover:scale-105"
-                            onclick={ondownload}
-                        >
+                {/* Buttons */}
+                <div class="mt-4 flex gap-2">
+                    <A href="/download">
+                        <Button style="primary">
+                            <Download size="16" />
                             Download
                         </Button>
+                    </A>
 
-                        <A href="https://github.com/Equicord/Equicord">
-                            <Button
-                                style="secondary"
-                                customClass="max-lg:text-sm transition-transform duration-200 hover:scale-105"
-                            >
-                                Source
-                            </Button>
-                        </A>
-                    </div>
-                </div>
-
-                {/* Laptop - had to wrap it around a div otherwise it wouldnt resize properly. */}
-                <div class="max-w-lg">
-                    <img 
-                        src={Laptop} 
-                        alt="Laptop" 
-                        draggable={false} 
-                        class="transition-all duration-300 hover:-translate-y-2"
-                    />
+                    <A href="https://github.com/Equicord/Equicord">
+                        <Button style="secondary">
+                            <Github size="16" />
+                            Source
+                        </Button>
+                    </A>
                 </div>
             </div>
-        </section>
+
+            {/* Laptop */}
+            <div class="relative max-w-lg" ref={laptopRef}>
+                <img src={Laptop} alt="Laptop" draggable={false} />
+                <div class="absolute inset-0 -z-10 h-96 w-full -translate-y-6 bg-[url(/img/grid.svg)] mask-radial-[50%_50%] mask-radial-from-0% mask-radial-at-center bg-repeat opacity-50" />
+            </div>
+        </div>
     )
 }
