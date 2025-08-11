@@ -100,22 +100,22 @@ export default function Teams() {
                                     <div class="text-lg leading-tight font-semibold text-white sm:text-xl">
                                         {username}
                                         {isOwner && (
-                                            <span class="bg-opacity-40 ml-2 rounded-md bg-[#850f0f] px-2 py-0.5 text-xs font-medium text-[#b11919] sm:text-sm">
+                                            <span class="bg-opacity-40 ml-2 rounded-md bg-[#aa3b3b] px-2 py-0.5 text-xs font-medium text-[#ff4848] sm:text-sm">
                                                 Owner
                                             </span>
                                         )}
                                         {isTeamMember && (
-                                            <span class="bg-opacity-40 ml-2 rounded-md bg-[#21448a] px-2 py-0.5 text-xs font-medium text-[#2a64d8] sm:text-sm">
+                                            <span class="bg-opacity-40 ml-2 rounded-md bg-[#9e6bff] px-2 py-0.5 text-xs font-medium text-[#9fc1ff] sm:text-sm">
                                                 Team
                                             </span>
                                         )}
                                         {isHelper && (
-                                            <span class="bg-opacity-40 ml-2 rounded-md bg-[#5d2161] px-2 py-0.5 text-xs font-medium text-[#86298d] sm:text-sm">
+                                            <span class="bg-opacity-40 ml-2 rounded-md bg-[#ff5dd6] px-2 py-0.5 text-xs font-medium text-[#ff9cbf] sm:text-sm">
                                                 Helper
                                             </span>
                                         )}
                                         {isArtist && (
-                                            <span class="bg-opacity-40 ml-2 rounded-md bg-[#165c2f] px-2 py-0.5 text-xs font-medium text-[#1f8543] sm:text-sm">
+                                            <span class="bg-opacity-40 ml-2 rounded-md bg-[#854d1c] px-2 py-0.5 text-xs font-medium text-[#dba423] sm:text-sm">
                                                 Artist
                                             </span>
                                         )}
