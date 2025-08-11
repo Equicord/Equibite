@@ -10,19 +10,21 @@ interface Props extends ParentProps {
     onclick?: () => void
 }
 
-export type Button = 'primary' | 'secondary'
+export type Button = 'primary' | 'secondary' | 'blue'
 
 function Button({ children, customClass, style, onclick }: Props) {
     return (
         <button
             class={classNames(
                 customClass,
-                'px-6 py-3 flex justify-center items-center font-bold rounded-xl transition-colors',
+                'flex cursor-pointer items-center justify-center gap-1 rounded-xl px-6 py-3 font-bold transition-colors',
                 {
-                    'text-neutral-800 bg-white hover:bg-neutral-200':
+                    'bg-white text-neutral-800 hover:bg-neutral-200':
                         style === 'primary',
-                    'text-neutral-200 bg-neutral-800 hover:bg-neutral-700':
+                    'bg-neutral-800 text-neutral-200 hover:bg-neutral-700':
                         style === 'secondary',
+                    'bg-sky-900 text-sky-200 hover:bg-sky-800':
+                        style === 'blue',
                 },
             )}
             onclick={onclick}
