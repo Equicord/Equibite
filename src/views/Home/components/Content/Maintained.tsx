@@ -9,7 +9,7 @@ function Commits() {
             <div class="flex flex-col rounded-xl border border-neutral-800 bg-neutral-900 mask-b-from-80% md:w-72">
                 <div class="flex flex-col gap-1 border-b border-neutral-800 py-3 pr-6 pl-4">
                     <span class="font-semibold">
-                        Plugin: Patch optimizations
+                        MusicControls: Merge
                     </span>
 
                     <p class="flex items-center gap-2 text-sm font-medium text-neutral-400">
@@ -19,7 +19,7 @@ function Commits() {
                 </div>
 
                 <div class="flex flex-col gap-1 border-b border-neutral-800 py-3 pr-6 pl-4">
-                    <span class="font-semibold">New Plugin (#324)</span>
+                    <span class="font-semibold">Tidal plugins (#337)</span>
 
                     <p class="flex items-center gap-2 text-sm font-medium text-neutral-400">
                         Commited 1 day ago
@@ -28,7 +28,7 @@ function Commits() {
                 </div>
 
                 <div class="flex flex-col gap-1 border-b border-neutral-800 py-3 pr-6 pl-4">
-                    <span class="font-semibold">Plugin: Pagination</span>
+                    <span class="font-semibold">Plugin: Infinite Scrolling</span>
 
                     <p class="flex items-center gap-2 text-sm font-medium text-neutral-400">
                         Commited 1 day ago
@@ -37,7 +37,7 @@ function Commits() {
                 </div>
 
                 <div class="flex flex-col gap-1 border-b border-neutral-800 py-3 pr-6 pl-4">
-                    <span class="font-semibold">Merge branch 'dev'</span>
+                    <span class="font-semibold">Fix Patches</span>
 
                     <p class="flex items-center gap-2 text-sm font-medium text-neutral-400">
                         Commited 2 days ago

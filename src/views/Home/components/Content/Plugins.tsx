@@ -71,15 +71,15 @@ export default function FeaturePlugins() {
             <div class="flex w-full flex-col items-center justify-center py-6 max-md:px-8 max-sm:gap-3">
                 <div class="opacity-50 md:translate-x-24 md:translate-y-3">
                     <DiscordPlugin
-                        title="BetterCommands"
-                        description="Enhances the command system with miscellaneous improvements. Available on all platforms."
+                        title="ShowBadgesInChat"
+                        description="Shows the message author's badges beside their name in chat. Available on all platforms."
                     />
                 </div>
 
                 <div class="-translate-y-6 shadow-lg md:-translate-x-24 md:-translate-y-3">
                     <DiscordPlugin
-                        title="BetterCommands"
-                        description="Enhances the command system with miscellaneous improvements. Available on all platforms."
+                        title="BetterActivities"
+                        description="Shows activity icons in the member list and allows showing all activities. Available on all platforms."
                     />
                 </div>
             </div>
