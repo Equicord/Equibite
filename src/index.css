@@ -9,9 +9,5 @@
 }
 
 body {
-    @apply max-w-page mx-auto bg-neutral-950 text-zinc-100;
-}
-
-.hide-scrollbar::-webkit-scrollbar {
-    display: none;
+    @apply bg-neutral-950 text-white;
 }

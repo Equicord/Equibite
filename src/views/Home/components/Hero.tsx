@@ -34,7 +34,7 @@ export default function HomeHero() {
     })
 
     return (
-        <div class="flex items-center justify-between gap-24 pt-12 pb-36 max-lg:flex-col">
+        <div class="flex items-center justify-between gap-24 pt-24 pb-48 max-lg:flex-col">
             <div
                 class="flex flex-col gap-3 max-lg:items-center max-lg:text-center"
                 ref={textRef}
@@ -70,7 +70,6 @@ export default function HomeHero() {
             {/* Laptop */}
             <div class="relative max-w-lg" ref={laptopRef}>
                 <img src={Laptop} alt="Laptop" draggable={false} />
-                <div class="absolute inset-0 -z-10 h-96 w-full -translate-y-6 bg-[url(/img/grid.svg)] mask-radial-[50%_50%] mask-radial-from-0% mask-radial-at-center bg-repeat opacity-50" />
             </div>
         </div>
     )

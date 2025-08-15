@@ -1,5 +1,5 @@
 import { createSignal, For, Show } from 'solid-js'
-import { ChevronDown, ChevronUp } from 'lucide-solid'
+import { ChevronDown } from 'lucide-solid'
 import classNames from 'classnames'
 
 interface Option {

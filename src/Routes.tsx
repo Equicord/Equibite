@@ -1,17 +1,19 @@
-import RootLayout from '@containers/RootLayout'
+import RootLayout from '@components/Layout/RootLayout'
 import { Router, Route } from '@solidjs/router'
 
 import Home from '@views/Home'
-import Icons from '@views/Icons'
+import Download from '@views/Download'
 import Plugins from '@views/Plugins'
+
+// Todo: Rewrite these pages.
+import Icons from '@views/Icons'
 import Team from '@views/Team'
 import ColorGen from '@views/Colorgen'
 import FreeNitro from '@views/Freenitro'
-import Download from '@views/Download'
 
 const NotFound = () => <h1>404 - Page Not Found</h1>
 
-const Routes = () => {
+export default function Routes() {
     return (
         <Router root={RootLayout}>
             <Route path="/" component={Home} />
@@ -25,5 +27,3 @@ const Routes = () => {
         </Router>
     )
 }
-
-export default Routes

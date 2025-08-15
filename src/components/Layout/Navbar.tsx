@@ -80,7 +80,7 @@ export default function Navbar() {
                 class={classNames(
                     'z-20 flex items-center justify-between py-10 transition-all',
                     isSticky() &&
-                        'sticky top-0 bg-gradient-to-t from-transparent via-neutral-950 to-neutral-950 !py-4',
+                        'sticky top-0 bg-gradient-to-t from-transparent via-neutral-950 to-neutral-950',
                 )}
             >
                 <A href="/">

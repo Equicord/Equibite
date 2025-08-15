@@ -2,7 +2,7 @@
 import './index.css'
 
 import { render } from 'solid-js/web'
-import Routes from './router'
+import Routes from './Routes'
 
 const root = document.getElementById('app') as HTMLDivElement
 render(() => <Routes />, root)
