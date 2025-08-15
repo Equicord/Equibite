@@ -71,26 +71,36 @@ export default function Plugins() {
         const query = search().toLowerCase()
 
         result = result.filter((plugin) => {
-            const nameMatch = plugin.name.toLowerCase().includes(query)
-            const authorMatch = plugin.authors?.some((author) =>
-                author.name.toLowerCase().includes(query),
-            )
-            const platform = plugin.target
-                ? plugin.target
-                      .replace(/([a-z])([A-Z])/g, '$1 $2')
-                      .toLowerCase()
-                : 'all platforms'
+            const args = query.toLowerCase().trim().split(/\s+/);
 
-            const platformMatch =
-                platform.includes(query) ||
-                ('all platforms'.startsWith(query) &&
-                    platform === 'all platforms')
+            return args.every((arg) => {
+                const nameQuery = plugin.name.toLowerCase().includes(arg);
+                const authorQuery = plugin.authors.some((author) =>
+                    author.name.toLowerCase().includes(arg)
+                )
 
-            const requiredMatch =
-                'required'.startsWith(query) && plugin.required
+                if (arg.startsWith("platform:")) {
+                    const platformQuery = arg.slice(9).trim();
+                    const platform = plugin.target
+                        ? plugin.target.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
+                        : 'all';
+                    return platform.includes(platformQuery);
+                }
 
-            return nameMatch || authorMatch || platformMatch || requiredMatch
-        })
+                if (arg.startsWith("required:")) {
+                    const reqQuery = arg.slice(9).trim();
+                    const shouldBeRequired = reqQuery === "true"
+                        || reqQuery === "yes"
+                        || reqQuery === "y"
+                        || reqQuery === "1";
+                    return plugin.required === shouldBeRequired;
+                }
+
+                return (
+                    nameQuery || authorQuery
+                );
+            });
+        });
 
         if (pluginFilter() === 'equicord') {
             result = result.filter((plugin) =>
