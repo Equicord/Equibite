@@ -5,7 +5,8 @@
     --font-sans: 'Satoshi', sans-serif;
 
     /* Spacing */
-    --spacing-page: 1100px;
+    --spacing-eq-lg: 1400px;
+    --spacing-eq-sm: 1100px;
 }
 
 body {

@@ -3,105 +3,114 @@ import {
     onCleanup,
     createResource,
     createSignal,
+    createMemo,
     Show,
     For,
 } from 'solid-js'
 import { fetchPlugins } from '@utils/plugin'
-import classNames from 'classnames'
 import gsap from 'gsap'
 
-import { Search, SlidersHorizontal, SearchX } from 'lucide-solid'
-import Dropdown from '@components/UI/Dropdown'
+import { RotateCcw, Search, SearchX } from 'lucide-solid'
 import { PluginCard } from './components/PluginCard'
 import Button from '@components/UI/Button'
+import Input from '@components/UI/Input'
+import PluginPopover from './components/PluginPopover'
+
+type PluginFilter = 'all' | 'equicord' | 'vencord'
+type PlatformFilter = 'all' | 'desktop' | 'web'
+
+const INITIAL_VISIBLE_COUNT = 18
+const LOAD_MORE_COUNT = 9
+const LOAD_MORE_THRESHOLD = 300
+
+const DESKTOP_PLATFORMS = ['discordDesktop', 'desktop', 'vesktop', 'equibop']
 
 export default function Plugins() {
     const [plugins, { refetch }] = createResource(() => fetchPlugins('all'))
     const [search, setSearch] = createSignal('')
-    const [pluginFilter, setPluginFilter] = createSignal<
-        'all' | 'equicord' | 'vencord'
-    >('all')
-    const [platformFilter, setPlatformFilter] = createSignal<
-        'all' | 'desktop' | 'web'
-    >('all')
-
+    const [pluginFilter, setPluginFilter] = createSignal<PluginFilter>('all')
+    const [platformFilter, setPlatformFilter] =
+        createSignal<PlatformFilter>('all')
     const [filterHasCommands, setFilterHasCommands] = createSignal(false)
-
-    const [visibleCount, setVisibleCount] = createSignal(18)
+    const [visibleCount, setVisibleCount] = createSignal(INITIAL_VISIBLE_COUNT)
 
     let containerRef: HTMLDivElement | undefined
 
-    const pluginOptions = [
-        {
-            value: 'all',
-            label: 'Show All Plugins',
-        },
-        {
-            value: 'equicord',
-            label: 'Show Equicord Plugins',
-        },
-        {
-            value: 'vencord',
-            label: 'Show Vencord Plugins',
-        },
-    ]
-
-    const platformOptions = [
-        {
-            value: 'all',
-            label: 'All Platforms',
-        },
-        {
-            value: 'desktop',
-            label: 'Desktop',
-        },
-        {
-            value: 'web',
-            label: 'Web',
-        },
-    ]
-
     const updateSearch = (value: string) => {
         setSearch(value)
-        setVisibleCount(18)
+        setVisibleCount(INITIAL_VISIBLE_COUNT)
     }
 
-    const sortedPlugins = () => {
-        let result = plugins() || []
-        const query = search().toLowerCase()
+    const parseSearchQuery = (query: string) => {
+        const args = query.toLowerCase().trim().split(/\s+/).filter(Boolean)
+        const filters: {
+            platform?: string
+            required?: boolean
+            terms: string[]
+        } = { terms: [] }
 
-        result = result.filter((plugin) => {
-            const args = query.toLowerCase().trim().split(/\s+/);
+        args.forEach((arg) => {
+            if (arg.startsWith('platform:')) {
+                filters.platform = arg.slice(9).trim()
+            } else if (arg.startsWith('required:')) {
+                const reqQuery = arg.slice(9).trim()
+                filters.required = ['true', 'yes', 'y', '1'].includes(reqQuery)
+            } else {
+                filters.terms.push(arg)
+            }
+        })
 
-            return args.every((arg) => {
-                const nameQuery = plugin.name.toLowerCase().includes(arg);
-                const authorQuery = plugin.authors.some((author) =>
-                    author.name.toLowerCase().includes(arg)
-                )
+        return filters
+    }
 
-                if (arg.startsWith("platform:")) {
-                    const platformQuery = arg.slice(9).trim();
-                    const platform = plugin.target
-                        ? plugin.target.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
-                        : 'all';
-                    return platform.includes(platformQuery);
+    const filteredPlugins = createMemo(() => {
+        const pluginList = plugins()
+        if (!pluginList) return []
+
+        const query = search()
+        let result = [...pluginList]
+
+        // Text search
+        if (query) {
+            const { platform, required, terms } = parseSearchQuery(query)
+
+            result = result.filter((plugin) => {
+                // Platform search
+                if (platform) {
+                    const pluginPlatform = plugin.target
+                        ? plugin.target
+                              .replace(/([a-z])([A-Z])/g, '$1 $2')
+                              .toLowerCase()
+                        : 'all'
+                    if (!pluginPlatform.includes(platform)) return false
                 }
 
-                if (arg.startsWith("required:")) {
-                    const reqQuery = arg.slice(9).trim();
-                    const shouldBeRequired = reqQuery === "true"
-                        || reqQuery === "yes"
-                        || reqQuery === "y"
-                        || reqQuery === "1";
-                    return plugin.required === shouldBeRequired;
+                // Required search
+                if (
+                    typeof required === 'boolean' &&
+                    plugin.required !== required
+                ) {
+                    return false
                 }
 
-                return (
-                    nameQuery || authorQuery
-                );
-            });
-        });
+                // Text terms search
+                if (terms.length > 0) {
+                    return terms.every((term) => {
+                        const nameMatch = plugin.name
+                            .toLowerCase()
+                            .includes(term)
+                        const authorMatch = plugin.authors.some((author) =>
+                            author.name.toLowerCase().includes(term),
+                        )
+                        return nameMatch || authorMatch
+                    })
+                }
 
+                return true
+            })
+        }
+
+        // Plugin source filter
         if (pluginFilter() === 'equicord') {
             result = result.filter((plugin) =>
                 plugin.filePath.toLowerCase().startsWith('src/equicordplugins'),
@@ -112,145 +121,161 @@ export default function Plugins() {
             )
         }
 
-        // Use platformFilter dropdown instead of separate desktop/web flags
+        // Platform filter
         if (platformFilter() === 'desktop') {
             result = result.filter((plugin) =>
-                ['discordDesktop', 'desktop', 'vesktop', 'equibop'].includes(
-                    plugin.target ?? '',
-                ),
+                DESKTOP_PLATFORMS.includes(plugin.target ?? ''),
             )
         } else if (platformFilter() === 'web') {
             result = result.filter((plugin) => plugin.target === 'web')
         }
 
-        // Filter by hasCommands
+        // Commands filter
         if (filterHasCommands()) {
             result = result.filter((plugin) => plugin.hasCommands)
         }
 
         return result.sort((a, b) => a.name.localeCompare(b.name))
-    }
+    })
 
-    const visiblePlugins = () => sortedPlugins().slice(0, visibleCount())
+    const visiblePlugins = createMemo(() =>
+        filteredPlugins().slice(0, visibleCount()),
+    )
 
-    const onScroll = () => {
+    const hasMorePlugins = createMemo(
+        () => visibleCount() < filteredPlugins().length,
+    )
+
+    const handleScroll = () => {
+        const { innerHeight, scrollY } = window
+        const { offsetHeight } = document.body
+
         if (
-            window.innerHeight + window.scrollY >=
-            document.body.offsetHeight - 300
+            innerHeight + scrollY >= offsetHeight - LOAD_MORE_THRESHOLD &&
+            hasMorePlugins()
         ) {
-            setVisibleCount((count) => count + 9)
+            setVisibleCount((count) => count + LOAD_MORE_COUNT)
         }
     }
 
     onMount(() => {
-        // prettier-ignore - Why is it doing that lmao
-        gsap.from(containerRef!, {
-            opacity: 0,
-            y: 50,
-            filter: 'blur(6px)',
-            duration: 0.4,
-        })
-
-        window.addEventListener('scroll', onScroll)
+        if (containerRef) {
+            gsap.from(containerRef, {
+                opacity: 0,
+                y: 50,
+                filter: 'blur(6px)',
+                duration: 0.4,
+            })
+        }
+        window.addEventListener('scroll', handleScroll, { passive: true })
     })
 
-    onCleanup(() => window.removeEventListener('scroll', onScroll))
+    onCleanup(() => {
+        window.removeEventListener('scroll', handleScroll)
+    })
 
     return (
-        <div class="flex flex-col gap-6" ref={containerRef}>
-            {/** Header */}
-            <div class="flex flex-col gap-1">
+        <div
+            class="max-w-eq-lg mx-auto flex flex-col gap-6 px-6"
+            ref={containerRef}
+        >
+            {/* Header */}
+            <header class="flex flex-col gap-1">
                 <h1 class="text-3xl font-bold md:text-4xl">Plugins</h1>
                 <p class="text-lg font-medium text-neutral-400">
-                    We found {sortedPlugins().length} plugins.
+                    {filteredPlugins().length} plugin
+                    {filteredPlugins().length !== 1 ? 's' : ''} found
                 </p>
+            </header>
+
+            {/* Search & Filters */}
+            <div class="flex items-center gap-3">
+                <Input
+                    placeholder="Search plugins... (try: platform:web, required:true)"
+                    value={search()}
+                    onInput={(e) => updateSearch(e.currentTarget.value)}
+                    icon={<Search size={18} />}
+                    class="flex-1 py-1.5"
+                />
+                <PluginPopover
+                    pluginFilter={pluginFilter}
+                    setPluginFilter={setPluginFilter}
+                    platformFilter={platformFilter}
+                    setPlatformFilter={setPlatformFilter}
+                    filterHasCommands={filterHasCommands}
+                    setFilterHasCommands={setFilterHasCommands}
+                />
             </div>
 
-            <div class="flex flex-col gap-3">
-                <div class="flex h-16 w-full items-center gap-3 rounded-lg bg-neutral-900 px-4">
-                    <Search size="18" />
-
-                    <input
-                        type="text"
-                        placeholder="Search plugins..."
-                        class="w-full outline-none"
-                        onInput={(e) => updateSearch(e.currentTarget.value)}
-                    />
-                </div>
-
-                <div class="flex gap-3 rounded-lg bg-neutral-900 p-4 max-md:flex-col md:justify-between">
-                    <div class="flex items-center gap-2 font-semibold text-neutral-300">
-                        <SlidersHorizontal size="18" fill="#ffffff80" />
-                        <span>Filters</span>
-                    </div>
-
-                    <div class="md:items-right flex gap-3 max-md:flex-wrap md:w-full md:justify-end">
-                        <Dropdown
-                            customClass="!w-full max-md:max-w-none"
-                            options={pluginOptions}
-                            selected={pluginFilter}
-                            setSelected={setPluginFilter}
-                        />
-
-                        <Dropdown
-                            customClass="!w-full sm:!max-w-[180px] max-md:max-w-none"
-                            options={platformOptions}
-                            selected={platformFilter}
-                            setSelected={setPlatformFilter}
-                        />
-
-                        <button
-                            class={classNames(
-                                filterHasCommands()
-                                    ? 'bg-sky-900 text-sky-200'
-                                    : 'bg-neutral-800 text-neutral-300 hover:bg-neutral-700',
-                                'cursor-pointer rounded-lg px-4 py-2 font-medium transition-colors',
-                            )}
-                            onClick={() =>
-                                setFilterHasCommands(!filterHasCommands())
-                            }
-                        >
-                            Has Commands
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="w-full">
+            {/* Plugins List */}
+            <main class="w-full">
                 <Show
                     when={!plugins.loading && !plugins.error}
                     fallback={
-                        <div class="text-center text-neutral-400">
+                        <div class="flex items-center justify-center py-12">
                             <Show
-                                when={!plugins.error}
+                                when={plugins.error}
                                 fallback={
+                                    <div class="flex flex-col items-center gap-2">
+                                        <div class="mx-auto h-8 w-8 animate-spin rounded-full border-b-2 border-sky-500"></div>
+
+                                        <p class="text-sm font-bold text-sky-200">
+                                            Loading plugins
+                                        </p>
+                                    </div>
+                                }
+                            >
+                                <div class="flex flex-col items-center gap-2">
+                                    <p class="text-sm font-bold text-red-400">
+                                        Failed to load plugins
+                                    </p>
                                     <Button
-                                        style="primary"
-                                        onclick={() => refetch()}
+                                        style="red"
+                                        icon={<RotateCcw size={16} />}
+                                        onClick={() => refetch()}
                                     >
                                         Retry
                                     </Button>
-                                }
-                            >
-                                <p>Loading plugins...</p>
+                                </div>
                             </Show>
                         </div>
                     }
                 >
-                    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                        <For each={visiblePlugins()}>
-                            {(plugin) => <PluginCard {...plugin} />}
-                        </For>
-                    </div>
+                    <Show
+                        when={filteredPlugins().length > 0}
+                        fallback={
+                            <div class="flex flex-col items-center justify-center gap-1 py-12 text-neutral-200">
+                                <SearchX size={48} class="text-neutral-500" />
 
-                    <Show when={sortedPlugins().length === 0}>
-                        <span class="flex items-center gap-1 text-center font-medium text-neutral-300">
-                            <SearchX size="18" />
-                            No plugins found.
-                        </span>
+                                <p class="text-lg font-bold">
+                                    No plugins found.
+                                </p>
+
+                                <p class="max-w-92 text-center font-medium text-neutral-300">
+                                    Try adjusting your search or filters to find
+                                    what you are looking for.
+                                </p>
+                            </div>
+                        }
+                    >
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                            <For each={visiblePlugins()}>
+                                {(plugin) => <PluginCard {...plugin} />}
+                            </For>
+                        </div>
+
+                        <Show when={hasMorePlugins()}>
+                            <div class="mt-8 flex justify-center">
+                                <p class="text-sm text-neutral-400">
+                                    Showing {visiblePlugins().length} of{' '}
+                                    {filteredPlugins().length} plugins • Scroll
+                                    down to load more
+                                </p>
+                            </div>
+                        </Show>
                     </Show>
                 </Show>
-            </div>
+            </main>
         </div>
     )
 }

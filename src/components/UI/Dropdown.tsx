@@ -1,73 +1,73 @@
-import { createSignal, For, Show } from 'solid-js'
-import { ChevronDown } from 'lucide-solid'
-import classNames from 'classnames'
+import { type JSX, createSignal, For, Show, onCleanup } from 'solid-js'
+import { ChevronDown, ChevronUp } from 'lucide-solid'
 
-interface Option {
+interface DropdownItem {
     label: string
-    value: string
+    value?: string | number
+    icon?: JSX.Element
+    onSelect?: () => void
 }
 
 interface Props {
-    // Custom Class
-    customClass?: string
-    // Options
-    options: Option[]
-    // Selected option
-    selected: () => string
-    // Set selected option
-    setSelected: (value: string) => void
+    icon?: JSX.Element
+    items: DropdownItem[]
+    placeholder?: string
+    selected?: DropdownItem | null
+    onSelect?: (item: DropdownItem) => void
 }
 
-export default function Dropdown({
-    customClass,
-    options,
-    selected,
-    setSelected,
-}: Props) {
+export default function Dropdown(props: Props) {
     const [open, setOpen] = createSignal(false)
 
-    const toggleOpen = () => setOpen((prev) => !prev)
+    const toggle = () => setOpen((open) => !open)
+    const close = () => setOpen(false)
 
-    const selectOption = (value: string) => {
-        setSelected(value)
-        setOpen(false)
+    const handleClickOutside = (event: MouseEvent) => {
+        const target = event.target as HTMLElement
+        if (!target.closest('.dropdown-container')) close()
     }
 
-    return (
-        <div class={classNames(customClass, 'relative w-fit max-w-[240px]')}>
-            <button
-                class="relative flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-neutral-800 px-6 text-neutral-300 transition-colors hover:bg-neutral-700"
-                onClick={toggleOpen}
-            >
-                <span class="font-medium">
-                    {
-                        options.find((option) => option.value === selected())
-                            ?.label
-                    }
-                </span>
+    const handleSelect = (item: DropdownItem) => {
+        props.onSelect?.(item)
+        close()
+    }
+    document.addEventListener('click', handleClickOutside)
 
-                <div class="absolute right-4">
-                    <ChevronDown
-                        size="14"
-                        class={classNames(
-                            open() && 'rotate-180',
-                            'transition-transform',
-                        )}
-                    />
-                </div>
+    onCleanup(() => document.removeEventListener('click', handleClickOutside))
+
+    return (
+        <div class="dropdown-container relative w-full">
+            <button
+                onClick={toggle}
+                class={`flex w-full cursor-pointer items-center justify-between rounded-lg border border-neutral-800 px-3 py-3 text-sm font-medium transition-colors hover:bg-neutral-900 focus:outline-none ${open() ? 'bg-neutral-900 text-white' : 'bg-neutral-950 text-neutral-400'}`}
+            >
+                <span class="flex flex-wrap items-center gap-1">
+                    <Show when={props.icon}>{props.icon}</Show>
+
+                    {props.placeholder ?? 'Select option'}
+
+                    <Show when={props.selected}>
+                        <span class="rounded bg-green-400 px-2 py-0.5 text-xs font-semibold text-green-950">
+                            {props.selected!.label}
+                        </span>
+                    </Show>
+                </span>
+                {open() ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
             </button>
 
+            {/* Menu */}
             <Show when={open()}>
-                <div class="absolute z-10 mt-2 flex max-h-60 w-full flex-col overflow-auto rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-3 text-neutral-300 shadow-lg max-md:right-0">
-                    <For each={options}>
-                        {(option) => (
-                            <span
-                                class="cursor-pointer rounded px-4 py-2 text-ellipsis hover:bg-neutral-800"
-                                tabIndex={0}
-                                onClick={() => selectOption(option.value)}
+                <div class="absolute z-50 mt-2 flex w-full flex-col divide-y divide-neutral-800 overflow-hidden rounded-lg border border-neutral-800 bg-neutral-900 shadow-lg">
+                    <For each={props.items}>
+                        {(item) => (
+                            <button
+                                class="flex w-full cursor-pointer items-center gap-2 px-3 py-3 text-sm font-medium text-neutral-200 hover:bg-neutral-800/70"
+                                onClick={() => handleSelect(item)}
                             >
-                                {option.label}
-                            </span>
+                                <Show when={item.icon}>{item.icon}</Show>
+
+                                {item.label}
+                            </button>
                         )}
                     </For>
                 </div>

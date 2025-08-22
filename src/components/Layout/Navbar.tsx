@@ -34,10 +34,6 @@ export default function Navbar() {
             text: 'Icons',
             href: '/icons',
         },
-        {
-            text: 'Color Gen',
-            href: '/colorgen',
-        },
     ]
 
     const toggleMenu = () => {
@@ -78,18 +74,22 @@ export default function Navbar() {
             {/* Navbar */}
             <header
                 class={classNames(
-                    'z-20 flex items-center justify-between py-10 transition-all',
+                    'max-w-eq-lg z-20 mx-auto flex items-center justify-between px-6 py-12 transition-all',
                     isSticky() &&
                         'sticky top-0 bg-gradient-to-t from-transparent via-neutral-950 to-neutral-950',
                 )}
             >
-                <A href="/">
+                <A
+                    href="/"
+                    class="flex items-center gap-2 text-lg font-medium text-neutral-200 transition-transform select-none active:scale-[.95]"
+                >
                     <img
                         alt="Equicord Logo"
                         src={Logo}
                         draggable={false}
-                        class="m-1 size-11 transition-transform duration-500 select-none hover:scale-110 hover:rotate-180"
+                        class="size-8"
                     />
+                    Equicord
                 </A>
 
                 <div class="hidden items-center gap-6 md:flex">

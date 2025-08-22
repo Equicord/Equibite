@@ -8,9 +8,7 @@ function Commits() {
         <div class="flex h-64 border-l border-neutral-800 pl-4 sm:pl-8">
             <div class="flex flex-col rounded-xl border border-neutral-800 bg-neutral-900 mask-b-from-80% md:w-72">
                 <div class="flex flex-col gap-1 border-b border-neutral-800 py-3 pr-6 pl-4">
-                    <span class="font-semibold">
-                        MusicControls: Merge
-                    </span>
+                    <span class="font-semibold">MusicControls: Merge</span>
 
                     <p class="flex items-center gap-2 text-sm font-medium text-neutral-400">
                         Commited an hour ago
@@ -28,7 +26,9 @@ function Commits() {
                 </div>
 
                 <div class="flex flex-col gap-1 border-b border-neutral-800 py-3 pr-6 pl-4">
-                    <span class="font-semibold">Plugin: Infinite Scrolling</span>
+                    <span class="font-semibold">
+                        Plugin: Infinite Scrolling
+                    </span>
 
                     <p class="flex items-center gap-2 text-sm font-medium text-neutral-400">
                         Commited 1 day ago
@@ -51,8 +51,8 @@ function Commits() {
 
 export default function FeatureMaintained() {
     return (
-        <div class="flex justify-between gap-6 border-t border-b border-neutral-900 max-md:flex-col md:flex-row-reverse">
-            <div class="flex w-full flex-col gap-6 bg-neutral-900 px-8 py-12 md:w-2/3 md:justify-between">
+        <div class="flex justify-between gap-6 max-md:flex-col md:flex-row-reverse">
+            <div class="flex w-full flex-col gap-6 rounded-xl bg-neutral-900 px-8 py-12 md:w-2/3 md:justify-between">
                 <div class="flex flex-col gap-2">
                     <span class="flex items-center gap-2 text-xl font-semibold">
                         <TrafficCone fill="#ffffff10" size={24} />
@@ -70,8 +70,7 @@ export default function FeatureMaintained() {
                     target="_blank"
                     class="w-fit"
                 >
-                    <Button style="secondary" customClass="gap-2 font-medium">
-                        <Github fill="#ffffff10" size={16} />
+                    <Button style="secondary" icon={<Github size={16} />}>
                         View repository
                     </Button>
                 </A>

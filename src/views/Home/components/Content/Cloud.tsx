@@ -3,22 +3,22 @@ import { CloudCheck, CloudDownload, Monitor } from 'lucide-solid'
 function Cloud() {
     return (
         <div class="flex flex-col items-center gap-12">
-            <div class="relative flex items-center gap-2 rounded-full border border-neutral-800 bg-neutral-900 px-2 py-2 font-medium text-neutral-200 shadow">
-                <CloudDownload class="text-green-500" size={16} />
+            <div class="relative flex items-center gap-2 rounded-full bg-green-950 px-3 py-2 font-medium text-green-200">
+                <CloudDownload size={16} />
                 Cloud
-                <div class="absolute top-4 right-0 -z-10 h-24 w-0.5 -rotate-45 bg-green-600/50" />
-                <div class="absolute top-4 left-0 -z-10 h-24 w-0.5 rotate-45 bg-green-600/50" />
+                <div class="absolute top-4 right-0 -z-10 h-24 w-0.5 -rotate-45 bg-green-950" />
+                <div class="absolute top-4 left-0 -z-10 h-24 w-0.5 rotate-45 bg-green-950" />
             </div>
 
             <div class="flex gap-24">
-                <span class="flex items-center gap-2 rounded-full border border-neutral-800 bg-neutral-900 px-2 py-2 font-medium text-neutral-200 shadow">
+                <span class="flex items-center gap-2 rounded-full bg-neutral-900 px-3 py-2 font-medium text-neutral-200">
                     <Monitor class="text-neutral-400" size={16} />
-                    Device #1
+                    Device
                 </span>
 
-                <span class="flex items-center gap-2 rounded-full border border-neutral-800 bg-neutral-900 px-2 py-2 font-medium text-neutral-200 shadow">
+                <span class="flex items-center gap-2 rounded-full bg-neutral-900 px-3 py-2 font-medium text-neutral-200">
                     <Monitor class="text-neutral-400" size={16} />
-                    Device #2
+                    Device
                 </span>
             </div>
         </div>
@@ -27,8 +27,8 @@ function Cloud() {
 
 export default function FeatureCloud() {
     return (
-        <div class="relative flex justify-between gap-6 border-t border-b border-neutral-900 max-md:flex-col">
-            <div class="flex w-full flex-col gap-6 bg-neutral-900 px-8 py-12 md:w-2/3 md:justify-between">
+        <div class="relative flex justify-between gap-6 max-md:flex-col">
+            <div class="flex w-full flex-col gap-6 rounded-xl bg-neutral-900 px-8 py-12 md:w-2/3 md:justify-between">
                 <div class="flex flex-col gap-2">
                     <span class="flex items-center gap-2 text-xl font-semibold">
                         <CloudCheck fill="#ffffff10" size={24} />

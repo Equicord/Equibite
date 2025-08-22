@@ -4,7 +4,7 @@ import { Github } from 'lucide-solid'
 
 export default function Contribute() {
     return (
-        <div class="relative flex flex-col gap-2 overflow-hidden border-neutral-900 p-12 max-md:border-t md:border-l">
+        <div class="relative flex flex-col gap-2 overflow-hidden rounded-xl border border-neutral-900 p-12">
             <h2 class="text-xl font-bold">Want to contribute?</h2>
 
             <p class="font-medium text-neutral-400">
@@ -17,8 +17,10 @@ export default function Contribute() {
                 target="_blank"
                 class="mt-6 w-fit"
             >
-                <Button style="secondary" customClass="gap-2 font-medium">
-                    <Github fill="#ffffff10" size={16} />
+                <Button
+                    style="secondary"
+                    icon={<Github fill="#ffffff10" size={16} />}
+                >
                     View repository
                 </Button>
             </A>

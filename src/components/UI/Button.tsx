@@ -1,37 +1,41 @@
-import type { ParentProps } from 'solid-js'
+import { type JSX, splitProps } from 'solid-js'
 import classNames from 'classnames'
 
-interface Props extends ParentProps {
-    // Custom Class
-    customClass?: string
-    // Button Style
-    style: Button
-    // Click
-    onclick?: () => void
+export type ButtonStyle = 'primary' | 'secondary' | 'blue' | 'red'
+
+interface Props extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
+    style: ButtonStyle
+    icon?: JSX.Element
 }
 
-export type Button = 'primary' | 'secondary' | 'blue'
+export default function Button(props: Props) {
+    const [local, rest] = splitProps(props, [
+        'style',
+        'class',
+        'icon',
+        'children',
+    ])
 
-function Button({ children, customClass, style, onclick }: Props) {
     return (
         <button
+            {...rest}
             class={classNames(
-                customClass,
-                'flex cursor-pointer items-center justify-center gap-1 rounded-xl px-6 py-3 font-bold transition-colors',
+                'flex cursor-pointer items-center justify-center gap-1 rounded-xl border px-6 py-3 font-bold transition-all active:scale-[.95]',
+                local.class,
                 {
-                    'bg-white text-neutral-800 hover:bg-neutral-200':
-                        style === 'primary',
-                    'bg-neutral-800 text-neutral-200 hover:bg-neutral-700':
-                        style === 'secondary',
+                    'bg-white text-neutral-800 hover:bg-neutral-300 hover:text-neutral-900':
+                        local.style === 'primary',
+                    'border-neutral-800 bg-neutral-900 text-neutral-300 hover:bg-neutral-800/70 hover:text-neutral-200':
+                        local.style === 'secondary',
                     'bg-sky-900 text-sky-200 hover:bg-sky-800':
-                        style === 'blue',
+                        local.style === 'blue',
+                    'bg-red-300 text-red-950 hover:bg-red-400':
+                        local.style === 'red',
                 },
             )}
-            onclick={onclick}
         >
-            {children}
+            {local.icon && <span class="flex-shrink-0">{local.icon}</span>}
+            {local.children}
         </button>
     )
 }
-
-export default Button

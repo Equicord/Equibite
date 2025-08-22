@@ -2,13 +2,13 @@ import { onMount } from 'solid-js'
 import { A } from '@solidjs/router'
 import gsap from 'gsap'
 
-import Laptop from '@assets/laptop.png'
-import { Download, Github } from 'lucide-solid'
+import Settings from '@assets/settings.png'
+import { BookCheck, Download, Github } from 'lucide-solid'
 import Button from '@components/UI/Button'
 
 export default function HomeHero() {
     let textRef: HTMLDivElement | undefined
-    let laptopRef: HTMLDivElement | undefined
+    let screenRef: HTMLImageElement | undefined
 
     onMount(() => {
         const tl = gsap.timeline({
@@ -23,7 +23,7 @@ export default function HomeHero() {
         })
 
         tl.from(
-            laptopRef!,
+            screenRef!,
             {
                 opacity: 0,
                 scale: 0.9,
@@ -34,42 +34,50 @@ export default function HomeHero() {
     })
 
     return (
-        <div class="flex items-center justify-between gap-24 pt-24 pb-48 max-lg:flex-col">
-            <div
-                class="flex flex-col gap-3 max-lg:items-center max-lg:text-center"
-                ref={textRef}
-            >
-                {/* Text */}
-                <h1 class="text-4xl font-semibold text-white lg:text-5xl">
-                    An enhanced version of Vencord
-                </h1>
+        <div class="pt-24 pb-24">
+            <div class="max-w-eq-sm mx-auto flex flex-col items-center px-6">
+                <div
+                    class="flex max-w-[460px] flex-col items-center justify-center gap-3 text-center"
+                    ref={textRef}
+                >
+                    {/* Text */}
+                    <h1 class="text-4xl font-semibold text-white lg:text-5xl">
+                        An enhanced version of Vencord
+                    </h1>
 
-                <p class="text-lg font-medium text-neutral-400">
-                    A fork that has everything you need, third-party plugins and
-                    more.
-                </p>
+                    <p class="text-xl font-medium text-neutral-400">
+                        A fork that has everything you need, third-party plugins
+                        and more.
+                    </p>
 
-                {/* Buttons */}
-                <div class="mt-4 flex gap-2">
-                    <A href="/download">
-                        <Button style="primary">
-                            <Download size="16" />
-                            Download
-                        </Button>
-                    </A>
+                    {/* Buttons */}
+                    <div class="mt-4 flex gap-2">
+                        <A href="/download">
+                            <Button
+                                style="primary"
+                                icon={<Download size="16" />}
+                            >
+                                Download
+                            </Button>
+                        </A>
 
-                    <A href="https://github.com/Equicord/Equicord">
-                        <Button style="secondary">
-                            <Github size="16" />
-                            Source
-                        </Button>
-                    </A>
+                        <A href="https://docs.equicord.org/">
+                            <Button
+                                style="secondary"
+                                icon={<BookCheck size="16" />}
+                            >
+                                Documentation
+                            </Button>
+                        </A>
+                    </div>
                 </div>
-            </div>
 
-            {/* Laptop */}
-            <div class="relative max-w-lg" ref={laptopRef}>
-                <img src={Laptop} alt="Laptop" draggable={false} />
+                <img
+                    ref={screenRef}
+                    src={Settings}
+                    class="mt-12 rounded-t-2xl mask-b-from-50% select-none"
+                    draggable="false"
+                />
             </div>
         </div>
     )

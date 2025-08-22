@@ -5,10 +5,8 @@ import Footer from '@components/Layout/Footer'
 export default function RootLayout({ children }: ParentProps) {
     return (
         <>
-            <div class="max-w-page mx-auto px-6">
-                <Navbar />
-                {children}
-            </div>
+            <Navbar />
+            {children}
             <Footer />
         </>
     )

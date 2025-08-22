@@ -1,10 +1,12 @@
-import { For, Show } from 'solid-js'
-import type { Plugin } from '@utils/plugin'
+import { Show } from 'solid-js'
+import { A } from '@solidjs/router'
 import {
+    type Plugin,
     formatAuthors,
     cleanDescription,
     getAvailabilityText,
 } from '@utils/plugin'
+import { Puzzle, Users } from 'lucide-solid'
 
 export function PluginCard({
     name,
@@ -16,12 +18,24 @@ export function PluginCard({
     target,
 }: Plugin) {
     return (
-        <div class="flex w-full flex-col gap-3 rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-800 p-6">
-            <div class="flex flex-col gap-1">
-                <span class="text-xl font-bold text-neutral-100">{name}</span>
-                <p class="text-xs font-medium text-neutral-400">
-                    by {formatAuthors(authors)}
-                </p>
+        <A
+            href={`/plugins/${name.toLowerCase()}`}
+            class="relative flex w-full flex-col gap-3 rounded-xl border border-neutral-800 bg-gradient-to-br from-neutral-900 to-neutral-950 p-6 pb-20 transition-all active:scale-[.98]"
+        >
+            <div class="flex items-center gap-4">
+                <div class="hidden size-10 items-center justify-center rounded-xl border border-neutral-800 bg-gradient-to-t from-neutral-900 to-neutral-800/90 outline-2 outline-offset-2 outline-neutral-600/50 md:flex">
+                    <Puzzle size={16} />
+                </div>
+
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold text-neutral-100">
+                        {name}
+                    </span>
+
+                    <p class="flex flex-wrap items-center gap-1 text-sm font-medium text-neutral-400">
+                        <Users size={16} /> by {formatAuthors(authors)}
+                    </p>
+                </div>
             </div>
 
             <p class="text-sm font-medium text-neutral-300">
@@ -30,26 +44,10 @@ export function PluginCard({
             </p>
 
             <Show when={hasCommands && commands.length > 0}>
-                <div class="group relative mt-4">
-                    <span class="cursor-help rounded text-sm font-semibold text-sky-400 underline decoration-wavy">
-                        Hover to view commands
-                    </span>
-
-                    <div class="invisible absolute top-full left-0 z-10 mt-2 grid max-h-60 w-full grid-cols-1 gap-3 overflow-auto rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-3 text-neutral-300 shadow-lg transition-all group-hover:visible group-hover:opacity-100 md:max-w-xl md:grid-cols-2 md:p-6">
-                        <For each={commands}>
-                            {(command) => (
-                                <div class="text-sm">
-                                    <span class="rounded bg-neutral-800 px-2 py-1 font-semibold text-sky-300">
-                                        {command.name}:
-                                    </span>
-
-                                    {command.description.toLowerCase()}
-                                </div>
-                            )}
-                        </For>
-                    </div>
-                </div>
+                <p class="absolute bottom-6 text-sm font-medium">
+                    Click to view commands.
+                </p>
             </Show>
-        </div>
+        </A>
     )
 }

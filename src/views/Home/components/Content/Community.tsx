@@ -6,7 +6,7 @@ import { faDiscord } from '@fortawesome/free-brands-svg-icons'
 
 export default function Community() {
     return (
-        <div class="flex flex-col gap-2 bg-neutral-900 p-12">
+        <div class="flex flex-col gap-2 rounded-xl bg-neutral-900 p-12">
             <h2 class="text-xl font-bold">Join our community!</h2>
 
             <p class="font-medium text-neutral-400">

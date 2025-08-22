@@ -1,26 +1,27 @@
-import { createSignal, createEffect, For } from 'solid-js'
+import { createSignal, createEffect, For, Show, onMount } from 'solid-js'
 import {
     teamMembers,
     ownerIds,
     teamIds,
     helperIds,
     artistIds,
-} from '../../utils/constants'
+} from '@utils/constants'
+import gsap from 'gsap'
 
-type AvatarDecoration = {
+interface AvatarDecoration {
     sku_id: string
     asset: string
     expires_at: string | null
 }
 
-type Activity = {
+interface Activity {
     id: string
     name: string
     type: number
     state?: string
 }
 
-type LanyardUser = {
+interface LanyardUser {
     discord_user: {
         id: string
         username: string
@@ -34,100 +35,214 @@ type LanyardUser = {
     activities: Activity[]
 }
 
+const StatusColours = {
+    online: 'bg-green-500',
+    idle: 'bg-yellow-500',
+    dnd: 'bg-red-500',
+    offline: 'bg-gray-500',
+}
+
+const StatusLabels = {
+    online: 'Online',
+    idle: 'Away',
+    dnd: 'Do Not Disturb',
+    offline: 'Offline',
+}
+
+const RoleColours = {
+    owner: 'bg-purple-900/40 text-purple-300 border-purple-600/30',
+    team: 'bg-blue-900/40 text-blue-300 border-blue-600/30',
+    helper: 'bg-green-900/40 text-green-300 border-green-600/30',
+    artist: 'bg-pink-900/40 text-pink-300 border-pink-600/30',
+}
+
 export default function Teams() {
     const [users, setUsers] = createSignal<Record<string, LanyardUser>>({})
+    const [loading, setLoading] = createSignal(true)
+
+    let containerRef: HTMLDivElement | undefined
 
     createEffect(() => {
         Promise.all(
             teamMembers.map(async (id) => {
-                const res = await fetch(
-                    `https://lanyard.equicord.org/v1/users/${id}`,
-                )
-                if (!res.ok) return null
-                const json = await res.json()
-                return json.success ? [id, json.data as LanyardUser] : null
+                try {
+                    const res = await fetch(
+                        `https://lanyard.equicord.org/v1/users/${id}`,
+                    )
+                    if (!res.ok) return null
+                    const json = await res.json()
+                    return json.success ? [id, json.data as LanyardUser] : null
+                } catch {
+                    return null
+                }
             }),
         ).then((entries) => {
             const filtered = entries.filter(Boolean) as [string, LanyardUser][]
             setUsers(Object.fromEntries(filtered))
+            setLoading(false)
         })
     })
 
+    const getUserRole = (userId: string) => {
+        // Owner
+        if (ownerIds.includes(userId)) return { label: 'Owner', type: 'owner' }
+
+        // Team
+        if (teamIds.includes(userId)) return { label: 'Team', type: 'team' }
+
+        // Helper
+        if (helperIds.includes(userId))
+            return { label: 'Helper', type: 'helper' }
+
+        // Artist
+        if (artistIds.includes(userId))
+            return { label: 'Artist', type: 'artist' }
+
+        return null
+    }
+
+    onMount(() => {
+        if (containerRef) {
+            gsap.from(containerRef, {
+                opacity: 0,
+                y: 50,
+                filter: 'blur(6px)',
+                duration: 0.4,
+            })
+        }
+    })
+
     return (
-        <div class="p-4 sm:p-6">
-            <h2 class="mb-4 text-xl font-bold text-white sm:text-2xl">
-                Meet the Team
-            </h2>
+        <div ref={containerRef} class="max-w-eq-lg mx-auto px-6">
+            <div class="flex flex-col gap-6">
+                {/* Header */}
+                <header class="flex flex-col gap-1">
+                    <h1 class="text-3xl font-bold md:text-4xl">
+                        Meet the Team
+                    </h1>
+                    <p class="text-lg font-medium text-neutral-400">
+                        The amazing people behind Equicord
+                    </p>
+                </header>
 
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
-                <For each={Object.values(users())}>
-                    {(userData) => {
-                        const u = userData.discord_user
-                        const avatar = u.avatar
-                            ? `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.png`
-                            : 'https://cdn.discordapp.com/embed/avatars/0.png'
-                        const decoration = u.avatar_decoration_data
-                            ? `https://cdn.discordapp.com/avatar-decoration-presets/${u.avatar_decoration_data.asset}.png`
-                            : null
-                        const customActivity = userData.activities.find(
-                            (a) => a.type === 4,
-                        )
-                        const username = u.global_name ?? u.username
-                        const status =
-                            customActivity?.state ?? userData.discord_status
-                        const isOwner = ownerIds.includes(u.id)
-                        const isTeamMember = teamIds.includes(u.id)
-                        const isHelper = helperIds.includes(u.id)
-                        const isArtist = artistIds.includes(u.id)
+                {/* Loading */}
+                <Show when={loading()}>
+                    <div class="flex flex-col items-center gap-2">
+                        <div class="mx-auto h-8 w-8 animate-spin rounded-full border-b-2 border-sky-500" />
 
-                        return (
-                            <div class="flex items-center gap-4 rounded-2xl bg-neutral-900 p-4 shadow-md sm:p-5">
-                                <div class="relative grid h-[72px] w-[72px] shrink-0 place-items-center sm:h-[90px] sm:w-[90px]">
-                                    {decoration && (
-                                        <img
-                                            alt="Avatar Decoration"
-                                            src={decoration}
-                                            class="pointer-events-none absolute h-[60px] w-[60px] rounded-full sm:h-[66px] sm:w-[66px]"
-                                        />
-                                    )}
-                                    <img
-                                        alt="User Avatar"
-                                        src={avatar}
-                                        class="z-5 h-12 w-12 rounded-full border-2 border-zinc-900 sm:h-14 sm:w-14"
-                                    />
-                                </div>
-                                <div class="flex flex-col">
-                                    <div class="text-lg leading-tight font-semibold text-white sm:text-xl">
-                                        {username}
-                                        {isOwner && (
-                                            <span class="bg-opacity-40 ml-2 rounded-md text-indigo-400 bg-indigo-900 px-2 py-0.5 text-xs font-medium sm:text-sm">
-                                                Owner
-                                            </span>
-                                        )}
-                                        {isTeamMember && (
-                                            <span class="bg-opacity-40 ml-2 rounded-md text-indigo-400 bg-indigo-900 px-2 py-0.5 text-xs font-medium sm:text-sm">
-                                                Team
-                                            </span>
-                                        )}
-                                        {isHelper && (
-                                            <span class="bg-opacity-40 ml-2 rounded-md text-indigo-400 bg-indigo-900 px-2 py-0.5 text-xs font-medium sm:text-sm">
-                                                Helper
-                                            </span>
-                                        )}
-                                        {isArtist && (
-                                            <span class="bg-opacity-40 ml-2 rounded-md text-indigo-400 bg-indigo-900 px-2 py-0.5 text-xs font-medium sm:text-sm">
-                                                Artist
-                                            </span>
-                                        )}
+                        <p class="text-sm font-bold text-sky-200">
+                            Loading team members
+                        </p>
+                    </div>
+                </Show>
+
+                {/* Grid */}
+                <Show when={!loading()}>
+                    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                        <For each={Object.values(users())}>
+                            {(userData) => {
+                                const u = userData.discord_user
+                                const avatar = u.avatar
+                                    ? `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.webp?size=128`
+                                    : 'https://cdn.discordapp.com/embed/avatars/0.png'
+
+                                const decoration = u.avatar_decoration_data
+                                    ? `https://cdn.discordapp.com/avatar-decoration-presets/${u.avatar_decoration_data.asset}.png`
+                                    : null
+
+                                const customActivity = userData.activities.find(
+                                    (a) => a.type === 4,
+                                )
+
+                                const gameActivity = userData.activities.find(
+                                    (a) => a.type === 0,
+                                )
+
+                                const username = u.global_name ?? u.username
+                                const status =
+                                    customActivity?.state ??
+                                    StatusLabels[
+                                        userData.discord_status as keyof typeof StatusLabels
+                                    ] ??
+                                    'Unknown'
+                                const role = getUserRole(u.id)
+
+                                return (
+                                    <div class="group relative overflow-hidden rounded-xl border border-neutral-800 bg-gradient-to-br from-neutral-900 to-neutral-950 p-6">
+                                        <div class="relative z-10 flex flex-col items-center text-center">
+                                            <div class="relative mb-4">
+                                                <div class="relative">
+                                                    {/* Decoration */}
+                                                    <Show when={decoration}>
+                                                        <img
+                                                            src={decoration!}
+                                                            draggable={false}
+                                                            class="absolute inset-0 z-10 size-20 object-contain select-none"
+                                                        />
+                                                    </Show>
+
+                                                    {/* Avatar */}
+                                                    <img
+                                                        src={avatar}
+                                                        draggable={false}
+                                                        class="size-16 rounded-full border-2 border-neutral-700 select-none"
+                                                    />
+
+                                                    {/* Status */}
+                                                    <div
+                                                        class={`absolute -right-1 -bottom-1 z-20 h-5 w-5 rounded-full border-2 border-neutral-900 ${StatusColours[userData.discord_status as keyof typeof StatusColours] ?? 'bg-gray-500'}`}
+                                                    ></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="flex flex-col items-center">
+                                                <h3 class="text-lg font-semibold text-white">
+                                                    {username}
+                                                </h3>
+
+                                                <Show when={role}>
+                                                    <span
+                                                        class={`rounded-full border px-3 py-1 text-xs font-medium ${RoleColours[role!.type as keyof typeof RoleColours]}`}
+                                                    >
+                                                        {role!.label}
+                                                    </span>
+                                                </Show>
+                                            </div>
+
+                                            <div class="mt-3 flex flex-col gap-1 text-center">
+                                                <Show
+                                                    when={customActivity?.state}
+                                                >
+                                                    <p class="text-sm font-medium text-neutral-300">
+                                                        {customActivity!.state}
+                                                    </p>
+                                                </Show>
+
+                                                <Show when={gameActivity}>
+                                                    <p class="text-xs text-neutral-400">
+                                                        Playing{' '}
+                                                        {gameActivity!.name}
+                                                    </p>
+                                                </Show>
+
+                                                <Show
+                                                    when={
+                                                        !customActivity?.state &&
+                                                        !gameActivity
+                                                    }
+                                                >
+                                                    <p class="text-sm text-neutral-400">
+                                                        {status}
+                                                    </p>
+                                                </Show>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="text-sm text-gray-400 sm:text-base">
-                                        {status}
-                                    </div>
-                                </div>
-                            </div>
-                        )
-                    }}
-                </For>
+                                )
+                            }}
+                        </For>
+                    </div>
+                </Show>
             </div>
         </div>
     )
