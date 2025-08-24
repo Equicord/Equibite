@@ -6,6 +6,7 @@ import {
     createMemo,
     Show,
     For,
+    createEffect,
 } from 'solid-js'
 import { fetchPlugins } from '@utils/plugin'
 import gsap from 'gsap'
@@ -15,6 +16,7 @@ import { PluginCard } from './components/PluginCard'
 import Button from '@components/UI/Button'
 import Input from '@components/UI/Input'
 import PluginPopover from './components/PluginPopover'
+import { useSearchParams } from '@solidjs/router'
 
 type PluginFilter = 'all' | 'equicord' | 'vencord'
 type PlatformFilter = 'all' | 'desktop' | 'web'
@@ -27,12 +29,30 @@ const DESKTOP_PLATFORMS = ['discordDesktop', 'desktop', 'vesktop', 'equibop']
 
 export default function Plugins() {
     const [plugins, { refetch }] = createResource(() => fetchPlugins('all'))
-    const [search, setSearch] = createSignal('')
-    const [pluginFilter, setPluginFilter] = createSignal<PluginFilter>('all')
-    const [platformFilter, setPlatformFilter] =
-        createSignal<PlatformFilter>('all')
-    const [filterHasCommands, setFilterHasCommands] = createSignal(false)
+
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [search, setSearch] = createSignal(searchParams.search || '')
+
+    const [pluginFilter, setPluginFilter] = createSignal<PluginFilter>(
+        (searchParams.source as PluginFilter) || 'all',
+    )
+    const [platformFilter, setPlatformFilter] = createSignal<PlatformFilter>(
+        (searchParams.platform as PlatformFilter) || 'all',
+    )
+    const [filterHasCommands, setFilterHasCommands] = createSignal(
+        searchParams.commands === 'true',
+    )
+
     const [visibleCount, setVisibleCount] = createSignal(INITIAL_VISIBLE_COUNT)
+
+    createEffect(() => {
+        setSearchParams({
+            search: search() || undefined,
+            source: pluginFilter() !== 'all' ? pluginFilter() : undefined,
+            platform: platformFilter() !== 'all' ? platformFilter() : undefined,
+            commands: filterHasCommands() ? 'true' : undefined,
+        })
+    })
 
     let containerRef: HTMLDivElement | undefined
 
@@ -67,7 +87,11 @@ export default function Plugins() {
         const pluginList = plugins()
         if (!pluginList) return []
 
-        const query = search()
+        const searchQuery = search()
+        const query = Array.isArray(searchQuery)
+            ? searchQuery.join(' ')
+            : searchQuery
+
         let result = [...pluginList]
 
         // Text search

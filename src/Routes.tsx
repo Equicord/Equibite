@@ -5,10 +5,10 @@ import Home from '@views/Home'
 import Download from '@views/Download'
 import Plugins from '@views/Plugins'
 import PluginDetails from '@views/Plugins/Details'
+import Team from '@views/Team'
 
 // Todo: Rewrite these pages.
 import Icons from '@views/Icons'
-import Team from '@views/Team'
 import FreeNitro from '@views/Freenitro'
 
 const NotFound = () => <h1>404 - Page Not Found</h1>
