@@ -8,15 +8,18 @@ import {
     For,
     createEffect,
 } from 'solid-js'
+import { useSearchParams } from '@solidjs/router'
+
 import { fetchPlugins } from '@utils/plugin'
 import gsap from 'gsap'
 
 import { RotateCcw, Search, SearchX } from 'lucide-solid'
-import { PluginCard } from './components/PluginCard'
+
 import Button from '@components/UI/Button'
 import Input from '@components/UI/Input'
+
+import PluginCard from './components/PluginCard'
 import PluginPopover from './components/PluginPopover'
-import { useSearchParams } from '@solidjs/router'
 
 type PluginFilter = 'all' | 'equicord' | 'vencord'
 type PlatformFilter = 'all' | 'desktop' | 'web'
@@ -61,76 +64,29 @@ export default function Plugins() {
         setVisibleCount(INITIAL_VISIBLE_COUNT)
     }
 
-    const parseSearchQuery = (query: string) => {
-        const args = query.toLowerCase().trim().split(/\s+/).filter(Boolean)
-        const filters: {
-            platform?: string
-            required?: boolean
-            terms: string[]
-        } = { terms: [] }
-
-        args.forEach((arg) => {
-            if (arg.startsWith('platform:')) {
-                filters.platform = arg.slice(9).trim()
-            } else if (arg.startsWith('required:')) {
-                const reqQuery = arg.slice(9).trim()
-                filters.required = ['true', 'yes', 'y', '1'].includes(reqQuery)
-            } else {
-                filters.terms.push(arg)
-            }
-        })
-
-        return filters
-    }
-
     const filteredPlugins = createMemo(() => {
         const pluginList = plugins()
         if (!pluginList) return []
 
-        const searchQuery = search()
-        const query = Array.isArray(searchQuery)
-            ? searchQuery.join(' ')
-            : searchQuery
-
         let result = [...pluginList]
 
-        // Text search
+        const searchQuery = search()
+        const query = (
+            Array.isArray(searchQuery)
+                ? (searchQuery[0] ?? '')
+                : (searchQuery ?? '')
+        )
+            .toLowerCase()
+            .trim()
+
         if (query) {
-            const { platform, required, terms } = parseSearchQuery(query)
-
             result = result.filter((plugin) => {
-                // Platform search
-                if (platform) {
-                    const pluginPlatform = plugin.target
-                        ? plugin.target
-                              .replace(/([a-z])([A-Z])/g, '$1 $2')
-                              .toLowerCase()
-                        : 'all'
-                    if (!pluginPlatform.includes(platform)) return false
-                }
+                const nameMatch = plugin.name.toLowerCase().includes(query)
+                const authorMatch = plugin.authors.some((author) =>
+                    author.name.toLowerCase().includes(query),
+                )
 
-                // Required search
-                if (
-                    typeof required === 'boolean' &&
-                    plugin.required !== required
-                ) {
-                    return false
-                }
-
-                // Text terms search
-                if (terms.length > 0) {
-                    return terms.every((term) => {
-                        const nameMatch = plugin.name
-                            .toLowerCase()
-                            .includes(term)
-                        const authorMatch = plugin.authors.some((author) =>
-                            author.name.toLowerCase().includes(term),
-                        )
-                        return nameMatch || authorMatch
-                    })
-                }
-
-                return true
+                return nameMatch || authorMatch
             })
         }
 
@@ -191,6 +147,7 @@ export default function Plugins() {
                 duration: 0.4,
             })
         }
+
         window.addEventListener('scroll', handleScroll, { passive: true })
     })
 
@@ -215,7 +172,7 @@ export default function Plugins() {
             {/* Search & Filters */}
             <div class="flex items-center gap-3">
                 <Input
-                    placeholder="Search plugins... (try: platform:web, required:true)"
+                    placeholder="Search plugins..."
                     value={search()}
                     onInput={(e) => updateSearch(e.currentTarget.value)}
                     icon={<Search size={18} />}

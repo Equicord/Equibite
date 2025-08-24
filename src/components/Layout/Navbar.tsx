@@ -2,8 +2,8 @@ import { createSignal, Show, onCleanup, onMount } from 'solid-js'
 import { A } from '@solidjs/router'
 import classNames from 'classnames'
 
-import { Download } from 'lucide-solid'
 import Logo from '@assets/logo.svg'
+import { Download } from 'lucide-solid'
 import Button from '@components/UI/Button'
 
 interface NavItem {
@@ -45,8 +45,8 @@ export default function Navbar() {
 
     const handleScroll = () => setIsSticky(window.scrollY > 0)
 
-    // Mounts
     onMount(() => window.addEventListener('scroll', handleScroll))
+
     onCleanup(() => window.removeEventListener('scroll', handleScroll))
 
     return (
@@ -55,18 +55,28 @@ export default function Navbar() {
             <Show when={showMenu()}>
                 <div
                     onclick={toggleMenu}
-                    class="fixed inset-0 z-10 h-dvh w-full bg-neutral-900/50 py-12 pl-6 backdrop-blur-md"
+                    class="fixed top-[129px] z-10 h-fit w-full bg-neutral-950 px-6 pt-8 pb-12"
                 >
                     <div class="flex flex-col gap-4 text-lg">
                         {items.map((item) => (
                             <A
                                 href={item.href}
                                 target={item.external ? '_blank' : undefined}
-                                class="font-medium transition-colors hover:text-gray-300"
+                                class="border-b border-neutral-900 pb-6 font-medium transition-colors hover:text-gray-300"
                             >
                                 {item.text}
                             </A>
                         ))}
+
+                        <A href="/download">
+                            <Button
+                                icon={<Download size={16} />}
+                                style="secondary"
+                                class="w-full justify-start"
+                            >
+                                Download
+                            </Button>
+                        </A>
                     </div>
                 </div>
             </Show>
@@ -74,9 +84,12 @@ export default function Navbar() {
             {/* Navbar */}
             <header
                 class={classNames(
-                    'max-w-eq-lg z-20 mx-auto flex items-center justify-between px-6 py-12 transition-all',
+                    'max-w-eq-lg z-20 mx-auto flex items-center justify-between border-b px-6 py-10 transition-all',
                     isSticky() &&
                         'sticky top-0 bg-gradient-to-t from-transparent via-neutral-950 to-neutral-950',
+                    showMenu()
+                        ? 'border-b-neutral-900'
+                        : 'border-b-transparent',
                 )}
             >
                 <A
@@ -104,8 +117,7 @@ export default function Navbar() {
                     ))}
 
                     <A href="/download">
-                        <Button style="primary">
-                            <Download size={16} />
+                        <Button icon={<Download size={16} />} style="secondary">
                             Download
                         </Button>
                     </A>
@@ -113,35 +125,26 @@ export default function Navbar() {
 
                 {/* Mobile Items */}
                 <div class="z-20 flex items-center gap-2 md:hidden">
-                    <A href="/download">
-                        <button class="flex size-12 cursor-pointer items-center justify-center rounded-lg bg-neutral-800">
-                            <Download size={20} />
-                        </button>
-                    </A>
-
                     <button
-                        class={classNames(
-                            showMenu() && '!bg-neutral-700',
-                            'flex size-12 cursor-pointer flex-col items-center justify-center gap-1 rounded-lg bg-neutral-800 transition-colors',
-                        )}
+                        class="flex size-12 cursor-pointer flex-col items-center justify-center gap-1 rounded-lg transition-colors"
                         onclick={toggleMenu}
                     >
                         <span
                             class={classNames(
                                 showMenu() && 'translate-y-1.5 rotate-45',
-                                'h-0.5 w-4 rounded-full bg-neutral-200 transition-all',
+                                'h-0.5 w-5 rounded-full bg-neutral-200 transition-all',
                             )}
                         />
                         <span
                             class={classNames(
                                 showMenu() && 'opacity-0',
-                                'h-0.5 w-4 rounded-full bg-neutral-200 transition-all',
+                                'h-0.5 w-5 rounded-full bg-neutral-200 transition-all',
                             )}
                         />
                         <span
                             class={classNames(
                                 showMenu() && '-translate-y-1.5 -rotate-45',
-                                'h-0.5 w-4 rounded-full bg-neutral-200 transition-all',
+                                'h-0.5 w-5 rounded-full bg-neutral-200 transition-all',
                             )}
                         />
                     </button>

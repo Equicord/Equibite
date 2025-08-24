@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from '@solidjs/router'
+import { useParams, useNavigate, A } from '@solidjs/router'
 import {
     createResource,
     createMemo,
@@ -20,6 +20,7 @@ import {
     ChevronRight,
     Notebook,
     Command,
+    ArrowLeft,
 } from 'lucide-solid'
 import { type Plugin, fetchPlugins, formatAuthors } from '@utils/plugin'
 
@@ -112,6 +113,13 @@ export default function PluginDetails() {
                 >
                     {(plugin) => (
                         <div class="flex flex-col gap-6">
+                            <A
+                                href="/plugins"
+                                class="flex w-fit items-center gap-1 font-medium transition-all hover:opacity-80 active:scale-[.95]"
+                            >
+                                <ArrowLeft size={16} />
+                                Back to plugins
+                            </A>
                             {/* Header */}
                             <header class="flex items-center justify-between">
                                 <div class="flex items-center gap-6">

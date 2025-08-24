@@ -8,7 +8,7 @@ import {
 } from '@utils/plugin'
 import { Puzzle, Users } from 'lucide-solid'
 
-export function PluginCard({
+export default function PluginCard({
     name,
     description,
     authors,
