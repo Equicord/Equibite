@@ -115,7 +115,7 @@ export default function Icons() {
     })
 
     return (
-        <div class="flex flex-col justify-center gap-12">
+        <div class="max-w-eq-lg mx-auto flex flex-col justify-center gap-12 px-6">
             <For each={folders()}>
                 {({ folder, images }) => (
                     <div class="flex flex-col gap-12">
