@@ -84,12 +84,10 @@ export default function Navbar() {
             {/* Navbar */}
             <header
                 class={classNames(
-                    'max-w-eq-lg z-20 mx-auto flex items-center justify-between border-b px-6 py-10 transition-all',
+                    'max-w-eq-lg z-20 mx-auto flex items-center justify-between border-b-neutral-900 px-6 py-10 transition-all',
                     isSticky() &&
                         'sticky top-0 bg-gradient-to-t from-transparent via-neutral-950 to-neutral-950',
-                    showMenu()
-                        ? 'border-b-neutral-900'
-                        : 'border-b-transparent',
+                    showMenu() && 'border-b',
                 )}
             >
                 <A
