@@ -1,4 +1,5 @@
 import { createSignal, onMount, For } from 'solid-js'
+import { Title } from '@solidjs/meta'
 
 interface DisplayImage {
     title: string
@@ -115,37 +116,41 @@ export default function Icons() {
     })
 
     return (
-        <div class="max-w-eq-lg mx-auto flex flex-col justify-center gap-12 px-6">
-            <For each={folders()}>
-                {({ folder, images }) => (
-                    <div class="flex flex-col gap-12">
-                        <h2 class="text-center text-xl font-semibold">
-                            {formatFolderName(folder)}
-                        </h2>
+        <>
+            <Title>Icons | Equicord</Title>
 
-                        <div class="flex flex-wrap justify-center gap-4">
-                            <For each={images}>
-                                {({ title, url }) => (
-                                    <div class="flex w-full flex-col items-center gap-3 rounded-lg bg-neutral-800 p-4 sm:max-w-[180px]">
-                                        <img
-                                            src={url}
-                                            alt={title}
-                                            width={100}
-                                            class="cursor-pointer rounded"
-                                            onClick={() =>
-                                                window.open(url, '_blank')
-                                            }
-                                        />
-                                        <span class="text-center text-xs font-medium">
-                                            {title}
-                                        </span>
-                                    </div>
-                                )}
-                            </For>
+            <div class="max-w-eq-lg mx-auto flex flex-col justify-center gap-12 px-6">
+                <For each={folders()}>
+                    {({ folder, images }) => (
+                        <div class="flex flex-col gap-12">
+                            <h2 class="text-center text-xl font-semibold">
+                                {formatFolderName(folder)}
+                            </h2>
+
+                            <div class="flex flex-wrap justify-center gap-4">
+                                <For each={images}>
+                                    {({ title, url }) => (
+                                        <div class="flex w-full flex-col items-center gap-3 rounded-lg bg-neutral-800 p-4 sm:max-w-[180px]">
+                                            <img
+                                                src={url}
+                                                alt={title}
+                                                width={100}
+                                                class="cursor-pointer rounded"
+                                                onClick={() =>
+                                                    window.open(url, '_blank')
+                                                }
+                                            />
+                                            <span class="text-center text-xs font-medium">
+                                                {title}
+                                            </span>
+                                        </div>
+                                    )}
+                                </For>
+                            </div>
                         </div>
-                    </div>
-                )}
-            </For>
-        </div>
+                    )}
+                </For>
+            </div>
+        </>
     )
 }
