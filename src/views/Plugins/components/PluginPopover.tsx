@@ -56,7 +56,6 @@ const Sources = [
 
 export default function PluginPopover(props: Props) {
     const [open, setOpen] = createSignal(false)
-    const [openDropdown, setOpenDropdown] = createSignal<string | null>(null)
 
     const toggle = () => setOpen((prev) => !prev)
     const close = () => setOpen(false)
@@ -88,7 +87,6 @@ export default function PluginPopover(props: Props) {
                     />
 
                     <Dropdown
-                        id="source"
                         icon={<Blocks size={16} />}
                         items={Sources.map((item) => ({
                             icon: item.icon,
@@ -104,12 +102,9 @@ export default function PluginPopover(props: Props) {
                             props.setPluginFilter(item.value as any)
                         }
                         placeholder="Source"
-                        openDropdown={openDropdown()}
-                        setOpenDropdown={setOpenDropdown}
                     />
 
                     <Dropdown
-                        id="platform"
                         icon={<Monitor size={16} />}
                         items={Platforms.map((item) => ({
                             label: item.label,
@@ -124,8 +119,6 @@ export default function PluginPopover(props: Props) {
                             props.setPlatformFilter(item.value as any)
                         }
                         placeholder="Platform"
-                        openDropdown={openDropdown()}
-                        setOpenDropdown={setOpenDropdown}
                     />
                 </div>
             </Show>
