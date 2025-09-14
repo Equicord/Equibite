@@ -120,13 +120,13 @@ export default function Teams() {
             case 1:
                 return "Streaming "
             case 2:
-                return "Listening "
+                return "Listening to "
             case 3:
                 return "Watching "
             case 4:
                 return "Custom ";
             case 5:
-                return "Competing ";
+                return "Competing in ";
         }
     }
 
