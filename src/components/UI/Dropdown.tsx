@@ -1,6 +1,8 @@
 import { type JSX, createSignal, For, Show, onCleanup } from 'solid-js'
 import { ChevronDown, ChevronUp } from 'lucide-solid'
 
+const [openDropdown, setOpenDropdown] = createSignal<string | null>(null)
+
 interface DropdownItem {
     label: string
     value?: string | number
@@ -9,27 +11,32 @@ interface DropdownItem {
 }
 
 interface Props {
+    id: string
     icon?: JSX.Element
     items: DropdownItem[]
     placeholder?: string
     selected?: DropdownItem | null
     onSelect?: (item: DropdownItem) => void
+    openDropdown?: string | null
+    setOpenDropdown?: (id: string | null) => void
 }
 
 export default function Dropdown(props: Props) {
-    const [open, setOpen] = createSignal(false)
+    const isOpen = () => props.id === props.openDropdown
 
-    const toggle = () => setOpen((open) => !open)
-    const close = () => setOpen(false)
+    const toggle = () => {
+        if (!props.setOpenDropdown) return
+        props.setOpenDropdown(isOpen() ? null : props.id)
+    }
 
     const handleClickOutside = (event: MouseEvent) => {
         const target = event.target as HTMLElement
-        if (!target.closest('.dropdown-container')) close()
+        if (!target.closest('.dropdown-container')) props.setOpenDropdown?.(null)
     }
 
     const handleSelect = (item: DropdownItem) => {
         props.onSelect?.(item)
-        close()
+        props.setOpenDropdown?.(null)
     }
     document.addEventListener('click', handleClickOutside)
 
@@ -39,7 +46,7 @@ export default function Dropdown(props: Props) {
         <div class="dropdown-container relative w-full">
             <button
                 onClick={toggle}
-                class={`flex w-full cursor-pointer items-center justify-between rounded-lg border border-neutral-800 px-3 py-3 font-medium transition-colors hover:bg-neutral-900 focus:outline-none ${open() ? 'bg-neutral-900 text-white' : 'bg-neutral-950 text-neutral-400'}`}
+                class={`flex w-full cursor-pointer items-center justify-between rounded-lg border border-neutral-800 px-3 py-3 font-medium transition-colors hover:bg-neutral-900 focus:outline-none ${isOpen() ? 'bg-neutral-900 text-white' : 'bg-neutral-950 text-neutral-400'}`}
             >
                 <span class="flex flex-wrap items-center gap-1">
                     <Show when={props.icon}>{props.icon}</Show>
@@ -52,11 +59,11 @@ export default function Dropdown(props: Props) {
                         </span>
                     </Show>
                 </span>
-                {open() ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                {isOpen() ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
             </button>
 
             {/* Menu */}
-            <Show when={open()}>
+            <Show when={isOpen()}>
                 <div class="absolute z-50 mt-2 flex w-full flex-col divide-y divide-neutral-800 overflow-hidden rounded-lg border border-neutral-800 bg-neutral-900 shadow-lg">
                     <For each={props.items}>
                         {(item) => (
