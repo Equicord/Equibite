@@ -150,19 +150,14 @@ export default function Teams() {
                                     ? `https://cdn.discordapp.com/avatar-decoration-presets/${u.avatar_decoration_data.asset}.png`
                                     : null
 
-                                const customActivity = userData.activities.find(
-                                    (a) => a.type === 4,
-                                )
-
-                                const gameActivity = userData.activities.find(
-                                    (a) => a.type === 0,
-                                )
+                                const customStatus = userData.activities.find(a => a.type === 4);
+                                const otherActivity = userData.activities.find(a => a.type !== 4);
 
                                 const username = u.global_name ?? u.username
                                 const status =
-                                    customActivity?.state ??
+                                    customStatus?.state ??
                                     StatusLabels[
-                                        userData.discord_status as keyof typeof StatusLabels
+                                    userData.discord_status as keyof typeof StatusLabels
                                     ] ??
                                     'Unknown'
                                 const role = getUserRole(u.id)
@@ -211,24 +206,24 @@ export default function Teams() {
 
                                             <div class="mt-3 flex flex-col gap-1 text-center">
                                                 <Show
-                                                    when={customActivity?.state}
+                                                    when={customStatus?.state}
                                                 >
                                                     <p class="text-sm font-medium text-neutral-300">
-                                                        {customActivity!.state}
+                                                        {customStatus!.state}
                                                     </p>
                                                 </Show>
 
-                                                <Show when={gameActivity}>
+                                                <Show when={otherActivity}>
                                                     <p class="text-xs text-neutral-400">
                                                         Playing{' '}
-                                                        {gameActivity!.name}
+                                                        {otherActivity!.name}
                                                     </p>
                                                 </Show>
 
                                                 <Show
                                                     when={
-                                                        !customActivity?.state &&
-                                                        !gameActivity
+                                                        !customStatus?.state &&
+                                                        !otherActivity
                                                     }
                                                 >
                                                     <p class="text-sm text-neutral-400">
