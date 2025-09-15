@@ -21,7 +21,7 @@ export default function CloudPolicy() {
 
                     <div class="bg-blue-900/20 border border-blue-700/30 rounded-lg p-4 mb-4">
                         <p class="text-sm font-medium text-blue-200 mb-0">
-                            <strong>Key Point:</strong> This policy only applies if you enable cloud services. Without cloud enabled, Equicord collects no data about you.
+                            <strong>Key Point:</strong> This policy only applies if you enable cloud services. Without cloud enabled, Equicord doesn't collect any data about you.
                         </p>
                     </div>
 
