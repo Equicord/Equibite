@@ -1,4 +1,5 @@
 import { createSignal, createEffect, For, Show, onMount } from 'solid-js'
+import { Title } from '@solidjs/meta'
 import {
     teamMembers,
     ownerIds,
@@ -131,132 +132,152 @@ export default function Teams() {
     }
 
     return (
-        <div ref={containerRef} class="max-w-eq-lg mx-auto px-6">
-            <div class="flex flex-col gap-6">
-                {/* Header */}
-                <header class="flex flex-col gap-1">
-                    <h1 class="text-3xl font-bold md:text-4xl">
-                        Meet the Team
-                    </h1>
-                    <p class="text-lg font-medium text-neutral-400">
-                        The amazing people behind Equicord
-                    </p>
-                </header>
+        <>
+            <Title>Team | Equicord</Title>
 
-                {/* Loading */}
-                <Show when={loading()}>
-                    <div class="flex flex-col items-center gap-2">
-                        <div class="mx-auto h-8 w-8 animate-spin rounded-full border-b-2 border-sky-500" />
-
-                        <p class="text-sm font-bold text-sky-200">
-                            Loading team members
+            <div ref={containerRef} class="max-w-eq-lg mx-auto px-6">
+                <div class="flex flex-col gap-6">
+                    {/* Header */}
+                    <header class="flex flex-col gap-1">
+                        <h1 class="text-3xl font-bold md:text-4xl">
+                            Meet the Team
+                        </h1>
+                        <p class="text-lg font-medium text-neutral-400">
+                            The amazing people behind Equicord
                         </p>
-                    </div>
-                </Show>
+                    </header>
 
-                {/* Grid */}
-                <Show when={!loading()}>
-                    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                        <For each={Object.values(users())}>
-                            {(userData) => {
-                                const u = userData.discord_user
-                                const avatar = u.avatar
-                                    ? `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.webp?size=128`
-                                    : 'https://cdn.discordapp.com/embed/avatars/0.png'
+                    {/* Loading */}
+                    <Show when={loading()}>
+                        <div class="flex flex-col items-center gap-2">
+                            <div class="mx-auto h-8 w-8 animate-spin rounded-full border-b-2 border-sky-500" />
 
-                                const decoration = u.avatar_decoration_data
-                                    ? `https://cdn.discordapp.com/avatar-decoration-presets/${u.avatar_decoration_data.asset}.png`
-                                    : null
+                            <p class="text-sm font-bold text-sky-200">
+                                Loading team members
+                            </p>
+                        </div>
+                    </Show>
 
-                                const customStatus = userData.activities.find(a => a.type === 4);
-                                const otherActivity = userData.activities.find(a => a.type !== 4);
+                    {/* Grid */}
+                    <Show when={!loading()}>
+                        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                            <For each={Object.values(users())}>
+                                {(userData) => {
+                                    const u = userData.discord_user
+                                    const avatar = u.avatar
+                                        ? `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.webp?size=128`
+                                        : 'https://cdn.discordapp.com/embed/avatars/0.png'
 
-                                const username = u.global_name ?? u.username
-                                const status =
-                                    customStatus?.state ??
-                                    StatusLabels[
-                                    userData.discord_status as keyof typeof StatusLabels
-                                    ] ??
-                                    'Unknown'
-                                const role = getUserRole(u.id)
+                                    const decoration = u.avatar_decoration_data
+                                        ? `https://cdn.discordapp.com/avatar-decoration-presets/${u.avatar_decoration_data.asset}.png`
+                                        : null
 
-                                return (
-                                    <div class="group relative overflow-hidden rounded-xl border border-neutral-800 bg-gradient-to-br from-neutral-900 to-neutral-950 p-6">
-                                        <div class="relative z-10 flex flex-col items-center text-center">
-                                            <div class="relative mb-4">
-                                                <div class="relative">
-                                                    {/* Decoration */}
-                                                    <Show when={decoration}>
+                                    const customActivity =
+                                        userData.activities.find(
+                                            (a) => a.type === 4,
+                                        )
+
+                                    const gameActivity =
+                                        userData.activities.find(
+                                            (a) => a.type === 0,
+                                        )
+
+                                    const username = u.global_name ?? u.username
+                                    const status =
+                                        customActivity?.state ??
+                                        StatusLabels[
+                                            userData.discord_status as keyof typeof StatusLabels
+                                        ] ??
+                                        'Unknown'
+                                    const role = getUserRole(u.id)
+
+                                    return (
+                                        <div class="group relative overflow-hidden rounded-xl border border-neutral-800 bg-gradient-to-br from-neutral-900 to-neutral-950 p-6">
+                                            <div class="relative z-10 flex flex-col items-center text-center">
+                                                <div class="relative mb-4">
+                                                    <div class="relative">
+                                                        {/* Decoration */}
+                                                        <Show when={decoration}>
+                                                            <img
+                                                                src={
+                                                                    decoration!
+                                                                }
+                                                                draggable={
+                                                                    false
+                                                                }
+                                                                class="absolute inset-0 z-10 size-20 object-contain select-none"
+                                                            />
+                                                        </Show>
+
+                                                        {/* Avatar */}
                                                         <img
-                                                            src={decoration!}
+                                                            src={avatar}
                                                             draggable={false}
-                                                            class="absolute inset-0 z-10 size-20 object-contain select-none"
+                                                            class="size-16 rounded-full border-2 border-neutral-700 select-none"
                                                         />
+
+                                                        {/* Status */}
+                                                        <div
+                                                            class={`absolute -right-1 -bottom-1 z-20 h-5 w-5 rounded-full border-2 border-neutral-900 ${StatusColours[userData.discord_status as keyof typeof StatusColours] ?? 'bg-gray-500'}`}
+                                                        ></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="flex flex-col items-center">
+                                                    <h3 class="text-lg font-semibold text-white">
+                                                        {username}
+                                                    </h3>
+
+                                                    <Show when={role}>
+                                                        <span
+                                                            class={`rounded-full border px-3 py-1 text-xs font-medium ${RoleColours[role!.type as keyof typeof RoleColours]}`}
+                                                        >
+                                                            {role!.label}
+                                                        </span>
+                                                    </Show>
+                                                </div>
+
+                                                <div class="mt-3 flex flex-col gap-1 text-center">
+                                                    <Show
+                                                        when={
+                                                            customActivity?.state
+                                                        }
+                                                    >
+                                                        <p class="text-sm font-medium text-neutral-300">
+                                                            {
+                                                                customActivity!
+                                                                    .state
+                                                            }
+                                                        </p>
                                                     </Show>
 
-                                                    {/* Avatar */}
-                                                    <img
-                                                        src={avatar}
-                                                        draggable={false}
-                                                        class="size-16 rounded-full border-2 border-neutral-700 select-none"
-                                                    />
+                                                    <Show when={gameActivity}>
+                                                        <p class="text-xs text-neutral-400">
+                                                            Playing{' '}
+                                                            {gameActivity!.name}
+                                                        </p>
+                                                    </Show>
 
-                                                    {/* Status */}
-                                                    <div
-                                                        class={`absolute -right-1 -bottom-1 z-20 h-5 w-5 rounded-full border-2 border-neutral-900 ${StatusColours[userData.discord_status as keyof typeof StatusColours] ?? 'bg-gray-500'}`}
-                                                    ></div>
+                                                    <Show
+                                                        when={
+                                                            !customActivity?.state &&
+                                                            !gameActivity
+                                                        }
+                                                    >
+                                                        <p class="text-sm text-neutral-400">
+                                                            {status}
+                                                        </p>
+                                                    </Show>
                                                 </div>
                                             </div>
-
-                                            <div class="flex flex-col items-center">
-                                                <h3 class="text-lg font-semibold text-white">
-                                                    {username}
-                                                </h3>
-
-                                                <Show when={role}>
-                                                    <span
-                                                        class={`rounded-full border px-3 py-1 text-xs font-medium ${RoleColours[role!.type as keyof typeof RoleColours]}`}
-                                                    >
-                                                        {role!.label}
-                                                    </span>
-                                                </Show>
-                                            </div>
-
-                                            <div class="mt-3 flex flex-col gap-1 text-center">
-                                                <Show
-                                                    when={customStatus?.state}
-                                                >
-                                                    <p class="text-sm font-medium text-neutral-300">
-                                                        {customStatus!.state}
-                                                    </p>
-                                                </Show>
-
-                                                <Show when={otherActivity}>
-                                                    <p class="text-xs text-neutral-400">
-                                                        {activityType(otherActivity!.type)}
-                                                        {otherActivity!.details ?? otherActivity!.name}
-                                                    </p>
-                                                </Show>
-
-                                                <Show
-                                                    when={
-                                                        !customStatus?.state &&
-                                                        !otherActivity
-                                                    }
-                                                >
-                                                    <p class="text-sm text-neutral-400">
-                                                        {status}
-                                                    </p>
-                                                </Show>
-                                            </div>
                                         </div>
-                                    </div>
-                                )
-                            }}
-                        </For>
-                    </div>
-                </Show>
+                                    )
+                                }}
+                            </For>
+                        </div>
+                    </Show>
+                </div>
             </div>
-        </div>
+        </>
     )
 }

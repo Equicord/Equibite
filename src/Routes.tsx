@@ -1,8 +1,10 @@
 import RootLayout from '@components/Layout/RootLayout'
 import { Router, Route } from '@solidjs/router'
+import { MetaProvider } from '@solidjs/meta'
 
 import Home from '@views/Home'
 import Download from '@views/Download'
+import DownloadThanks from '@views/Download/Thanks'
 import Plugins from '@views/Plugins'
 import PluginDetails from '@views/Plugins/Details'
 import Team from '@views/Team'
@@ -11,19 +13,22 @@ import Team from '@views/Team'
 import Icons from '@views/Icons'
 import FreeNitro from '@views/Freenitro'
 
-const NotFound = () => <h1>404 - Page Not Found</h1>
+import NotFound from '@views/NotFound'
 
 export default function Routes() {
     return (
-        <Router root={RootLayout}>
-            <Route path="/" component={Home} />
-            <Route path="/plugins" component={Plugins} />
-            <Route path="/plugins/:name" component={PluginDetails} />
-            <Route path="/team" component={Team} />
-            <Route path="/icons" component={Icons} />
-            <Route path="/freenitro" component={FreeNitro} />
-            <Route path="/download" component={Download} />
-            <Route path="*" component={NotFound} />
-        </Router>
+        <MetaProvider>
+            <Router root={RootLayout}>
+                <Route path="/" component={Home} />
+                <Route path="/plugins" component={Plugins} />
+                <Route path="/plugins/:name" component={PluginDetails} />
+                <Route path="/team" component={Team} />
+                <Route path="/icons" component={Icons} />
+                <Route path="/freenitro" component={FreeNitro} />
+                <Route path="/download" component={Download} />
+                <Route path="/download/thanks" component={DownloadThanks} />
+                <Route path="*" component={NotFound} />
+            </Router>
+        </MetaProvider>
     )
 }

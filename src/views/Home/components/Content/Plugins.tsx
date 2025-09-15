@@ -1,6 +1,5 @@
 import { createSignal } from 'solid-js'
 import { A } from '@solidjs/router'
-import classNames from 'classnames'
 
 import { Puzzle, Globe } from 'lucide-solid'
 import Button from '@components/UI/Button'
