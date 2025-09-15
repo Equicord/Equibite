@@ -1,22 +1,22 @@
-import { createSignal, For, onMount, onCleanup } from 'solid-js'
-import { A, useSearchParams } from '@solidjs/router'
 import { Title } from '@solidjs/meta'
+import { A, useSearchParams } from '@solidjs/router'
 import gsap from 'gsap'
+import { createSignal, For, onMount } from 'solid-js'
 
-import { isWindows, isMac, isLinux } from '@utils/navigator'
-import Fa from 'solid-fa'
 import {
     type IconDefinition,
-    faWindows,
     faApple,
     faLinux,
+    faWindows,
 } from '@fortawesome/free-brands-svg-icons'
+import { isLinux, isMac, isWindows } from '@utils/navigator'
 import {
-    Download as DownloadIcon,
     BookOpen,
-    HardDriveDownload,
     CircleQuestionMark,
+    Download as DownloadIcon,
+    HardDriveDownload,
 } from 'lucide-solid'
+import Fa from 'solid-fa'
 
 import Button from '@components/UI/Button'
 import Dropdown from '@components/UI/Dropdown'

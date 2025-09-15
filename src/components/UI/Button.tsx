@@ -1,5 +1,5 @@
-import { type JSX, splitProps } from 'solid-js'
 import classNames from 'classnames'
+import { type JSX, splitProps } from 'solid-js'
 
 export type ButtonStyle = 'primary' | 'secondary' | 'blue' | 'red'
 

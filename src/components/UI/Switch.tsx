@@ -1,4 +1,4 @@
-import { type JSX, splitProps, createSignal, Show } from 'solid-js'
+import { createSignal, type JSX, Show, splitProps } from 'solid-js'
 
 interface Props extends JSX.InputHTMLAttributes<HTMLInputElement> {
     label?: string

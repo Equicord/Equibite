@@ -1,6 +1,6 @@
-import { A } from '@solidjs/router'
-import { TrafficCone, Github, Check, Merge } from 'lucide-solid'
 import Button from '@components/UI/Button'
+import { A } from '@solidjs/router'
+import { Check, Github, Merge, TrafficCone } from 'lucide-solid'
 
 // Maybe make this dynamic in the future?
 function Commits() {

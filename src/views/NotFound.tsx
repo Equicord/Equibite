@@ -1,8 +1,8 @@
 import SimpleBootstrap from '@components/SimpleBootstrap'
 import { A } from '@solidjs/router'
 
-import { Flower2, ArrowLeft } from 'lucide-solid'
 import Button from '@components/UI/Button'
+import { ArrowLeft, Flower2 } from 'lucide-solid'
 
 const Texts: string[] = [
     "Looks like you've lost your map!",
@@ -10,7 +10,7 @@ const Texts: string[] = [
     "Yeah... This page doesn't exist.",
     "Hey! Oh yeah, this page doesn't exist.",
     'Naibuu was here.',
-    'Thor took this path away.'
+    'Thor took this path away.',
 ]
 
 export default function NotFound() {

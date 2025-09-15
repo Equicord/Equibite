@@ -1,14 +1,14 @@
-import { For, onMount } from 'solid-js'
 import { A } from '@solidjs/router'
 import gsap from 'gsap'
+import { For, onMount } from 'solid-js'
 
+import { faApple, faLinux, faWindows } from '@fortawesome/free-brands-svg-icons'
 import { Download } from 'lucide-solid'
 import Fa from 'solid-fa'
-import { faWindows, faApple, faLinux } from '@fortawesome/free-brands-svg-icons'
 
-import { isWindows, isMac, isLinux } from '@utils/navigator'
 import Settings from '@assets/settings.png'
 import Button from '@components/UI/Button'
+import { isLinux, isMac, isWindows } from '@utils/navigator'
 
 export default function HomeHero() {
     let textRef: HTMLHeadingElement | undefined

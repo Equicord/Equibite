@@ -1,8 +1,8 @@
-import { A } from '@solidjs/router'
 import Logo from '@assets/logo.svg'
-import Fa from 'solid-fa'
 import { faDiscord } from '@fortawesome/free-brands-svg-icons'
+import { A } from '@solidjs/router'
 import { Github } from 'lucide-solid'
+import Fa from 'solid-fa'
 
 export default function Footer() {
     return (

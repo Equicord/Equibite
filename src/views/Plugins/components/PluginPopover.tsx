@@ -1,12 +1,12 @@
-import { createSignal, onCleanup, Show } from 'solid-js'
 import { Blocks, Braces, Cog, Monitor } from 'lucide-solid'
+import { createSignal, onCleanup, Show } from 'solid-js'
 
 import Button from '@components/UI/Button'
-import Switch from '@components/UI/Switch'
 import Dropdown from '@components/UI/Dropdown'
+import Switch from '@components/UI/Switch'
 
-import Vencord from '@assets/icons/vencord.png'
 import Equicord from '@assets/icons/equicord.png'
+import Vencord from '@assets/icons/vencord.png'
 
 interface Props {
     // Plugin filter

@@ -1,5 +1,5 @@
 import { A } from '@solidjs/router'
-import { Heart, ArrowLeft, Earth } from 'lucide-solid'
+import { ArrowLeft, Earth, Heart } from 'lucide-solid'
 
 import SimpleBootstrap from '@components/SimpleBootstrap'
 import Button from '@components/UI/Button'

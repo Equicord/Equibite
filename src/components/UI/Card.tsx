@@ -1,6 +1,6 @@
-import type { Component } from 'solid-js'
-import type { LucideProps } from 'lucide-solid'
 import classNames from 'classnames'
+import type { LucideProps } from 'lucide-solid'
+import type { Component } from 'solid-js'
 
 interface Props {
     // Custom Class

@@ -1,6 +1,6 @@
 import { Title } from '@solidjs/meta'
-import HomeHero from './components/Hero'
 import HomeContent from './components/Content'
+import HomeHero from './components/Hero'
 
 export default function Home() {
     return (

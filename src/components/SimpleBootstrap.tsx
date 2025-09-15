@@ -1,6 +1,6 @@
-import { type ParentProps, type JSX, onMount } from 'solid-js'
 import { Title } from '@solidjs/meta'
 import gsap from 'gsap'
+import { type JSX, onMount, type ParentProps } from 'solid-js'
 
 interface Props extends ParentProps {
     meta?: {

@@ -1,8 +1,8 @@
 import FeatureCloud from './Cloud'
-import FeatureMaintained from './Maintained'
-import FeaturePlugins from './Plugins'
 import Community from './Community'
 import Contribute from './Contribute'
+import FeatureMaintained from './Maintained'
+import FeaturePlugins from './Plugins'
 
 export default function HomeContent() {
     return (

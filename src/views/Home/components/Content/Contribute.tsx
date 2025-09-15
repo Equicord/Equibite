@@ -1,5 +1,5 @@
-import { A } from '@solidjs/router'
 import Button from '@components/UI/Button'
+import { A } from '@solidjs/router'
 import { Github } from 'lucide-solid'
 
 export default function Contribute() {

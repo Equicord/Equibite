@@ -1,13 +1,13 @@
-import { createSignal, createEffect, For, Show, onMount } from 'solid-js'
 import { Title } from '@solidjs/meta'
 import {
-    teamMembers,
+    artistIds,
+    helperIds,
     ownerIds,
     teamIds,
-    helperIds,
-    artistIds,
+    teamMembers,
 } from '@utils/constants'
 import gsap from 'gsap'
+import { createEffect, createSignal, For, onMount, Show } from 'solid-js'
 
 interface AvatarDecoration {
     sku_id: string

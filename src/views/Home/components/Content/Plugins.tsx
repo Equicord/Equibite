@@ -1,9 +1,9 @@
-import { createSignal } from 'solid-js'
 import { A } from '@solidjs/router'
+import { createSignal } from 'solid-js'
 
-import { Puzzle, Globe } from 'lucide-solid'
 import Button from '@components/UI/Button'
 import Switch from '@components/UI/Switch'
+import { Globe, Puzzle } from 'lucide-solid'
 
 interface PluginProps {
     title: string

@@ -1,20 +1,21 @@
-import { createSignal, onMount, onCleanup, JSX } from 'solid-js'
 import { A } from '@solidjs/router'
-import gsap from 'gsap'
 import classNames from 'classnames'
+import gsap from 'gsap'
+import { createSignal, JSX, onCleanup, onMount } from 'solid-js'
 
+import { faDiscord } from '@fortawesome/free-brands-svg-icons'
 import {
-    Download,
-    ChevronDown,
-    Users,
     Book,
-    Puzzle,
-    Github,
-    ExternalLink,
+    ChevronDown,
+    CloudFog,
     Code,
+    Download,
+    ExternalLink,
+    Github,
+    Puzzle,
+    Users,
 } from 'lucide-solid'
 import Fa from 'solid-fa'
-import { faDiscord } from '@fortawesome/free-brands-svg-icons'
 
 import Logo from '@assets/logo.svg'
 import Button from '@components/UI/Button'
@@ -58,6 +59,12 @@ const BrowseSections: BrowseSection[] = [
     {
         category: 'Resources',
         items: [
+            {
+                text: 'Cloud',
+                excerpt: 'Equicord comes with a cloud integration.',
+                href: '/cloud',
+                icon: () => <CloudFog size={20} />,
+            },
             {
                 text: 'Documentation',
                 excerpt: 'Learn how to use Equicord',
@@ -226,7 +233,7 @@ export default function Navbar() {
         <A
             href={props.item.href}
             target={props.item.external ? '_blank' : undefined}
-            class="flex cursor-pointer items-center gap-1 font-medium text-neutral-400 transition-colors hover:text-white"
+            class="flex cursor-pointer items-center hover:bg-neutral-900 py-2 px-3 rounded-xl gap-1 font-medium text-neutral-400 transition-colors hover:text-white"
         >
             {props.item.text}
             {props.item.external && <ExternalLink size={16} />}
@@ -239,7 +246,7 @@ export default function Navbar() {
             onMouseEnter={openDropdown}
             onMouseLeave={closeDropdown}
         >
-            <div class="flex cursor-pointer items-center gap-1 font-medium text-neutral-400 transition-colors hover:text-white">
+            <div class="flex cursor-pointer items-center gap-1 font-medium text-neutral-400 transition-colors hover:text-white hover:bg-neutral-900 py-2 px-3 rounded-xl">
                 <span>Browse</span>
 
                 <ChevronDown
@@ -253,7 +260,7 @@ export default function Navbar() {
 
             <div
                 ref={dropdownRef}
-                class="absolute top-10 left-3 z-30 mt-2 w-[800px] -translate-x-1/3 rounded-2xl border border-neutral-700/50 bg-neutral-900 shadow-2xl"
+                class="absolute top-12 left-3 z-30 mt-2 w-[800px] -translate-x-1/3 rounded-2xl border border-neutral-700/50 bg-neutral-900 shadow-2xl"
                 style={{ display: 'none' }}
             >
                 <div class="grid grid-cols-3 gap-8 p-8">
@@ -328,7 +335,7 @@ export default function Navbar() {
                 class={classNames(
                     'max-w-eq-lg z-30 mx-auto flex items-center justify-between px-6 py-8 transition-colors',
                     hasScrolled() &&
-                    'sticky top-0 bg-neutral-950/90 backdrop-blur-lg',
+                        'sticky top-0 bg-neutral-950/90 backdrop-blur-lg',
                 )}
             >
                 <A
@@ -344,7 +351,7 @@ export default function Navbar() {
                     Equicord
                 </A>
 
-                <nav class="hidden flex-1 items-center justify-center gap-6 md:flex">
+                <nav class="hidden flex-1 items-center justify-center gap-1 md:flex">
                     <BrowseDropdown />
 
                     {NavItems.map((item) => (

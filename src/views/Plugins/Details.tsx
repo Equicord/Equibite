@@ -1,32 +1,33 @@
-import {
-    createResource,
-    createMemo,
-    createSignal,
-    Show,
-    For,
-    Switch,
-    Match,
-} from 'solid-js'
-import { useParams, useNavigate, A } from '@solidjs/router'
 import { Title } from '@solidjs/meta'
-
+import { A, useNavigate, useParams } from '@solidjs/router'
 import {
-    Users,
-    FileText,
-    RotateCcw,
-    Globe,
-    Puzzle,
-    Link,
-    ChartNoAxesColumnDecreasing,
-    Braces,
-    ChevronRight,
-    Notebook,
-    Command,
-    ArrowLeft,
-} from 'lucide-solid'
+    createMemo,
+    createResource,
+    createSignal,
+    For,
+    Match,
+    Show,
+    Switch,
+} from 'solid-js'
+
 import { type Plugin, fetchPlugins, formatAuthors } from '@utils/plugin'
+import {
+    ArrowLeft,
+    Braces,
+    ChartNoAxesColumnDecreasing,
+    ChevronRight,
+    Command,
+    FileText,
+    Globe,
+    Link,
+    Notebook,
+    Puzzle,
+    RotateCcw,
+    Users,
+} from 'lucide-solid'
 
 import Button from '@components/UI/Button'
+import toast from 'solid-toast'
 
 const getPluginSource = (filePath: string): string => {
     const lower = filePath.toLowerCase()
@@ -54,6 +55,18 @@ export default function PluginDetails() {
     const [activeTab, setActiveTab] = createSignal<'overview' | 'commands'>(
         'overview',
     )
+
+    const copyLink = (plugin: Plugin) => {
+        const url = `https://equicord.org/plugins/${plugin.name}`
+        navigator.clipboard.writeText(url)
+        toast.success('Copied Link', {
+            className:
+                'border-1 !rounded-xl !bg-neutral-900 !text-white !font-medium border-neutral-800',
+            iconTheme: {
+                secondary: 'var(--color-neutral-900)',
+            },
+        })
+    }
 
     return (
         <>
@@ -162,12 +175,7 @@ export default function PluginDetails() {
                                             icon={<Link size={16} />}
                                             style="secondary"
                                             class="!px-4 !py-2.5 text-sm"
-                                            onClick={() => {
-                                                const url = `https://equicord.org/plugins/${plugin().name}`
-                                                navigator.clipboard.writeText(
-                                                    url,
-                                                )
-                                            }}
+                                            onClick={() => copyLink(plugin())}
                                         >
                                             Copy Link
                                         </Button>

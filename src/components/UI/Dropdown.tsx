@@ -1,5 +1,5 @@
-import { type JSX, createSignal, For, Show, onCleanup } from 'solid-js'
 import { ChevronDown, ChevronUp } from 'lucide-solid'
+import { For, type JSX, Show, createSignal, onCleanup, onMount } from 'solid-js'
 
 interface DropdownItem {
     label: string
@@ -18,25 +18,32 @@ interface Props {
 
 export default function Dropdown(props: Props) {
     const [open, setOpen] = createSignal(false)
+    let containerRef: HTMLDivElement | undefined
 
     const toggle = () => setOpen((open) => !open)
     const close = () => setOpen(false)
 
     const handleClickOutside = (event: MouseEvent) => {
-        const target = event.target as HTMLElement
-        if (!target.closest('.dropdown-container')) close()
+        if (containerRef && !containerRef.contains(event.target as Node)) {
+            close()
+        }
     }
 
     const handleSelect = (item: DropdownItem) => {
         props.onSelect?.(item)
         close()
     }
-    document.addEventListener('click', handleClickOutside)
 
-    onCleanup(() => document.removeEventListener('click', handleClickOutside))
+    onMount(() => {
+        document.addEventListener('click', handleClickOutside)
+    })
+
+    onCleanup(() => {
+        document.removeEventListener('click', handleClickOutside)
+    })
 
     return (
-        <div class="dropdown-container relative w-full">
+        <div ref={containerRef} class="relative w-full">
             <button
                 onClick={toggle}
                 class={`flex w-full cursor-pointer items-center justify-between rounded-lg border border-neutral-800 px-3 py-3 font-medium transition-colors hover:bg-neutral-900 focus:outline-none ${open() ? 'bg-neutral-900 text-white' : 'bg-neutral-950 text-neutral-400'}`}

@@ -1,8 +1,8 @@
-import { A } from '@solidjs/router'
 import Button from '@components/UI/Button'
+import { A } from '@solidjs/router'
 
-import Fa from 'solid-fa'
 import { faDiscord } from '@fortawesome/free-brands-svg-icons'
+import Fa from 'solid-fa'
 
 export default function Community() {
     return (

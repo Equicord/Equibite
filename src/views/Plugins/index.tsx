@@ -1,15 +1,15 @@
+import { Title } from '@solidjs/meta'
+import { useSearchParams } from '@solidjs/router'
 import {
-    onMount,
-    onCleanup,
+    createEffect,
+    createMemo,
     createResource,
     createSignal,
-    createMemo,
-    Show,
     For,
-    createEffect,
+    onCleanup,
+    onMount,
+    Show,
 } from 'solid-js'
-import { useSearchParams } from '@solidjs/router'
-import { Title } from '@solidjs/meta'
 
 import { fetchPlugins } from '@utils/plugin'
 import gsap from 'gsap'

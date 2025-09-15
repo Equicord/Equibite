@@ -1,12 +1,12 @@
-import { Show } from 'solid-js'
 import { A } from '@solidjs/router'
 import {
     type Plugin,
-    formatAuthors,
     cleanDescription,
+    formatAuthors,
     getAvailabilityText,
 } from '@utils/plugin'
 import { Puzzle, Users } from 'lucide-solid'
+import { Show } from 'solid-js'
 
 export default function PluginCard({
     name,

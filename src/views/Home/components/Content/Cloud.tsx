@@ -1,4 +1,6 @@
-import { CloudCheck, CloudDownload, Monitor } from 'lucide-solid'
+import Button from '@components/UI/Button'
+import { A } from '@solidjs/router'
+import { CloudCheck, CloudDownload, CloudFog, Monitor } from 'lucide-solid'
 
 function Cloud() {
     return (
@@ -39,6 +41,15 @@ export default function FeatureCloud() {
                         Sync your settings anytime with our dedicated Vencord
                         cloud instance for seamless experience across devices.
                     </p>
+
+                    <A href="/cloud" class="mt-6 w-fit">
+                        <Button
+                            style="secondary"
+                            icon={<CloudFog fill="#ffffff10" size={16} />}
+                        >
+                            Read more
+                        </Button>
+                    </A>
                 </div>
             </div>
 
