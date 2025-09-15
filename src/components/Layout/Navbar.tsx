@@ -78,13 +78,13 @@ const BrowseSections: BrowseSection[] = [
             {
                 text: 'Discord',
                 excerpt: 'Join the active community',
-                href: '/featured',
+                href: '/discord',
                 icon: () => <Fa icon={faDiscord} class="h-8" />,
             },
             {
                 text: 'GitHub',
                 excerpt: 'Contribute to Equicord',
-                href: '/popular',
+                href: 'https://github.com/Equicord',
                 icon: () => <Github size={20} />,
             },
         ],
