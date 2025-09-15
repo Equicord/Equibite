@@ -17,6 +17,7 @@ import Icons from '@views/Icons'
 
 import NotFound from '@views/NotFound'
 import Discord from '@views/Discord'
+import CloudGDPR from '@views/Cloud/GDPR'
 
 export default function Routes() {
     return (
@@ -32,6 +33,7 @@ export default function Routes() {
                 <Route path="/download/thanks" component={DownloadThanks} />
                 <Route path="/cloud" component={Cloud} />
                 <Route path="/cloud/policy" component={CloudPolicy} />
+                <Route path="/cloud/gdpr" component={CloudGDPR} />
                 <Route path="/discord" component={Discord} />
                 <Route path="*" component={NotFound} />
             </Router>

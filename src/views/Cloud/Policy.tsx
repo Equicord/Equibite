@@ -12,7 +12,7 @@ export default function CloudPolicy() {
             description="Privacy policy for Equicord's cloud services."
         >
             <h2 class="text-lg font-semibold text-neutral-300">
-                Last Updated: 26/03/2023
+                Last Updated: 9/15/2025
             </h2>
 
             <div class="flex flex-col gap-3">
@@ -20,12 +20,12 @@ export default function CloudPolicy() {
                 <p class="leading-relaxed font-medium text-neutral-400">
                     This privacy policy applies to our cloud services, which you
                     need to explicitly enable. If you don't enable the cloud,
-                    Vencord will not collect any data about you whatsoever. Our
+                    Equicord will not collect any data about you whatsoever. Our
                     website (the one you are currently on) might collect data
                     about you via our hosting provider Vercel. You can find out
                     more about this in our{' '}
                     <A
-                        href="https://vencord.dev/cloud/gdpr/"
+                        href="/cloud/gdpr"
                         class="text-neutral-300 underline"
                     >
                         GDPR policy
@@ -50,7 +50,7 @@ export default function CloudPolicy() {
                         to uniquely identify your data
                     </li>
                     <li>
-                        Your Vencord settings, stored as JSON plain text. This
+                        Your Equicord settings, stored as JSON plain text. This
                         is necessary to synchronise your settings between
                         multiple clients as part of our Settings Sync feature.
                     </li>
@@ -72,8 +72,8 @@ export default function CloudPolicy() {
                     We will retain your data until it is no longer necessary for
                     the aforementioned purposes. You can delete all your data
                     permamently at any time by using the Erase All Data button
-                    in the Vencord Cloud settings section or by emailing us at
-                    privacy@vencord.dev.
+                    in the Equicord Cloud settings section or by emailing us at
+                    privacy@equicord.org.
                 </p>
             </div>
 
