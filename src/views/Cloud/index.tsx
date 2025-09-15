@@ -22,20 +22,12 @@ export default function Cloud() {
                     you're good to go! You can now enable specific features on
                     the same page.
                 </p>
-            </div>
 
-            {/* <div class="flex items-center gap-3">
-                <img
-                    src={CloudOne}
-                    class="rounded-xl select-none"
-                    draggable={false}
-                />
-                <img
-                    src={CloudTwo}
-                    class="rounded-xl select-none"
-                    draggable={false}
-                />
-            </div> */}
+                <p class="font-medium text-neutral-400">
+                    To use our cloud, all you need to do is change the backend url in
+                    the cloud tab to <b><code>https://cloud.equicord.org.</code></b>
+                </p>
+            </div>
 
             <div class="mt-6 flex flex-col gap-6">
                 <h1 class="text-2xl font-bold">What is included?</h1>
