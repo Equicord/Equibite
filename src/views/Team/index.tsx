@@ -130,7 +130,7 @@ export default function Teams() {
             : 'https://cdn.discordapp.com/embed/avatars/0.png'
 
         const decoration = u.avatar_decoration_data
-            ? `https://cdn.discordapp.com/avatar-decoration-presets/${u.avatar_decoration_data.asset}.png`
+            ? `https://cdn.discordapp.com/avatar-decoration-presets/${u.avatar_decoration_data.asset}.png?size=128`
             : null
 
         const customStatus = userData.activities.find((a) => a.type === 4)
@@ -148,7 +148,7 @@ export default function Teams() {
                                 <img
                                     src={decoration!}
                                     draggable={false}
-                                    class="absolute inset-0 z-10 size-20 object-contain select-none"
+                                    class="absolute inset-0 z-10 size-16 object-contain select-none top-[-3.5px] scale-x-110"
                                 />
                             </Show>
 
