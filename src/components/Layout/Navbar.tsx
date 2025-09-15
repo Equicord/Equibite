@@ -85,7 +85,7 @@ const BrowseSections: BrowseSection[] = [
             {
                 text: 'Discord',
                 excerpt: 'Join the active community',
-                href: '/discord',
+                href: 'https://discord.gg/equicord-1173279886065029291',
                 icon: () => <Fa icon={faDiscord} class="h-8" />,
             },
             {
