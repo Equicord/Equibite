@@ -1,8 +1,4 @@
 import Logo from '@assets/logo.svg'
-import { faDiscord } from '@fortawesome/free-brands-svg-icons'
-import { A } from '@solidjs/router'
-import { Github } from 'lucide-solid'
-import Fa from 'solid-fa'
 
 export default function Footer() {
     return (
@@ -26,35 +22,11 @@ export default function Footer() {
                             plugins and more.
                         </p>
                     </div>
-
-                    <div class="flex flex-col items-end gap-2">
-                        <span class="text-sm font-medium text-neutral-400">
-                            Socials
-                        </span>
-
-                        <A
-                            href="/discord"
-                            target="_blank"
-                            class="flex items-center gap-2 font-medium transition-opacity hover:opacity-80"
-                        >
-                            <Fa icon={faDiscord} class="size-4" />
-                            Discord
-                        </A>
-
-                        <A
-                            href="https://github.com/Equicord"
-                            target="_blank"
-                            class="flex items-center gap-2 font-medium transition-opacity hover:opacity-80"
-                        >
-                            <Github size={16} />
-                            GitHub
-                        </A>
-                    </div>
                 </div>
 
                 <div class="flex items-center justify-between max-sm:flex-col-reverse max-sm:gap-3">
                     <span class="text-sm font-medium text-neutral-200">
-                        © {new Date().getFullYear()} An enhanced version of
+                        ©2025 An enhanced version of
                         Vencord.
                     </span>
 

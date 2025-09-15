@@ -56,7 +56,7 @@ export default function Cloud() {
             </div>
 
             <div class="mt-6 flex items-center gap-3">
-                <A href="https://github.com/Vencord/Vencloud" class="w-fit">
+                <A href="https://github.com/Vencord/Vencloud" target="_blank" rel="noopener noreferrer" class="w-fit" >
                     <Button
                         style="primary"
                         icon={<Link size={16} />}

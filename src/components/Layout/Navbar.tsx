@@ -30,6 +30,7 @@ interface BrowseItem {
     text: string
     excerpt: string
     href: string
+    target?: string;
     icon: () => JSX.Element
 }
 
@@ -69,12 +70,14 @@ const BrowseSections: BrowseSection[] = [
                 text: 'Documentation',
                 excerpt: 'Learn how to use Equicord',
                 href: 'https://docs.equicord.org',
+                target: "_blank",
                 icon: () => <Book size={20} />,
             },
             {
                 text: 'Source Code',
                 excerpt: 'View the code of Equicord',
                 href: 'https://github.com/Equicord/Equicord',
+                target: "_blank",
                 icon: () => <Code size={20} />,
             },
         ],
@@ -86,12 +89,14 @@ const BrowseSections: BrowseSection[] = [
                 text: 'Discord',
                 excerpt: 'Join the active community',
                 href: '/discord',
+                target: "_blank",
                 icon: () => <Fa icon={faDiscord} class="h-8" />,
             },
             {
                 text: 'GitHub',
                 excerpt: 'Contribute to Equicord',
                 href: 'https://github.com/Equicord',
+                target: "_blank",
                 icon: () => <Github size={20} />,
             },
         ],
@@ -188,6 +193,7 @@ export default function Navbar() {
     const DropdownItem = (props: { item: BrowseItem; isMobile?: boolean }) => (
         <A
             href={props.item.href}
+            {...(props.item.target && { target: props.item.target })}
             class="group flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-neutral-800"
             onClick={() => props.isMobile && closeMobileMenu()}
         >
