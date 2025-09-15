@@ -185,7 +185,7 @@ export default function Teams() {
                                     const status =
                                         customStatus?.state ??
                                         StatusLabels[
-                                            userData.discord_status as keyof typeof StatusLabels
+                                        userData.discord_status as keyof typeof StatusLabels
                                         ] ??
                                         'Unknown'
                                     const role = getUserRole(u.id)
@@ -198,13 +198,9 @@ export default function Teams() {
                                                         {/* Decoration */}
                                                         <Show when={decoration}>
                                                             <img
-                                                                src={
-                                                                    decoration!
-                                                                }
-                                                                draggable={
-                                                                    false
-                                                                }
-                                                                class="absolute inset-0 z-10 size-20 object-contain select-none"
+                                                                src={decoration!}
+                                                                draggable={false}
+                                                                class="absolute inset-0 z-10 size-16 object-contain select-none top-[-3.5px] scale-x-110"
                                                             />
                                                         </Show>
 
