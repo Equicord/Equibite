@@ -15,7 +15,7 @@ export default function Community() {
             </p>
 
             <A
-                href="https://discord.gg/Dsy4sv7aad"
+                href="/discord"
                 target="_blank"
                 class="mt-6 w-fit"
             >

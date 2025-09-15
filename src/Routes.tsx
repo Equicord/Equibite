@@ -16,6 +16,7 @@ import Team from '@views/Team'
 import Icons from '@views/Icons'
 
 import NotFound from '@views/NotFound'
+import Discord from '@views/Discord'
 
 export default function Routes() {
     return (
@@ -31,6 +32,7 @@ export default function Routes() {
                 <Route path="/download/thanks" component={DownloadThanks} />
                 <Route path="/cloud" component={Cloud} />
                 <Route path="/cloud/policy" component={CloudPolicy} />
+                <Route path="/discord" component={Discord} />
                 <Route path="*" component={NotFound} />
             </Router>
         </MetaProvider>

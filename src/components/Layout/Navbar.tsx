@@ -85,7 +85,7 @@ const BrowseSections: BrowseSection[] = [
             {
                 text: 'Discord',
                 excerpt: 'Join the active community',
-                href: 'https://discord.gg/equicord-1173279886065029291',
+                href: '/discord',
                 icon: () => <Fa icon={faDiscord} class="h-8" />,
             },
             {
@@ -335,7 +335,7 @@ export default function Navbar() {
                 class={classNames(
                     'max-w-eq-lg z-30 mx-auto flex items-center justify-between px-6 py-8 transition-colors',
                     hasScrolled() &&
-                        'sticky top-0 bg-neutral-950/90 backdrop-blur-lg',
+                    'sticky top-0 bg-neutral-950/90 backdrop-blur-lg',
                 )}
             >
                 <A

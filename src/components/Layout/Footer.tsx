@@ -33,7 +33,7 @@ export default function Footer() {
                         </span>
 
                         <A
-                            href="https://discord.gg/Dsy4sv7aad"
+                            href="/discord"
                             target="_blank"
                             class="flex items-center gap-2 font-medium transition-opacity hover:opacity-80"
                         >
