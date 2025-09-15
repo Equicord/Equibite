@@ -20,6 +20,7 @@ interface Activity {
     name: string
     type: number
     state?: string
+    details?: string
 }
 
 interface LanyardUser {
@@ -112,6 +113,23 @@ export default function Teams() {
             })
         }
     })
+
+    const activityType = (type: number) => {
+        switch (type) {
+            case 0:
+                return "Playing "
+            case 1:
+                return "Streaming "
+            case 2:
+                return "Listening to "
+            case 3:
+                return "Watching "
+            case 4:
+                return "Custom ";
+            case 5:
+                return "Competing in ";
+        }
+    }
 
     return (
         <>
