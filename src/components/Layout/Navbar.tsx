@@ -97,11 +97,6 @@ const NavItems: NavItem[] = [
         href: 'https://docs.equicord.org',
         external: true,
     },
-    {
-        text: 'Nitro',
-        href: '/freenitro',
-        external: true,
-    },
 ]
 
 const Animations = {
@@ -333,7 +328,7 @@ export default function Navbar() {
                 class={classNames(
                     'max-w-eq-lg z-30 mx-auto flex items-center justify-between px-6 py-8 transition-colors',
                     hasScrolled() &&
-                        'sticky top-0 bg-neutral-950/90 backdrop-blur-lg',
+                    'sticky top-0 bg-neutral-950/90 backdrop-blur-lg',
                 )}
             >
                 <A

@@ -11,7 +11,6 @@ import Team from '@views/Team'
 
 // Todo: Rewrite these pages.
 import Icons from '@views/Icons'
-import FreeNitro from '@views/Freenitro'
 
 import NotFound from '@views/NotFound'
 
@@ -24,7 +23,6 @@ export default function Routes() {
                 <Route path="/plugins/:name" component={PluginDetails} />
                 <Route path="/team" component={Team} />
                 <Route path="/icons" component={Icons} />
-                <Route path="/freenitro" component={FreeNitro} />
                 <Route path="/download" component={Download} />
                 <Route path="/download/thanks" component={DownloadThanks} />
                 <Route path="*" component={NotFound} />
