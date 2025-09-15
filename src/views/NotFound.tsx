@@ -10,6 +10,7 @@ const Texts: string[] = [
     "Yeah... This page doesn't exist.",
     "Hey! Oh yeah, this page doesn't exist.",
     'Naibuu was here.',
+    'Thor took this path away.'
 ]
 
 export default function NotFound() {
