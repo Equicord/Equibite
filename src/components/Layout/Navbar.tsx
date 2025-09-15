@@ -10,6 +10,7 @@ import {
     CloudFog,
     Code,
     Download,
+    DownloadIcon,
     ExternalLink,
     Github,
     Puzzle,
@@ -55,16 +56,22 @@ const BrowseSections: BrowseSection[] = [
                 href: '/team',
                 icon: () => <Users size={20} />,
             },
+            {
+                text: 'Cloud',
+                excerpt: 'Equicord comes with a cloud integration.',
+                href: '/cloud',
+                icon: () => <CloudFog size={20} />,
+            },
         ],
     },
     {
         category: 'Resources',
         items: [
             {
-                text: 'Cloud',
-                excerpt: 'Equicord comes with a cloud integration.',
-                href: '/cloud',
-                icon: () => <CloudFog size={20} />,
+                text: 'Download',
+                excerpt: 'Download Equicords installer Equilotl',
+                href: '/download',
+                icon: () => <DownloadIcon size={20} />,
             },
             {
                 text: 'Documentation',
