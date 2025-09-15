@@ -1,7 +1,7 @@
 import PageBootstrap from '@components/PageBootstrap'
 import Button from '@components/UI/Button'
 import { A } from '@solidjs/router'
-import { CloudFog, Rabbit, RefreshCcw, Scroll } from 'lucide-solid'
+import { CloudFog, Rabbit, RefreshCcw, Scroll, Link } from 'lucide-solid'
 
 export default function Cloud() {
     return (
@@ -10,22 +10,8 @@ export default function Cloud() {
             icon={<CloudFog />}
             fullWidth
             title="Cloud"
-            description="Equicord comes with a cloud integration allowing settings to be synced across apps and devices. We use Vencord's source code to provide our cloud instance which has a 32MB backup cap."
+            description="Equicord comes with a cloud integration allowing settings to be synced across apps and devices. We use Vencord's source code to provide our cloud instance which has a 60MB backup cap."
         >
-            <div class="flex items-center gap-3">
-                <A href="/cloud/policy" class="w-fit">
-                    <Button
-                        style="primary"
-                        icon={<Scroll size={16} />}
-                        class="text-sm"
-                    >
-                        Read policy
-                    </Button>
-                </A>
-
-                <p class="font-medium text-neutral-400">Updated 26/03/2023</p>
-            </div>
-
             <div class="mt-6 flex flex-col gap-3">
                 <h1 class="text-2xl font-bold">Getting Started</h1>
 
@@ -74,6 +60,27 @@ export default function Cloud() {
                     <p class="font-medium text-neutral-400">
                         Stay tuned for more future features!
                     </p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <A href="https://github.com/Vencord/Vencloud" class="w-fit">
+                        <Button
+                            style="primary"
+                            icon={<Link size={16} />}
+                            class="text-sm"
+                        >
+                            View the source code
+                        </Button>
+                    </A>
+
+                    <A href="/cloud/policy" class="w-fit">
+                        <Button
+                            style="primary"
+                            icon={<Scroll size={16} />}
+                            class="text-sm"
+                        >
+                            Read our privacy policy
+                        </Button>
+                    </A>
                 </div>
             </div>
         </PageBootstrap>
