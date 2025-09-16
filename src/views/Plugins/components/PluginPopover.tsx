@@ -20,6 +20,10 @@ interface Props {
     // Commands filter
     filterHasCommands: () => boolean
     setFilterHasCommands: (value: boolean) => void
+
+    // Compact mode
+    compactMode: () => boolean
+    setCompactMode: (value: boolean) => void
 }
 
 const Platforms = [
@@ -77,6 +81,15 @@ export default function PluginPopover(props: Props) {
 
             <Show when={open()}>
                 <div class="absolute right-0 z-50 mt-2 flex w-68 flex-col gap-3 rounded-lg border border-neutral-800 bg-neutral-900 p-4 shadow-lg">
+                    <Switch
+                        icon={<Blocks size={16} />}
+                        label="Compact Mode"
+                        checked={props.compactMode()}
+                        onChange={(e) =>
+                            props.setCompactMode(e.currentTarget.checked)
+                        }
+                    />
+
                     <Switch
                         icon={<Braces size={16} />}
                         label="Has Commands"

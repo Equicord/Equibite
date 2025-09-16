@@ -1,4 +1,3 @@
-import { Title } from '@solidjs/meta'
 import { useSearchParams } from '@solidjs/router'
 import {
     createEffect,
@@ -12,13 +11,14 @@ import {
 } from 'solid-js'
 
 import { fetchPlugins } from '@utils/plugin'
-import gsap from 'gsap'
+import { getStored, setStored } from '@utils/storage'
 
-import { RotateCcw, Search, SearchX } from 'lucide-solid'
+import { Puzzle, RotateCcw, Search, SearchX } from 'lucide-solid'
 
 import Button from '@components/UI/Button'
 import Input from '@components/UI/Input'
 
+import PageBootstrap from '@components/PageBootstrap'
 import PluginCard from './components/PluginCard'
 import PluginPopover from './components/PluginPopover'
 
@@ -33,10 +33,12 @@ const DESKTOP_PLATFORMS = ['discordDesktop', 'desktop', 'vesktop', 'equibop']
 
 export default function Plugins() {
     const [plugins, { refetch }] = createResource(() => fetchPlugins('all'))
-
     const [searchParams, setSearchParams] = useSearchParams()
     const [search, setSearch] = createSignal(searchParams.search || '')
 
+    const [compactMode, setCompactMode] = createSignal(
+        getStored<boolean>('compactMode', true),
+    )
     const [pluginFilter, setPluginFilter] = createSignal<PluginFilter>(
         (searchParams.source as PluginFilter) || 'all',
     )
@@ -50,6 +52,7 @@ export default function Plugins() {
     const [visibleCount, setVisibleCount] = createSignal(INITIAL_VISIBLE_COUNT)
 
     createEffect(() => {
+        setStored('compactMode', compactMode())
         setSearchParams({
             search: search() || undefined,
             source: pluginFilter() !== 'all' ? pluginFilter() : undefined,
@@ -57,8 +60,6 @@ export default function Plugins() {
             commands: filterHasCommands() ? 'true' : undefined,
         })
     })
-
-    let containerRef: HTMLDivElement | undefined
 
     const updateSearch = (value: string) => {
         setSearch(value)
@@ -140,15 +141,6 @@ export default function Plugins() {
     }
 
     onMount(() => {
-        if (containerRef) {
-            gsap.from(containerRef, {
-                opacity: 0,
-                y: 50,
-                filter: 'blur(6px)',
-                duration: 0.4,
-            })
-        }
-
         window.addEventListener('scroll', handleScroll, { passive: true })
     })
 
@@ -157,114 +149,110 @@ export default function Plugins() {
     })
 
     return (
-        <>
-            <Title>Plugins | Equicord</Title>
+        <PageBootstrap
+            meta={{ title: 'Plugins' }}
+            fullWidth
+            icon={<Puzzle />}
+            title="Plugins"
+            description={`${filteredPlugins().length} plugin${filteredPlugins().length !== 1 ? 's' : ''} found`}
+        >
+            {/* Search & Filters */}
+            <div class="flex items-center gap-3">
+                <Input
+                    placeholder="Search plugins..."
+                    value={search()}
+                    onInput={(e) => updateSearch(e.currentTarget.value)}
+                    icon={<Search size={18} />}
+                    class="flex-1 py-1.5"
+                />
+                <PluginPopover
+                    pluginFilter={pluginFilter}
+                    setPluginFilter={setPluginFilter}
+                    platformFilter={platformFilter}
+                    setPlatformFilter={setPlatformFilter}
+                    filterHasCommands={filterHasCommands}
+                    setFilterHasCommands={setFilterHasCommands}
+                    compactMode={compactMode}
+                    setCompactMode={setCompactMode}
+                />
+            </div>
 
-            <div
-                class="max-w-eq-lg mx-auto flex flex-col gap-6 px-6"
-                ref={containerRef}
-            >
-                {/* Header */}
-                <header class="flex flex-col gap-1">
-                    <h1 class="text-3xl font-bold md:text-4xl">Plugins</h1>
-                    <p class="text-lg font-medium text-neutral-400">
-                        {filteredPlugins().length} plugin
-                        {filteredPlugins().length !== 1 ? 's' : ''} found
-                    </p>
-                </header>
-
-                {/* Search & Filters */}
-                <div class="flex items-center gap-3">
-                    <Input
-                        placeholder="Search plugins..."
-                        value={search()}
-                        onInput={(e) => updateSearch(e.currentTarget.value)}
-                        icon={<Search size={18} />}
-                        class="flex-1 py-1.5"
-                    />
-                    <PluginPopover
-                        pluginFilter={pluginFilter}
-                        setPluginFilter={setPluginFilter}
-                        platformFilter={platformFilter}
-                        setPlatformFilter={setPlatformFilter}
-                        filterHasCommands={filterHasCommands}
-                        setFilterHasCommands={setFilterHasCommands}
-                    />
-                </div>
-
-                {/* Plugins List */}
-                <main class="w-full">
-                    <Show
-                        when={!plugins.loading && !plugins.error}
-                        fallback={
-                            <div class="flex items-center justify-center py-12">
-                                <Show
-                                    when={plugins.error}
-                                    fallback={
-                                        <div class="flex flex-col items-center gap-2">
-                                            <div class="mx-auto h-8 w-8 animate-spin rounded-full border-b-2 border-sky-500"></div>
-
-                                            <p class="text-sm font-bold text-sky-200">
-                                                Loading plugins
-                                            </p>
-                                        </div>
-                                    }
-                                >
+            {/* Plugins List */}
+            <main class="w-full">
+                <Show
+                    when={!plugins.loading && !plugins.error}
+                    fallback={
+                        <div class="flex items-center justify-center py-12">
+                            <Show
+                                when={plugins.error}
+                                fallback={
                                     <div class="flex flex-col items-center gap-2">
-                                        <p class="text-sm font-bold text-red-400">
-                                            Failed to load plugins
+                                        <div class="mx-auto h-8 w-8 animate-spin rounded-full border-b-2 border-sky-500"></div>
+
+                                        <p class="text-sm font-bold text-sky-200">
+                                            Loading plugins
                                         </p>
-                                        <Button
-                                            style="red"
-                                            icon={<RotateCcw size={16} />}
-                                            onClick={() => refetch()}
-                                        >
-                                            Retry
-                                        </Button>
                                     </div>
-                                </Show>
+                                }
+                            >
+                                <div class="flex flex-col items-center gap-2">
+                                    <p class="text-sm font-bold text-red-400">
+                                        Failed to load plugins
+                                    </p>
+                                    <Button
+                                        style="red"
+                                        icon={<RotateCcw size={16} />}
+                                        onClick={() => refetch()}
+                                    >
+                                        Retry
+                                    </Button>
+                                </div>
+                            </Show>
+                        </div>
+                    }
+                >
+                    <Show
+                        when={filteredPlugins().length > 0}
+                        fallback={
+                            <div class="flex flex-col items-center justify-center gap-1 py-12 text-neutral-200">
+                                <SearchX size={48} class="text-neutral-500" />
+
+                                <p class="text-lg font-bold">
+                                    No plugins found.
+                                </p>
+
+                                <p class="max-w-92 text-center font-medium text-neutral-300">
+                                    Try adjusting your search or filters to find
+                                    what you are looking for.
+                                </p>
                             </div>
                         }
                     >
-                        <Show
-                            when={filteredPlugins().length > 0}
-                            fallback={
-                                <div class="flex flex-col items-center justify-center gap-1 py-12 text-neutral-200">
-                                    <SearchX
-                                        size={48}
-                                        class="text-neutral-500"
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                            <For each={visiblePlugins()}>
+                                {(plugin) => (
+                                    <PluginCard
+                                        variant={
+                                            compactMode() ? 'compact' : 'normal'
+                                        }
+                                        {...plugin}
                                     />
+                                )}
+                            </For>
+                        </div>
 
-                                    <p class="text-lg font-bold">
-                                        No plugins found.
-                                    </p>
-
-                                    <p class="max-w-92 text-center font-medium text-neutral-300">
-                                        Try adjusting your search or filters to
-                                        find what you are looking for.
-                                    </p>
-                                </div>
-                            }
-                        >
-                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                <For each={visiblePlugins()}>
-                                    {(plugin) => <PluginCard {...plugin} />}
-                                </For>
+                        <Show when={hasMorePlugins()}>
+                            <div class="mt-8 flex justify-center">
+                                <p class="text-sm text-neutral-400">
+                                    Showing {visiblePlugins().length} of{' '}
+                                    {filteredPlugins().length} plugins • Scroll
+                                    down to load more
+                                </p>
                             </div>
-
-                            <Show when={hasMorePlugins()}>
-                                <div class="mt-8 flex justify-center">
-                                    <p class="text-sm text-neutral-400">
-                                        Showing {visiblePlugins().length} of{' '}
-                                        {filteredPlugins().length} plugins •
-                                        Scroll down to load more
-                                    </p>
-                                </div>
-                            </Show>
                         </Show>
                     </Show>
-                </main>
-            </div>
-        </>
+                </Show>
+            </main>
+        </PageBootstrap>
     )
 }
