@@ -5,9 +5,6 @@ import Button from '@components/UI/Button'
 import Dropdown from '@components/UI/Dropdown'
 import Switch from '@components/UI/Switch'
 
-import Equicord from '@assets/icons/equicord.png'
-import Vencord from '@assets/icons/vencord.png'
-
 interface Props {
     // Plugin filter
     pluginFilter: () => 'all' | 'equicord' | 'vencord'
@@ -47,13 +44,13 @@ const Sources = [
         value: 'all' as const,
     },
     {
-        icon: <img src={Vencord} class="size-6 select-none" alt="Vencord" />,
+        icon: <img src="/assets/icons/vencord.png" class="size-6 select-none" alt="Vencord" />,
         label: 'Vencord',
         value: 'vencord' as const,
     },
     {
         label: 'Equicord',
-        icon: <img src={Equicord} class="size-6 select-none" alt="Vencord" />,
+        icon: <img src="/assets/icons/equicord.png" class="size-6 select-none" alt="Vencord" />,
         value: 'equicord' as const,
     },
 ]

@@ -6,7 +6,6 @@ import { faApple, faLinux, faWindows } from '@fortawesome/free-brands-svg-icons'
 import { Download } from 'lucide-solid'
 import Fa from 'solid-fa'
 
-import Settings from '@assets/settings.png'
 import Button from '@components/UI/Button'
 import { isLinux, isMac, isWindows } from '@utils/navigator'
 
@@ -122,7 +121,7 @@ export default function HomeHero() {
 
             <img
                 ref={screenRef}
-                src={Settings}
+                src="/assets/settings/settings.png"
                 alt="Equicord Settings Interface"
                 class="mt-12 rounded-t-2xl mask-b-from-75% select-none"
                 draggable="false"

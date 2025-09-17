@@ -18,7 +18,6 @@ import {
 } from 'lucide-solid'
 import Fa from 'solid-fa'
 
-import Logo from '@assets/logo.svg'
 import Button from '@components/UI/Button'
 
 interface NavItem {
@@ -356,7 +355,7 @@ export default function Navbar() {
                     class="flex items-center gap-3 text-lg font-bold text-white transition-transform active:scale-[.95]"
                 >
                     <img
-                        src={Logo}
+                        src="/assets/favicon.png"
                         class="size-8 select-none"
                         draggable={false}
                         alt="Equicord logo"
