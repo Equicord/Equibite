@@ -10,7 +10,7 @@ export default function Cloud() {
             icon={<CloudFog />}
             fullWidth
             title="Cloud"
-            description="Equicord comes with a cloud integration allowing settings to be synced across apps and devices. We use Vencord's source code to provide our cloud instance which has a 60MB backup cap."
+            description="Equicord comes with a cloud integration allowing settings to be synced across apps and devices. We use our own Equicloud source code to provide our cloud instance which has a 60MB backup cap."
         >
             <div class="mt-6 flex flex-col gap-6">
                 <h1 class="text-2xl font-bold">What is included?</h1>
@@ -56,7 +56,7 @@ export default function Cloud() {
             </div>
 
             <div class="mt-6 flex items-center gap-3">
-                <A href="https://github.com/Vencord/Vencloud" target="_blank" rel="noopener noreferrer" class="w-fit" >
+                <A href="https://github.com/Equicord/Equicloud" target="_blank" rel="noopener noreferrer" class="w-fit" >
                     <Button
                         style="primary"
                         icon={<Link size={16} />}
