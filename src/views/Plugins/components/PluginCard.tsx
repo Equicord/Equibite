@@ -18,7 +18,7 @@ type CardVariant = 'compact' | 'normal'
 export default function PluginCard(props: Props) {
     return (
         <A
-            href={`/plugins/${props.name.toLowerCase()}`}
+            href={`/plugins/${props.name}`}
             class={classNames(
                 'relative flex w-full flex-col gap-3 rounded-xl border border-neutral-800',
                 'bg-gradient-to-br from-neutral-900 to-neutral-950 p-6 transition-transform active:scale-[.98]',
