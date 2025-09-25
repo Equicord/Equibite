@@ -200,23 +200,19 @@ export default function PluginDetails() {
                                     >
                                         Overview
                                     </Button>
-
-                                    <Show when={plugin().hasCommands}>
-                                        <Button
-                                            icon={<Braces size={16} />}
-                                            buttonColor={
-                                                activeTab() === 'commands'
-                                                    ? 'primary'
-                                                    : 'secondary'
-                                            }
-                                            class="text-sm"
-                                            onClick={() =>
-                                                setActiveTab('commands')
-                                            }
-                                        >
-                                            Commands
-                                        </Button>
-                                    </Show>
+                                    <Button
+                                        icon={<Braces size={16} />}
+                                        disabled={!plugin().hasCommands}
+                                        buttonColor={
+                                            activeTab() === 'commands'
+                                                ? 'primary'
+                                                : 'secondary'
+                                        }
+                                        class="text-sm"
+                                        onClick={() => plugin().hasCommands && setActiveTab('commands')}
+                                    >
+                                        Commands
+                                    </Button>
                                 </div>
 
                                 {/* Content */}
