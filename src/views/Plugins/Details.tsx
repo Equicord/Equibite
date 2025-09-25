@@ -55,7 +55,9 @@ interface PluginSourceChipProps {
 
 function PluginSourceChip(props: PluginSourceChipProps) {
     return (
-        <span class={`rounded-full px-2 py-0.5 font-semibold ${chipStyles[props.source]}`}>
+        <span
+            class={`rounded-full px-2 py-0.5 font-semibold ${chipStyles[props.source]}`}
+        >
             {props.source}
         </span>
     )
@@ -177,7 +179,11 @@ export default function PluginDetails() {
                                                 <h1 class="text-2xl font-bold">
                                                     {plugin().name}
                                                 </h1>
-                                                <PluginSourceChip source={getPluginSource(plugin().filePath)} />
+                                                <PluginSourceChip
+                                                    source={getPluginSource(
+                                                        plugin().filePath,
+                                                    )}
+                                                />
                                             </div>
                                             <div class="flex items-center gap-2 font-medium text-neutral-300">
                                                 <Users size={16} />
