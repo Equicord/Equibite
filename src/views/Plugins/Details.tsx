@@ -29,12 +29,36 @@ import {
 import Button from '@components/UI/Button'
 import toast from 'solid-toast'
 
-const getPluginSource = (filePath: string): string => {
-    const lower = filePath.toLowerCase()
-    if (lower.startsWith('src/equicordplugins')) return 'Equicord'
-    if (lower.startsWith('src/plugins')) return 'Vencord'
+const enum PluginSource {
+    Equicord = 'Equicord',
+    Vencord = 'Vencord',
+    Unknown = 'Unknown',
+}
 
-    return 'Unknown'
+const getPluginSource = (filePath: string): PluginSource => {
+    const lower = filePath.toLowerCase()
+    if (lower.startsWith('src/equicordplugins')) return PluginSource.Equicord
+    if (lower.startsWith('src/plugins')) return PluginSource.Vencord
+
+    return PluginSource.Unknown
+}
+
+const chipStyles: Record<PluginSource, string> = {
+    [PluginSource.Equicord]: 'bg-sky-950 text-sky-100',
+    [PluginSource.Vencord]: 'bg-pink-300 text-neutral-900',
+    [PluginSource.Unknown]: 'border border-red-500',
+}
+
+interface PluginSourceChipProps {
+    source: PluginSource
+}
+
+function PluginSourceChip(props: PluginSourceChipProps) {
+    return (
+        <span class={`rounded-full px-2 py-0.5 font-semibold ${chipStyles[props.source]}`}>
+            {props.source}
+        </span>
+    )
 }
 
 export default function PluginDetails() {
@@ -149,10 +173,12 @@ export default function PluginDetails() {
                                         </div>
 
                                         <div class="flex flex-col">
-                                            <h1 class="text-2xl font-bold">
-                                                {plugin().name}
-                                            </h1>
-
+                                            <div class="flex gap-2 items-center">
+                                                <h1 class="text-2xl font-bold">
+                                                    {plugin().name}
+                                                </h1>
+                                                <PluginSourceChip source={getPluginSource(plugin().filePath)} />
+                                            </div>
                                             <div class="flex items-center gap-2 font-medium text-neutral-300">
                                                 <Users size={16} />
 
@@ -167,10 +193,6 @@ export default function PluginDetails() {
                                     </div>
 
                                     <div class="flex w-fit items-center gap-2">
-                                        <span class="rounded-xl bg-sky-950 px-4 py-2 font-semibold text-sky-100">
-                                            {getPluginSource(plugin().filePath)}
-                                        </span>
-
                                         <Button
                                             icon={<Link size={16} />}
                                             buttonColor="secondary"
