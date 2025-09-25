@@ -49,7 +49,7 @@ export default function FeaturePlugins() {
                 </div>
 
                 <A href="/plugins" class="w-fit">
-                    <Button style="secondary" icon={<Globe size={16} />}>
+                    <Button buttonColor="secondary" icon={<Globe size={16} />}>
                         Explore plugins
                     </Button>
                 </A>

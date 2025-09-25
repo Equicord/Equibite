@@ -13,7 +13,7 @@ export default function DownloadThanks() {
         >
             <A href="/">
                 <Button
-                    style="primary"
+                    buttonColor="primary"
                     icon={<ArrowLeft size={16} />}
                     class="text-sm"
                 >
@@ -23,7 +23,7 @@ export default function DownloadThanks() {
 
             <A href="/plugins">
                 <Button
-                    style="secondary"
+                    buttonColor="secondary"
                     icon={<Earth size={16} />}
                     class="text-sm"
                 >

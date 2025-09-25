@@ -194,7 +194,7 @@ export default function Download() {
                                     {(item) => (
                                         <A href={item.href} class="w-full">
                                             <Button
-                                                style={
+                                                buttonColor={
                                                     item.prioritize
                                                         ? 'primary'
                                                         : 'secondary'

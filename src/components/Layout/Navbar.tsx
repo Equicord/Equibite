@@ -332,7 +332,7 @@ export default function Navbar() {
                         <A href="/download" onClick={closeMobileMenu}>
                             <Button
                                 icon={<Download size={16} />}
-                                style="secondary"
+                                buttonColor="secondary"
                                 class="w-full justify-center"
                             >
                                 Download
@@ -372,7 +372,7 @@ export default function Navbar() {
                 </nav>
 
                 <A href="/download" class="hidden md:flex">
-                    <Button icon={<Download size={16} />} style="primary">
+                    <Button icon={<Download size={16} />} buttonColor="primary">
                         Download
                     </Button>
                 </A>

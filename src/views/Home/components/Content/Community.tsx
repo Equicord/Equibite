@@ -19,7 +19,7 @@ export default function Community() {
                 target="_blank"
                 class="mt-6 w-fit"
             >
-                <Button style="primary">
+                <Button buttonColor="primary">
                     <Fa icon={faDiscord} class="size-8" />
                     Join Discord
                 </Button>
