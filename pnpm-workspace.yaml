@@ -1,6 +1,9 @@
 packages:
-    - '**'
+  - '**'
 
 onlyBuiltDependencies:
-    - '@tailwindcss/oxide'
-    - esbuild
+  - '@tailwindcss/oxide'
+  - esbuild
+
+patchedDependencies:
+  lucide-solid: patches/lucide-solid.patch

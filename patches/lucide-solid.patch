@@ -1,0 +1,66 @@
+diff --git a/dist/source/aliases/prefixed.jsx b/dist/source/aliases/prefixed.jsx
+index 6d0d9c73fe18bf0c2a49a5a8977e4ecfee0bef23..91667c83c76702b3fa34897c90541539eaca6378 100644
+--- a/dist/source/aliases/prefixed.jsx
++++ b/dist/source/aliases/prefixed.jsx
+@@ -549,7 +549,7 @@ import { default as default541 } from "../icons/file-x";
+ import { default as default542 } from "../icons/file";
+ import { default as default543 } from "../icons/files";
+ import { default as default544 } from "../icons/film";
+-import { default as default545 } from "../icons/fingerprint";
++// import { default as default545 } from "../icons/fingerprint";
+ import { default as default546 } from "../icons/fire-extinguisher";
+ import { default as default547 } from "../icons/fish-off";
+ import { default as default548 } from "../icons/fish";
+@@ -3004,7 +3004,7 @@ export {
+   default544 as LucideFilm,
+   default1602 as LucideFilter,
+   default1600 as LucideFilterX,
+-  default545 as LucideFingerprint,
++  // default545 as LucideFingerprint,
+   default546 as LucideFireExtinguisher,
+   default548 as LucideFish,
+   default547 as LucideFishOff,
+diff --git a/dist/source/aliases/suffixed.jsx b/dist/source/aliases/suffixed.jsx
+index 01ecccd31fd8d7b8dd57051f23e1602e5f5f2cc7..3ef16c081475e9dbaed11ba2fb034e4d684d755c 100644
+--- a/dist/source/aliases/suffixed.jsx
++++ b/dist/source/aliases/suffixed.jsx
+@@ -550,7 +550,7 @@ import { default as default542 } from "../icons/file";
+ import { default as default543 } from "../icons/files";
+ import { default as default544 } from "../icons/film";
+ import { default as default545 } from "../icons/fire-extinguisher";
+-import { default as default546 } from "../icons/fingerprint";
++// import { default as default546 } from "../icons/fingerprint";
+ import { default as default547 } from "../icons/fish";
+ import { default as default548 } from "../icons/fish-off";
+ import { default as default549 } from "../icons/fish-symbol";
+@@ -3004,7 +3004,7 @@ export {
+   default544 as FilmIcon,
+   default1600 as FilterIcon,
+   default1602 as FilterXIcon,
+-  default546 as FingerprintIcon,
++  // default546 as FingerprintIcon,
+   default545 as FireExtinguisherIcon,
+   default547 as FishIcon,
+   default548 as FishOffIcon,
+diff --git a/dist/source/icons/index.jsx b/dist/source/icons/index.jsx
+index f88b997c6f05ebbc02d24814e549d3c9a8959410..196a255ef9c5d1786dc5c71139ce1ec94f83fdd8 100644
+--- a/dist/source/icons/index.jsx
++++ b/dist/source/icons/index.jsx
+@@ -638,7 +638,7 @@ import { default as default630 } from "./file-x";
+ import { default as default631 } from "./file";
+ import { default as default632 } from "./files";
+ import { default as default633 } from "./film";
+-import { default as default634 } from "./fingerprint";
++// import { default as default634 } from "./fingerprint";
+ import { default as default635 } from "./fire-extinguisher";
+ import { default as default636 } from "./fish-off";
+ import { default as default637 } from "./fish";
+@@ -2269,7 +2269,7 @@ export {
+   default629 as FileX2,
+   default632 as Files,
+   default633 as Film,
+-  default634 as Fingerprint,
++  // default634 as Fingerprint,
+   default635 as FireExtinguisher,
+   default637 as Fish,
+   default636 as FishOff,
