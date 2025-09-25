@@ -95,7 +95,7 @@ export default function PluginDetails() {
                                     </p>
 
                                     <Button
-                                        style="red"
+                                        buttonColor="red"
                                         icon={<RotateCcw size={16} />}
                                         onClick={() => refetch()}
                                     >
@@ -122,7 +122,7 @@ export default function PluginDetails() {
                                 </p>
 
                                 <Button
-                                    style="secondary"
+                                    buttonColor="secondary"
                                     class="mt-2"
                                     icon={<Globe size={16} />}
                                     onClick={() => navigate('/plugins')}
@@ -173,7 +173,7 @@ export default function PluginDetails() {
 
                                         <Button
                                             icon={<Link size={16} />}
-                                            style="secondary"
+                                            buttonColor="secondary"
                                             class="!px-4 !py-2.5 text-sm"
                                             onClick={() => copyLink(plugin())}
                                         >
@@ -190,7 +190,7 @@ export default function PluginDetails() {
                                                 size={16}
                                             />
                                         }
-                                        style={
+                                        buttonColor={
                                             activeTab() === 'overview'
                                                 ? 'primary'
                                                 : 'secondary'
@@ -204,7 +204,7 @@ export default function PluginDetails() {
                                     <Show when={plugin().hasCommands}>
                                         <Button
                                             icon={<Braces size={16} />}
-                                            style={
+                                            buttonColor={
                                                 activeTab() === 'commands'
                                                     ? 'primary'
                                                     : 'secondary'

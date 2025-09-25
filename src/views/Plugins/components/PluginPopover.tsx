@@ -72,7 +72,7 @@ export default function PluginPopover(props: Props) {
 
     return (
         <div class="popover-container relative inline-block">
-            <Button icon={<Cog size={16} />} style="secondary" onClick={toggle}>
+            <Button icon={<Cog size={16} />} buttonColor="secondary" onClick={toggle}>
                 Options
             </Button>
 

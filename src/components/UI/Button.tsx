@@ -4,13 +4,13 @@ import { type JSX, splitProps } from 'solid-js'
 export type ButtonStyle = 'primary' | 'secondary' | 'blue' | 'red'
 
 interface Props extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
-    style: ButtonStyle
+    buttonColor: ButtonStyle
     icon?: JSX.Element
 }
 
 export default function Button(props: Props) {
     const [local, rest] = splitProps(props, [
-        'style',
+        'buttonColor',
         'class',
         'icon',
         'children',
@@ -24,13 +24,13 @@ export default function Button(props: Props) {
                 local.class,
                 {
                     'border-white bg-neutral-100 text-neutral-800 hover:bg-neutral-300 hover:text-neutral-900':
-                        local.style === 'primary',
+                        local.buttonColor === 'primary',
                     'border-neutral-800/50 bg-neutral-900 text-neutral-300 hover:bg-neutral-800/70 hover:text-neutral-200':
-                        local.style === 'secondary',
+                        local.buttonColor === 'secondary',
                     'border-sky-700/50 bg-sky-900 text-sky-200 hover:bg-sky-800':
-                        local.style === 'blue',
+                        local.buttonColor === 'blue',
                     'border-red-300/50 bg-red-300 text-red-900 hover:bg-red-400 hover:text-red-950':
-                        local.style === 'red',
+                        local.buttonColor === 'red',
                 },
             )}
         >

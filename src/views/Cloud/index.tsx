@@ -58,7 +58,7 @@ export default function Cloud() {
             <div class="mt-6 flex items-center gap-3">
                 <A href="https://github.com/Equicord/Equicloud" target="_blank" rel="noopener noreferrer" class="w-fit" >
                     <Button
-                        style="primary"
+                        buttonColor="primary"
                         icon={<Link size={16} />}
                         class="text-sm"
                     >
@@ -68,7 +68,7 @@ export default function Cloud() {
 
                 <A href="/cloud/policy" class="w-fit">
                     <Button
-                        style="primary"
+                        buttonColor="primary"
                         icon={<Scroll size={16} />}
                         class="text-sm"
                     >

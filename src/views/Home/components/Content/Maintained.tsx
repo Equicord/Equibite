@@ -70,7 +70,7 @@ export default function FeatureMaintained() {
                     target="_blank"
                     class="w-fit"
                 >
-                    <Button style="secondary" icon={<Github size={16} />}>
+                    <Button buttonColor="secondary" icon={<Github size={16} />}>
                         View repository
                     </Button>
                 </A>

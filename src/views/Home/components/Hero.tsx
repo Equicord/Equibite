@@ -106,7 +106,7 @@ export default function HomeHero() {
                     ref={contentRef}
                 >
                     <A href={platform.href}>
-                        <Button style="primary" icon={platform.icon}>
+                        <Button buttonColor="primary" icon={platform.icon}>
                             {platform.label}
                         </Button>
                     </A>
