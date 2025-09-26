@@ -97,7 +97,7 @@ export default function HomeHero() {
                     class="text-lg font-semibold text-neutral-400"
                     ref={paragraphRef}
                 >
-                    A fork that has everything you need, third-party plugins and
+                    A fork that has everything you need: third-party plugins and
                     more.
                 </p>
 

@@ -7,7 +7,8 @@ import {
 } from '@utils/plugin'
 import classNames from 'classnames'
 import { Puzzle, Users } from 'lucide-solid'
-import { Show } from 'solid-js'
+import { createSignal, Show } from 'solid-js'
+import { getPluginSource, PluginSourceIcon } from '../Details'
 
 interface Props extends Plugin {
     variant: CardVariant
@@ -16,6 +17,8 @@ interface Props extends Plugin {
 type CardVariant = 'compact' | 'normal'
 
 export default function PluginCard(props: Props) {
+    const [hovered, setHovered] = createSignal(false)
+
     return (
         <A
             href={`/plugins/${props.name}`}
@@ -26,16 +29,33 @@ export default function PluginCard(props: Props) {
                     'pb-20': props.variant === 'normal',
                 },
             )}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
         >
             <div class="flex items-center gap-4">
                 <div
                     class={classNames(
-                        'hidden size-10 items-center justify-center rounded-xl border border-neutral-800',
+                        'hidden size-10 relative w-12 h-12 rounded-xl border border-neutral-800',
                         'bg-gradient-to-t from-neutral-900 to-neutral-800/90',
-                        'outline-2 outline-offset-2 outline-neutral-600/50 md:flex',
+                        'outline-2 outline-offset-2 outline-neutral-600/50 md:flex'
                     )}
-                >
-                    <Puzzle size={16} />
+                    >
+                    <div
+                        class={classNames(
+                            'absolute inset-0 flex items-center justify-center transition-all duration-300 ease-in-out',
+                            hovered() ? 'opacity-100 scale-100' : 'opacity-0 scale-100'
+                        )}
+                    >
+                        <PluginSourceIcon source={getPluginSource(props.filePath)} size={8} />
+                    </div>
+                    <div
+                        class={classNames(
+                            'absolute inset-0 flex items-center justify-center transition-all duration-300 ease-in-out',
+                            hovered() ? 'opacity-0 scale-100' : 'opacity-100 scale-100'
+                        )}
+                    >
+                        <Puzzle size={16} />
+                    </div>
                 </div>
 
                 <div class="flex flex-col">

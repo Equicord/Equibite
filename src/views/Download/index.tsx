@@ -130,7 +130,7 @@ export default function Download() {
                             Download Equicord
                         </h1>
                         <p class="text-lg font-medium text-neutral-400">
-                            A fork that has everything you need, third-party
+                            A fork that has everything you need: third-party
                             plugins and more.
                         </p>
                     </div>

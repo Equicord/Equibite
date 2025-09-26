@@ -44,13 +44,13 @@ const Sources = [
         value: 'all' as const,
     },
     {
-        icon: <img src="/assets/icons/vencord.png" class="size-6 select-none" alt="Vencord" />,
         label: 'Vencord',
+        icon: <img src="/assets/icons/vencord.png" class="size-6 select-none" alt="Vencord" />,
         value: 'vencord' as const,
     },
     {
         label: 'Equicord',
-        icon: <img src="/assets/icons/equicord.png" class="size-6 select-none" alt="Vencord" />,
+        icon: <img src="/assets/icons/equicord.png" class="size-6 select-none" alt="Equicord" />,
         value: 'equicord' as const,
     },
 ]

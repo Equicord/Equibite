@@ -21,6 +21,7 @@ import Input from '@components/UI/Input'
 import PageBootstrap from '@components/PageBootstrap'
 import PluginCard from './components/PluginCard'
 import PluginPopover from './components/PluginPopover'
+import { getPluginSource, pluginIcons, PluginSource } from './Details'
 
 type PluginFilter = 'all' | 'equicord' | 'vencord'
 type PlatformFilter = 'all' | 'desktop' | 'web'

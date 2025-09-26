@@ -21,7 +21,6 @@ import {
     Globe,
     Link,
     Notebook,
-    Puzzle,
     RotateCcw,
     Users,
 } from 'lucide-solid'
@@ -35,7 +34,7 @@ const enum PluginSource {
     Unknown = 'Unknown',
 }
 
-const getPluginSource = (filePath: string): PluginSource => {
+export const getPluginSource = (filePath: string): PluginSource => {
     const lower = filePath.toLowerCase()
     if (lower.startsWith('src/equicordplugins')) return PluginSource.Equicord
     if (lower.startsWith('src/plugins')) return PluginSource.Vencord
@@ -43,22 +42,23 @@ const getPluginSource = (filePath: string): PluginSource => {
     return PluginSource.Unknown
 }
 
-const chipStyles: Record<PluginSource, string> = {
-    [PluginSource.Equicord]: 'bg-sky-950 text-sky-100',
-    [PluginSource.Vencord]: 'bg-pink-300 text-neutral-900',
-    [PluginSource.Unknown]: 'border border-red-500',
-}
-
-interface PluginSourceChipProps {
+interface PluginSourceProps {
     source: PluginSource
+    size: number
 }
 
-function PluginSourceChip(props: PluginSourceChipProps) {
+const pluginIcons: Record<PluginSource, string> = {
+    [PluginSource.Equicord]: '/assets/favicon.png',
+    [PluginSource.Vencord]: '/assets/icons/vencord.png',
+    [PluginSource.Unknown]: '/assets/icons/userplugin.png',
+}
+
+export function PluginSourceIcon(props: PluginSourceProps) {
+    const { size, source } = props
+    const icon = pluginIcons[source]
     return (
-        <span
-            class={`rounded-full px-2 py-0.5 font-semibold ${chipStyles[props.source]}`}
-        >
-            {props.source}
+        <span class={`rounded-full px-2 py-0.5 font-semibold flex items-center gap-1`}>
+            {icon && <img src={icon} class={`size-${size}`} alt={source} />}
         </span>
     )
 }
@@ -171,7 +171,11 @@ export default function PluginDetails() {
                                 <header class="flex items-center justify-between">
                                     <div class="flex items-center gap-6">
                                         <div class="flex size-16 items-center justify-center rounded-xl border border-neutral-800 bg-gradient-to-t from-neutral-900 to-neutral-800/90 outline-2 outline-offset-2 outline-neutral-600/50">
-                                            <Puzzle />
+                                            <PluginSourceIcon
+                                                    source={getPluginSource(
+                                                        plugin().filePath,
+                                                    )}
+                                                />
                                         </div>
 
                                         <div class="flex flex-col">
@@ -179,11 +183,6 @@ export default function PluginDetails() {
                                                 <h1 class="text-2xl font-bold">
                                                     {plugin().name}
                                                 </h1>
-                                                <PluginSourceChip
-                                                    source={getPluginSource(
-                                                        plugin().filePath,
-                                                    )}
-                                                />
                                             </div>
                                             <div class="flex items-center gap-2 font-medium text-neutral-300">
                                                 <Users size={16} />
