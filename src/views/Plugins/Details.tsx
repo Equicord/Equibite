@@ -57,7 +57,7 @@ export function PluginSourceIcon(props: PluginSourceProps) {
     const { size, source } = props
     const icon = pluginIcons[source]
     return (
-        <span class={`rounded-full px-2 py-0.5 font-semibold flex items-center gap-1`}>
+        <span class={`rounded-full py-0.5 font-semibold flex items-center gap-1`}>
             {icon && <img src={icon} class={`size-${size}`} alt={source} />}
         </span>
     )
