@@ -15,6 +15,7 @@ import {
     Github,
     Puzzle,
     Users,
+    Paintbrush,
 } from 'lucide-solid'
 import Fa from 'solid-fa'
 
@@ -104,6 +105,13 @@ const BrowseSections: BrowseSection[] = [
                 href: 'https://github.com/Equicord',
                 target: "_blank",
                 icon: () => <Github size={20} />,
+            },
+            {
+                text: 'Icons',
+                excerpt: 'Custom icons for Equicord',
+                href: '/icons',
+                target: "_blank",
+                icon: () => <Paintbrush size={20} />,
             },
         ],
     },
