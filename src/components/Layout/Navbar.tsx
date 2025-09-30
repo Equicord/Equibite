@@ -94,14 +94,14 @@ const BrowseSections: BrowseSection[] = [
         items: [
             {
                 text: 'Discord',
-                excerpt: 'Join the active community',
+                excerpt: 'Join the active community on Discord',
                 href: '/discord',
                 target: "_blank",
                 icon: () => <Fa icon={faDiscord} class="h-8" />,
             },
             {
                 text: 'GitHub',
-                excerpt: 'Contribute to Equicord',
+                excerpt: 'Contribute to Equicord and our other projects',
                 href: 'https://github.com/Equicord',
                 target: "_blank",
                 icon: () => <Github size={20} />,
