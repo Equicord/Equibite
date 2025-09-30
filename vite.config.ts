@@ -10,4 +10,7 @@ export default defineConfig({
     },
     plugins: [solid(), paths(), tailwind()],
     // build: { sourcemap: true } - ???,
+    preview: {
+        allowedHosts: ['equicord.org'],
+    },
 })
