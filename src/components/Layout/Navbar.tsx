@@ -110,7 +110,6 @@ const BrowseSections: BrowseSection[] = [
                 text: 'Icons',
                 excerpt: 'Custom icons for Equicord',
                 href: '/icons',
-                target: "_blank",
                 icon: () => <Paintbrush size={20} />,
             },
         ],
