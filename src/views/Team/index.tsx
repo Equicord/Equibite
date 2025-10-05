@@ -142,7 +142,7 @@ function UserCard({ userData }: { userData: LanyardUser }) {
                             <img
                                 src={decoration!}
                                 draggable={false}
-                                class="absolute inset-0 z-10 size-16 object-contain select-none top-[-3.5px] scale-x-110"
+                                class="absolute inset-0 z-10 size-16 object-fit select-none scale-115"
                             />
                         </Show>
 
