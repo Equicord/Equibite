@@ -200,7 +200,7 @@ export default function Plugins() {
                                         Failed to load plugins
                                     </p>
                                     <Button
-                                        buttonColor="red"
+                                        variant="red"
                                         icon={<RotateCcw size={16} />}
                                         onClick={() => refetch()}
                                     >

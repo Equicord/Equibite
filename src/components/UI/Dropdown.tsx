@@ -46,19 +46,21 @@ export default function Dropdown(props: Props) {
         <div ref={containerRef} class="relative w-full">
             <button
                 onClick={toggle}
-                class={`flex w-full cursor-pointer items-center justify-between rounded-lg border border-neutral-800 px-3 py-3 font-medium transition-colors hover:bg-neutral-900 focus:outline-none ${open() ? 'bg-neutral-900 text-white' : 'bg-neutral-950 text-neutral-400'}`}
+                class={`flex w-full cursor-pointer items-center gap-1 justify-between rounded-lg border border-neutral-800 px-3 py-3 font-medium transition-colors hover:bg-neutral-900 focus:outline-none ${open() ? 'bg-neutral-900 text-white' : 'bg-neutral-950 text-neutral-400'}`}
             >
-                <span class="flex flex-wrap items-center gap-1">
-                    <Show when={props.icon}>{props.icon}</Show>
-
-                    {props.placeholder ?? 'Select option'}
+                <div class="flex flex-1 justify-between items-center gap-1">
+                    <span class="flex items-center gap-1">
+                        <Show when={props.icon}>{props.icon}</Show>
+                        {props.placeholder ?? 'Select option'}
+                    </span>
 
                     <Show when={props.selected}>
                         <span class="rounded bg-green-400 px-2 py-0.5 text-xs font-semibold text-green-950">
                             {props.selected!.label}
                         </span>
                     </Show>
-                </span>
+                </div>
+
                 {open() ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
             </button>
 

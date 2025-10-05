@@ -18,7 +18,7 @@ export default function Contribute() {
                 class="mt-6 w-fit"
             >
                 <Button
-                    buttonColor="secondary"
+                    variant="secondary"
                     icon={<Github fill="#ffffff10" size={16} />}
                 >
                     View repository

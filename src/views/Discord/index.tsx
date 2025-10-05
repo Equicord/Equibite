@@ -12,7 +12,7 @@ export default function Discord() {
         <SimpleBootstrap
             meta={{ title: 'Discord | Equicord' }}
             icon={<ExternalLink size={72} />}
-            title={"Redirecting to our Discord."}
+            title={'Redirecting to our Discord.'}
         />
     )
 }

@@ -45,12 +45,24 @@ const Sources = [
     },
     {
         label: 'Vencord',
-        icon: <img src="/assets/icons/vencord.png" class="size-6 select-none" alt="Vencord" />,
+        icon: (
+            <img
+                src="/assets/icons/vencord.png"
+                class="size-6 select-none"
+                alt="Vencord"
+            />
+        ),
         value: 'vencord' as const,
     },
     {
         label: 'Equicord',
-        icon: <img src="/assets/icons/equicord.png" class="size-6 select-none" alt="Equicord" />,
+        icon: (
+            <img
+                src="/assets/icons/equicord.png"
+                class="size-6 select-none"
+                alt="Equicord"
+            />
+        ),
         value: 'equicord' as const,
     },
 ]
@@ -72,7 +84,11 @@ export default function PluginPopover(props: Props) {
 
     return (
         <div class="popover-container relative inline-block">
-            <Button icon={<Cog size={16} />} buttonColor="secondary" onClick={toggle}>
+            <Button
+                icon={<Cog size={16} />}
+                variant="secondary"
+                onClick={toggle}
+            >
                 Options
             </Button>
 

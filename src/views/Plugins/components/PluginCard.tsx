@@ -23,8 +23,7 @@ export default function PluginCard(props: Props) {
         <A
             href={`/plugins/${props.name}`}
             class={classNames(
-                'relative flex w-full flex-col gap-3 rounded-xl border border-neutral-800',
-                'bg-gradient-to-br from-neutral-900 to-neutral-950 p-6 transition-transform active:scale-[.98]',
+                'relative flex w-full flex-col gap-3 rounded-xl border border-neutral-800 bg-gradient-to-br from-neutral-900 to-neutral-950 p-6 transition-transform active:scale-[.98]',
                 {
                     'pb-20': props.variant === 'normal',
                 },
@@ -37,21 +36,28 @@ export default function PluginCard(props: Props) {
                     class={classNames(
                         'hidden size-10 relative w-12 h-12 rounded-xl border border-neutral-800',
                         'bg-gradient-to-t from-neutral-900 to-neutral-800/90',
-                        'outline-2 outline-offset-2 outline-neutral-600/50 md:flex'
+                        'outline-2 outline-offset-2 outline-neutral-600/50 md:flex',
                     )}
-                    >
+                >
                     <div
                         class={classNames(
                             'absolute inset-0 flex items-center justify-center transition-all duration-300 ease-in-out',
-                            hovered() ? 'opacity-100 scale-100' : 'opacity-0 scale-100'
+                            hovered()
+                                ? 'opacity-100 scale-100'
+                                : 'opacity-0 scale-100',
                         )}
                     >
-                        <PluginSourceIcon source={getPluginSource(props.filePath)} size={8} />
+                        <PluginSourceIcon
+                            source={getPluginSource(props.filePath)}
+                            size={8}
+                        />
                     </div>
                     <div
                         class={classNames(
                             'absolute inset-0 flex items-center justify-center transition-all duration-300 ease-in-out',
-                            hovered() ? 'opacity-0 scale-100' : 'opacity-100 scale-100'
+                            hovered()
+                                ? 'opacity-0 scale-100'
+                                : 'opacity-100 scale-100',
                         )}
                     >
                         <Puzzle size={16} />

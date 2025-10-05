@@ -14,12 +14,8 @@ export default function Community() {
                 up to date with new updates and announcements!
             </p>
 
-            <A
-                href="/discord"
-                target="_blank"
-                class="mt-6 w-fit"
-            >
-                <Button buttonColor="primary">
+            <A href="/discord" target="_blank" class="mt-6 w-fit">
+                <Button variant="primary">
                     <Fa icon={faDiscord} class="size-8" />
                     Join Discord
                 </Button>

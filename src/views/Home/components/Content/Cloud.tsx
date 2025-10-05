@@ -44,7 +44,7 @@ export default function FeatureCloud() {
 
                     <A href="/cloud" class="mt-6 w-fit">
                         <Button
-                            buttonColor="secondary"
+                            variant="secondary"
                             icon={<CloudFog fill="#ffffff10" size={16} />}
                         >
                             Read more

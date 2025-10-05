@@ -56,8 +56,11 @@ const pluginIcons: Record<PluginSource, string> = {
 export function PluginSourceIcon(props: PluginSourceProps) {
     const { size, source } = props
     const icon = pluginIcons[source]
+
     return (
-        <span class={`rounded-full py-0.5 font-semibold flex items-center gap-1`}>
+        <span
+            class={`rounded-full py-0.5 font-semibold flex items-center gap-1`}
+        >
             {icon && <img src={icon} class={`size-${size}`} alt={source} />}
         </span>
     )
@@ -121,7 +124,7 @@ export default function PluginDetails() {
                                     </p>
 
                                     <Button
-                                        buttonColor="red"
+                                        variant="red"
                                         icon={<RotateCcw size={16} />}
                                         onClick={() => refetch()}
                                     >
@@ -148,7 +151,7 @@ export default function PluginDetails() {
                                 </p>
 
                                 <Button
-                                    buttonColor="secondary"
+                                    variant="secondary"
                                     class="mt-2"
                                     icon={<Globe size={16} />}
                                     onClick={() => navigate('/plugins')}
@@ -172,10 +175,10 @@ export default function PluginDetails() {
                                     <div class="flex items-center gap-6">
                                         <div class="flex size-16 items-center justify-center rounded-xl border border-neutral-800 bg-gradient-to-t from-neutral-900 to-neutral-800/90 outline-2 outline-offset-2 outline-neutral-600/50">
                                             <PluginSourceIcon
-                                                    source={getPluginSource(
-                                                        plugin().filePath,
-                                                    )}
-                                                />
+                                                source={getPluginSource(
+                                                    plugin().filePath,
+                                                )}
+                                            />
                                         </div>
 
                                         <div class="flex flex-col">
@@ -200,7 +203,7 @@ export default function PluginDetails() {
                                     <div class="flex w-fit items-center gap-2">
                                         <Button
                                             icon={<Link size={16} />}
-                                            buttonColor="secondary"
+                                            variant="secondary"
                                             class="!px-4 !py-2.5 text-sm"
                                             onClick={() => copyLink(plugin())}
                                         >
@@ -217,7 +220,7 @@ export default function PluginDetails() {
                                                 size={16}
                                             />
                                         }
-                                        buttonColor={
+                                        variant={
                                             activeTab() === 'overview'
                                                 ? 'primary'
                                                 : 'secondary'
@@ -230,13 +233,16 @@ export default function PluginDetails() {
                                     <Button
                                         icon={<Braces size={16} />}
                                         disabled={!plugin().hasCommands}
-                                        buttonColor={
+                                        variant={
                                             activeTab() === 'commands'
                                                 ? 'primary'
                                                 : 'secondary'
                                         }
                                         class="text-sm"
-                                        onClick={() => plugin().hasCommands && setActiveTab('commands')}
+                                        onClick={() =>
+                                            plugin().hasCommands &&
+                                            setActiveTab('commands')
+                                        }
                                     >
                                         Commands
                                     </Button>

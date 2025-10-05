@@ -1,25 +1,23 @@
+import Button from '@components/UI/Button'
+import Popover from '@components/UI/Popover'
+import { faDiscord } from '@fortawesome/free-brands-svg-icons'
 import { A } from '@solidjs/router'
 import classNames from 'classnames'
 import gsap from 'gsap'
-import { createSignal, JSX, onCleanup, onMount } from 'solid-js'
-
-import { faDiscord } from '@fortawesome/free-brands-svg-icons'
 import {
     Book,
-    ChevronDown,
+    BookMarked,
     CloudFog,
     Code,
     Download,
     DownloadIcon,
     ExternalLink,
     Github,
-    Puzzle,
-    Users,
     Paintbrush,
+    Puzzle,
 } from 'lucide-solid'
 import Fa from 'solid-fa'
-
-import Button from '@components/UI/Button'
+import { createSignal, For, onCleanup, onMount, type JSX } from 'solid-js'
 
 interface NavItem {
     text: string
@@ -28,11 +26,11 @@ interface NavItem {
 }
 
 interface BrowseItem {
-    text: string
-    excerpt: string
-    href: string
-    target?: string;
     icon: () => JSX.Element
+    text: string
+    description: string
+    href: string
+    external?: boolean
 }
 
 interface BrowseSection {
@@ -45,22 +43,22 @@ const BrowseSections: BrowseSection[] = [
         category: 'Discover',
         items: [
             {
-                text: 'Plugins',
-                excerpt: 'Discover third-party plugins for Equicord',
-                href: '/plugins',
                 icon: () => <Puzzle size={20} />,
+                text: 'Plugins',
+                description: "List of Equicord's third-party plugins",
+                href: '/plugins',
             },
             {
-                text: 'Team',
-                excerpt: 'Meet the team of Equicord',
-                href: '/team',
-                icon: () => <Users size={20} />,
+                icon: () => <BookMarked size={20} />,
+                text: 'Projects',
+                description: "List of Equicord's active repositories",
+                href: '/projects',
             },
             {
-                text: 'Cloud',
-                excerpt: 'Equicord comes with a cloud integration.',
-                href: '/cloud',
                 icon: () => <CloudFog size={20} />,
+                text: 'Cloud',
+                description: "About Equicord's cloud integration",
+                href: '/cloud',
             },
         ],
     },
@@ -68,24 +66,24 @@ const BrowseSections: BrowseSection[] = [
         category: 'Resources',
         items: [
             {
-                text: 'Download',
-                excerpt: 'Download Equicords installer Equilotl',
-                href: '/download',
                 icon: () => <DownloadIcon size={20} />,
+                text: 'Download',
+                description: 'Download Equicord’s installer Equilotl',
+                href: '/download',
             },
             {
-                text: 'Documentation',
-                excerpt: 'Learn how to use Equicord',
-                href: 'https://docs.equicord.org',
-                target: "_blank",
                 icon: () => <Book size={20} />,
+                text: 'Documentation',
+                description: 'Learn how to use Equicord',
+                href: 'https://docs.equicord.org',
+                external: true,
             },
             {
-                text: 'Source Code',
-                excerpt: 'View the code of Equicord',
-                href: 'https://github.com/Equicord/Equicord',
-                target: "_blank",
                 icon: () => <Code size={20} />,
+                text: 'Source Code',
+                description: 'View the Equicord repository',
+                href: 'https://github.com/Equicord/Equicord',
+                external: true,
             },
         ],
     },
@@ -93,24 +91,24 @@ const BrowseSections: BrowseSection[] = [
         category: 'Community',
         items: [
             {
-                text: 'Discord',
-                excerpt: 'Join the active community on Discord',
-                href: '/discord',
-                target: "_blank",
                 icon: () => <Fa icon={faDiscord} class="h-8" />,
+                text: 'Discord',
+                description: 'Join the active community on Discord',
+                href: '/discord',
+                external: true,
             },
             {
-                text: 'GitHub',
-                excerpt: 'Contribute to Equicord and our other projects',
-                href: 'https://github.com/Equicord',
-                target: "_blank",
                 icon: () => <Github size={20} />,
+                text: 'GitHub',
+                description: 'Contribute to Equicord and other projects',
+                href: 'https://github.com/Equicord',
+                external: true,
             },
             {
-                text: 'Icons',
-                excerpt: 'Custom icons for Equicord',
-                href: '/icons',
                 icon: () => <Paintbrush size={20} />,
+                text: 'Icons',
+                description: 'Custom icons for Equicord',
+                href: '/icons',
             },
         ],
     },
@@ -118,192 +116,83 @@ const BrowseSections: BrowseSection[] = [
 
 const NavItems: NavItem[] = [
     {
+        text: 'Team',
+        href: '/team',
+    },
+    {
         text: 'Docs',
         href: 'https://docs.equicord.org',
         external: true,
     },
 ]
 
-const Animations = {
-    dropdown: {
-        duration: 0.2,
-        ease: 'power2.out',
-    },
-    mobileMenu: {
-        duration: 0.3,
-        ease: 'power2.out',
-    },
-} as const
+const DropdownItem = (props: { item: BrowseItem; onClick?: () => void }) => (
+    <A
+        href={props.item.href}
+        target={props.item.external ? '_blank' : undefined}
+        onClick={props.onClick}
+        class="relative group flex items-start opacity-60 hover:opacity-100 transition-opacity gap-3 rounded-xl p-3"
+    >
+        <div class="flex items-center justify-center pt-2">
+            {props.item.icon()}
+        </div>
+
+        <div class="flex flex-1 flex-col">
+            <h4 class="font-semibold text-white">{props.item.text}</h4>
+            <p class="text-sm font-semibold text-neutral-400">
+                {props.item.description}
+            </p>
+        </div>
+
+        <div class="-z-10 absolute size-full inset-0 rounded-xl bg-neutral-800 opacity-0 group-hover:opacity-100 group-hover:scale-100 scale-95 transition-all" />
+    </A>
+)
+
+const NavLink = (props: { item: NavItem }) => (
+    <A
+        href={props.item.href}
+        target={props.item.external ? '_blank' : undefined}
+        class="flex cursor-pointer items-center hover:bg-neutral-900 py-2 px-3 rounded-xl gap-1 font-medium text-neutral-400 transition-colors hover:text-white"
+    >
+        {props.item.text}
+        {props.item.external && <ExternalLink size={16} />}
+    </A>
+)
 
 export default function Navbar() {
-    const [showDropdown, setShowDropdown] = createSignal(false)
     const [showMobileMenu, setShowMobileMenu] = createSignal(false)
     const [hasScrolled, setHasScrolled] = createSignal(false)
-
-    let dropdownRef: HTMLDivElement | undefined
     let mobileMenuRef: HTMLDivElement | undefined
+
+    const toggleMobileMenu = (force?: boolean) => {
+        const next = force ?? !showMobileMenu()
+        setShowMobileMenu(next)
+        document.body.style.overflowY = next ? 'hidden' : 'auto'
+
+        if (mobileMenuRef)
+            gsap.to(mobileMenuRef, {
+                x: next ? 0 : 400,
+                duration: 0.3,
+                ease: 'power2.out',
+                display: next ? 'flex' : 'none',
+            })
+    }
 
     const handleScroll = () => setHasScrolled(window.scrollY > 0)
 
-    const handleClickOutside = (e: MouseEvent) => {
-        if (dropdownRef && !dropdownRef.contains(e.target as Node)) {
-            closeDropdown()
-        }
-    }
-
-    const animateDropdown = (show: boolean) => {
-        if (!dropdownRef) return
-
-        gsap.to(dropdownRef, {
-            ...Animations.dropdown,
-            opacity: show ? 1 : 0,
-            display: show ? 'block' : 'none',
-            filter: show ? '' : 'blur(4px)',
-        })
-    }
-
-    const animateMobileMenu = (show: boolean) => {
-        if (!mobileMenuRef) return
-
-        gsap.to(mobileMenuRef, {
-            ...Animations.mobileMenu,
-            x: show ? 0 : 400,
-            display: show ? 'flex' : 'none',
-        })
-    }
-
-    const openDropdown = () => {
-        setShowDropdown(true)
-        animateDropdown(true)
-    }
-
-    const closeDropdown = () => {
-        setShowDropdown(false)
-        animateDropdown(false)
-    }
-
-    const toggleMobileMenu = (forceState?: boolean) => {
-        const newState = forceState ?? !showMobileMenu()
-        setShowMobileMenu(newState)
-
-        document.body.style.overflowY = newState ? 'hidden' : 'auto'
-        animateMobileMenu(newState)
-    }
-
-    const closeMobileMenu = () => toggleMobileMenu(false)
-
-    onMount(() => {
-        window.addEventListener('scroll', handleScroll)
-        document.addEventListener('mousedown', handleClickOutside)
-    })
-
+    onMount(() => window.addEventListener('scroll', handleScroll))
     onCleanup(() => {
         window.removeEventListener('scroll', handleScroll)
-        document.removeEventListener('mousedown', handleClickOutside)
         document.body.style.overflowY = 'auto'
     })
 
-    const DropdownItem = (props: { item: BrowseItem; isMobile?: boolean }) => (
-        <A
-            href={props.item.href}
-            {...(props.item.target && { target: props.item.target })}
-            class="group flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-neutral-800"
-            onClick={() => props.isMobile && closeMobileMenu()}
-        >
-            <div class="flex items-center justify-center pt-2">
-                {props.item.icon()}
-            </div>
-            <div class="flex flex-1 flex-col">
-                <h4 class="font-semibold text-white">{props.item.text}</h4>
-                <p class="text-sm font-semibold text-neutral-400">
-                    {props.item.excerpt}
-                </p>
-            </div>
-        </A>
-    )
-
-    const ToggleMenu = () => (
-        <button
-            class="z-50 flex size-12 cursor-pointer flex-col items-center justify-center gap-1.5 rounded-xl md:hidden"
-            onClick={() => toggleMobileMenu()}
-        >
-            <span
-                class={classNames(
-                    showMobileMenu() && 'translate-y-2 rotate-45',
-                    'h-0.5 w-5 rounded-full bg-neutral-200 transition-all',
-                )}
-            />
-            <span
-                class={classNames(
-                    showMobileMenu() && 'opacity-0',
-                    'h-0.5 w-5 rounded-full bg-neutral-200 transition-all',
-                )}
-            />
-            <span
-                class={classNames(
-                    showMobileMenu() && '-translate-y-2 -rotate-45',
-                    'h-0.5 w-5 rounded-full bg-neutral-200 transition-all',
-                )}
-            />
-        </button>
-    )
-
-    const NavLink = (props: { item: NavItem }) => (
-        <A
-            href={props.item.href}
-            target={props.item.external ? '_blank' : undefined}
-            class="flex cursor-pointer items-center hover:bg-neutral-900 py-2 px-3 rounded-xl gap-1 font-medium text-neutral-400 transition-colors hover:text-white"
-        >
-            {props.item.text}
-            {props.item.external && <ExternalLink size={16} />}
-        </A>
-    )
-
-    const BrowseDropdown = () => (
-        <div
-            class="relative py-3"
-            onMouseEnter={openDropdown}
-            onMouseLeave={closeDropdown}
-        >
-            <div class="flex cursor-pointer items-center gap-1 font-medium text-neutral-400 transition-colors hover:text-white hover:bg-neutral-900 py-2 px-3 rounded-xl">
-                <span>Browse</span>
-
-                <ChevronDown
-                    size={16}
-                    class={classNames(
-                        'transition-transform duration-200',
-                        showDropdown() && 'rotate-180',
-                    )}
-                />
-            </div>
-
-            <div
-                ref={dropdownRef}
-                class="absolute top-12 left-3 z-30 mt-2 w-[800px] -translate-x-1/3 rounded-2xl border border-neutral-700/50 bg-neutral-900 shadow-2xl"
-                style={{ display: 'none' }}
-            >
-                <div class="grid grid-cols-3 gap-8 p-8">
-                    {BrowseSections.map((section) => (
-                        <div class="space-y-4">
-                            <h2 class="font-bold">{section.category}</h2>
-
-                            {section.items.map((item) => (
-                                <DropdownItem item={item} />
-                            ))}
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </div>
-    )
-
     return (
         <>
-            {/* Mobile Overlay */}
+            {/* Mobile overlay */}
             {showMobileMenu() && (
                 <div
                     class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm md:hidden"
-                    onClick={closeMobileMenu}
+                    onClick={() => toggleMobileMenu(false)}
                 />
             )}
 
@@ -314,32 +203,52 @@ export default function Navbar() {
                 style={{ display: 'none' }}
             >
                 <div class="flex flex-col gap-6 p-6 pt-20">
-                    {BrowseSections.map((section) => (
-                        <div class="flex flex-col">
-                            <div class="mb-2 font-bold">{section.category}</div>
-                            {section.items.map((item) => (
-                                <DropdownItem item={item} isMobile />
-                            ))}
-                        </div>
-                    ))}
+                    <For each={BrowseSections}>
+                        {(section) => (
+                            <div class="flex flex-col">
+                                <div class="mb-2 font-bold">
+                                    {section.category}
+                                </div>
+                                <For each={section.items}>
+                                    {(item) => (
+                                        <DropdownItem
+                                            item={item}
+                                            onClick={() =>
+                                                toggleMobileMenu(false)
+                                            }
+                                        />
+                                    )}
+                                </For>
+                            </div>
+                        )}
+                    </For>
 
                     <div class="flex flex-col gap-2 border-t border-neutral-800 pt-4">
-                        {NavItems.map((item) => (
-                            <A
-                                href={item.href}
-                                target={item.external ? '_blank' : undefined}
-                                class="flex items-center gap-1 rounded-xl p-3 font-bold hover:bg-neutral-800/50"
-                                onClick={closeMobileMenu}
-                            >
-                                {item.text}
-                                {item.external && <ExternalLink size={16} />}
-                            </A>
-                        ))}
+                        <For each={NavItems}>
+                            {(item) => (
+                                <A
+                                    href={item.href}
+                                    target={
+                                        item.external ? '_blank' : undefined
+                                    }
+                                    class="flex items-center gap-1 rounded-xl p-3 font-bold hover:bg-neutral-800/50"
+                                    onClick={() => toggleMobileMenu(false)}
+                                >
+                                    {item.text}
+                                    {item.external && (
+                                        <ExternalLink size={16} />
+                                    )}
+                                </A>
+                            )}
+                        </For>
 
-                        <A href="/download" onClick={closeMobileMenu}>
+                        <A
+                            href="/download"
+                            onClick={() => toggleMobileMenu(false)}
+                        >
                             <Button
                                 icon={<Download size={16} />}
-                                buttonColor="secondary"
+                                variant="secondary"
                                 class="w-full justify-center"
                             >
                                 Download
@@ -349,42 +258,86 @@ export default function Navbar() {
                 </div>
             </div>
 
-            {/* Navbar */}
             <header
                 class={classNames(
                     'max-w-eq-lg z-30 mx-auto flex items-center justify-between px-6 py-8 transition-colors',
                     hasScrolled() &&
-                    'sticky top-0 bg-neutral-950/90 backdrop-blur-lg',
+                        'sticky top-0 bg-neutral-950/90 backdrop-blur-lg',
                 )}
             >
-                <A
-                    href="/"
-                    class="flex items-center gap-3 text-lg font-bold text-white transition-transform active:scale-[.95]"
-                >
-                    <img
-                        src="/assets/favicon.png"
-                        class="size-8 select-none"
-                        draggable={false}
-                        alt="Equicord logo"
-                    />
-                    Equicord
-                </A>
+                <div class="flex items-center gap-6">
+                    <A
+                        href="/"
+                        class="flex items-center gap-3 text-lg font-bold text-white transition-transform active:scale-[.95]"
+                    >
+                        <img
+                            src="/assets/favicon.png"
+                            class="size-8 select-none"
+                            draggable={false}
+                            alt="Equicord logo"
+                        />
+                        Equicord
+                    </A>
 
-                <nav class="hidden flex-1 items-center justify-center gap-1 md:flex">
-                    <BrowseDropdown />
+                    <hr class="max-lg:hidden border-r h-8 border-neutral-900" />
 
-                    {NavItems.map((item) => (
-                        <NavLink item={item} />
-                    ))}
-                </nav>
+                    <div class="hidden items-center gap-3 lg:flex">
+                        <For each={BrowseSections}>
+                            {(section) => (
+                                <Popover
+                                    trigger={
+                                        <span class="cursor-pointer text-neutral-400 hover:text-white transition-colors font-medium">
+                                            {section.category}
+                                        </span>
+                                    }
+                                    popoverClass="left-1/2 -translate-x-1/3 w-[240px] p-3"
+                                >
+                                    <div class="flex flex-col gap-2">
+                                        <For each={section.items}>
+                                            {(item) => (
+                                                <DropdownItem item={item} />
+                                            )}
+                                        </For>
+                                    </div>
+                                </Popover>
+                            )}
+                        </For>
+
+                        <For each={NavItems}>
+                            {(item) => <NavLink item={item} />}
+                        </For>
+                    </div>
+                </div>
 
                 <A href="/download" class="hidden md:flex">
-                    <Button icon={<Download size={16} />} buttonColor="primary">
+                    <Button icon={<Download size={16} />} variant="primary">
                         Download
                     </Button>
                 </A>
 
-                <ToggleMenu />
+                <button
+                    class="z-50 flex size-12 flex-col items-center justify-center gap-1.5 rounded-xl md:hidden"
+                    onClick={() => toggleMobileMenu()}
+                >
+                    <span
+                        class={classNames(
+                            showMobileMenu() && 'translate-y-2 rotate-45',
+                            'h-0.5 w-5 rounded-full bg-neutral-200 transition-all',
+                        )}
+                    />
+                    <span
+                        class={classNames(
+                            showMobileMenu() && 'opacity-0',
+                            'h-0.5 w-5 rounded-full bg-neutral-200 transition-all',
+                        )}
+                    />
+                    <span
+                        class={classNames(
+                            showMobileMenu() && '-translate-y-2 -rotate-45',
+                            'h-0.5 w-5 rounded-full bg-neutral-200 transition-all',
+                        )}
+                    />
+                </button>
             </header>
         </>
     )
