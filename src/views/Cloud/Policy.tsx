@@ -13,7 +13,7 @@ export default function CloudPolicy() {
         >
             <div class="prose prose-invert max-w-none">
                 <p class="text-lg font-medium text-neutral-300 mb-8">
-                    Last Updated: September 15, 2025
+                    Last Updated: October 5, 2025
                 </p>
 
                 <section class="mb-8">
@@ -40,7 +40,7 @@ export default function CloudPolicy() {
                         <div class="bg-neutral-900/50 border border-neutral-700 rounded-lg p-4">
                             <h3 class="text-lg font-semibold text-neutral-200 mb-2">Discord User ID Hash</h3>
                             <p class="text-sm font-medium text-neutral-400">
-                                We store the SHA1 hash of your Discord user ID to uniquely identify your data. This is a one-way hash that cannot be reversed to reveal your actual Discord ID.
+                                We store the CRC hash of your Discord user ID to uniquely identify your data. This is a one-way hash that cannot be reversed to reveal your actual Discord ID.
                             </p>
                         </div>
 
