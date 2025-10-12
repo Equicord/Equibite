@@ -19,8 +19,6 @@ export const teamIds = [
     913205935319691335n, // cortex
     209830981060788225n, // creations
     929208515883569182n, // indi
-    1207087393929171095n, // nyx
-    840854894881538079n, // vmohammad
     1120045713867423835n, // naibuu
 ].map(String)
 
