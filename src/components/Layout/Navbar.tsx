@@ -271,7 +271,7 @@ export default function Navbar() {
                         class="flex items-center gap-3 text-lg font-bold text-white transition-transform active:scale-[.95]"
                     >
                         <img
-                            src="/assets/favicon.png"
+                            src={Math.random() < 1 / 1_000_000 ? "/assets/icons/equicord/old/icon.png" : "/assets/favicon.png"}
                             class="size-8 select-none"
                             draggable={false}
                             alt="Equicord logo"
