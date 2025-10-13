@@ -32,6 +32,7 @@ export interface Plugin {
     enabledByDefault: boolean
     target: PluginTarget
     filePath: string
+    isModified: boolean
 }
 
 export interface PluginUrlFetchType {

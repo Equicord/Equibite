@@ -47,7 +47,7 @@ const Sources = [
         label: 'Vencord',
         icon: (
             <img
-                src="/assets/icons/vencord.png"
+                src="/assets/icons/vencord/icon.png"
                 class="size-6 select-none"
                 alt="Vencord"
             />
@@ -58,13 +58,24 @@ const Sources = [
         label: 'Equicord',
         icon: (
             <img
-                src="/assets/icons/equicord.png"
+                src="/assets/icons/equicord/icon-far.png"
                 class="size-6 select-none"
                 alt="Equicord"
             />
         ),
         value: 'equicord' as const,
     },
+    {
+        label: 'Modified',
+        icon: (
+            <img
+                src="/assets/icons/equicord/modified.png"
+                class="size-6 select-none"
+                alt="Equicord"
+            />
+        ),
+        value: 'modified' as const,
+    }
 ]
 
 export default function PluginPopover(props: Props) {

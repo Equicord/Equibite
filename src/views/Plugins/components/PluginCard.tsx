@@ -48,7 +48,7 @@ export default function PluginCard(props: Props) {
                         )}
                     >
                         <PluginSourceIcon
-                            source={getPluginSource(props.filePath)}
+                            source={getPluginSource(props)}
                             size={8}
                         />
                     </div>
