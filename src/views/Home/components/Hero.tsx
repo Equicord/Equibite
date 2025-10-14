@@ -121,7 +121,7 @@ export default function HomeHero() {
 
             <img
                 ref={screenRef}
-                src="/assets/settings/settings.png"
+                src="/assets/home/settings.png"
                 alt="Equicord Settings Interface"
                 class="mt-12 rounded-t-2xl mask-b-from-75% select-none"
                 draggable="false"
