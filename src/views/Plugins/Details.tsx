@@ -181,7 +181,7 @@ export default function PluginDetails() {
                                         <div class="flex size-16 items-center justify-center rounded-xl border border-neutral-800 bg-gradient-to-t from-neutral-900 to-neutral-800/90 outline-2 outline-offset-2 outline-neutral-600/50">
                                             <PluginSourceIcon
                                                 source={getPluginSource(plugin())}
-                                                size={8}
+                                                size={10}
                                             />
                                         </div>
 
