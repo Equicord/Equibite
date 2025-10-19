@@ -31,14 +31,14 @@ import toast from 'solid-toast'
 const enum PluginSource {
     Equicord = 'Equicord',
     Vencord = 'Vencord',
-    Modified = "Modified",
+    Modified = 'Modified',
     Unknown = 'Unknown',
 }
 
 export const getPluginSource = (props: any): PluginSource => {
     const { filePath, isModified } = props
     const lower = filePath.toLowerCase()
-    
+
     if (isModified) return PluginSource.Modified
     if (lower.startsWith('src/equicordplugins')) return PluginSource.Equicord
     if (lower.startsWith('src/plugins')) return PluginSource.Vencord
@@ -180,7 +180,9 @@ export default function PluginDetails() {
                                     <div class="flex items-center gap-6">
                                         <div class="flex size-16 items-center justify-center rounded-xl border border-neutral-800 bg-gradient-to-t from-neutral-900 to-neutral-800/90 outline-2 outline-offset-2 outline-neutral-600/50">
                                             <PluginSourceIcon
-                                                source={getPluginSource(plugin())}
+                                                source={getPluginSource(
+                                                    plugin(),
+                                                )}
                                                 size={10}
                                             />
                                         </div>

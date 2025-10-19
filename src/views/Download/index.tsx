@@ -3,8 +3,8 @@ import Button from '@components/UI/Button'
 import classNames from 'classnames'
 
 import {
-    faApple,
     faAndroid,
+    faApple,
     faChrome,
     faFirefox,
     faLinux,
@@ -12,7 +12,7 @@ import {
     IconDefinition,
 } from '@fortawesome/free-brands-svg-icons'
 import { isLinux, isMac, isWindows } from '@utils/navigator'
-import { DownloadIcon, MonitorCheck, AlertCircle, Package } from 'lucide-solid'
+import { AlertCircle, DownloadIcon, MonitorCheck, Package } from 'lucide-solid'
 import Fa from 'solid-fa'
 
 interface Download {
@@ -382,7 +382,10 @@ export default function Download() {
                             that support Equicord.
                         </p>
                         <div class="flex items-start gap-2 px-4 py-3 rounded-lg bg-neutral-800/50 border border-neutral-700 text-neutral-300 text-sm">
-                            <AlertCircle size={16} class="mt-0.5 flex-shrink-0" />
+                            <AlertCircle
+                                size={16}
+                                class="mt-0.5 flex-shrink-0"
+                            />
                             <span>
                                 We may have difficulty offering support for
                                 these third-party packages.

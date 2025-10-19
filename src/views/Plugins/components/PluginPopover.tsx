@@ -75,7 +75,7 @@ const Sources = [
             />
         ),
         value: 'modified' as const,
-    }
+    },
 ]
 
 export default function PluginPopover(props: Props) {

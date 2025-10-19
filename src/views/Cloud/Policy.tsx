@@ -54,10 +54,10 @@ export default function CloudPolicy() {
                                 Discord User ID Hash
                             </h3>
                             <p class="text-sm font-medium text-neutral-400">
-                                We store the CRC hash of your Discord user ID
-                                to uniquely identify your data. This is a
-                                one-way hash that cannot be reversed to reveal
-                                your actual Discord ID.
+                                We store the CRC hash of your Discord user ID to
+                                uniquely identify your data. This is a one-way
+                                hash that cannot be reversed to reveal your
+                                actual Discord ID.
                             </p>
                         </div>
 
