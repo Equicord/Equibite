@@ -43,5 +43,11 @@
         "solid-js": "^1.9.9",
         "solid-toast": "^0.5.0"
     },
-    "packageManager": "pnpm@10.17.1"
+    "packageManager": "pnpm@10.17.1",
+    "workspaces": [
+        "**"
+    ],
+    "patchedDependencies": {
+        "lucide-solid@0.539.0": "patches/lucide-solid.patch"
+    }
 }
