@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="width:100%;height:100%;transform:translate3d(0,0,0);content-visibility:visible" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="a">
+      <path d="M0 0h24v24H0z"/>
+    </clipPath>
+    <clipPath id="b">
+      <path d="M0 0h600v600H0z"/>
+    </clipPath>
+    <clipPath id="c">
+      <path d="M0 0h1000v1000H0z"/>
+    </clipPath>
+    <clipPath id="d">
+      <path d="M0 0h1000v1000H0z"/>
+    </clipPath>
+    <mask id="e">
+      <path fill="#fff" d="M211.538 211.538h576.924v576.924H211.538z"/>
+      <path d="m67.22 823.796-193.523 193.954 49.665 49.342 54.318 53.964 193.523-193.954s68.474-66.76 15.678-116.988C130 756 67.22 823.796 67.22 823.796"/>
+    </mask>
+  </defs>
+  <g clip-path="url(#a)">
+    <g clip-path="url(#b)" style="display:block" transform="rotate(.012)scale(.04)">
+      <g clip-path="url(#c)" style="display:block" transform="translate(-220 -220)scale(1.04)">
+        <g clip-path="url(#d)" mask="url(#e)" style="display:block">
+          <path fill="#888888" d="M-8-.288a8 8 0 0 1 16 0q.002 1.04-.146 2H6c-.944 0-1.833.445-2.4 1.2l-1.973 2.63a2.32 2.32 0 0 0-.323 2.181c.585 1.609 2.583 2.565 4.178 1.409C8.839 6.701 10 3.38 10-.288c0-5.523-4.477-10-10-10s-10 4.477-10 10c0 3.668 1.161 6.989 4.518 9.42 1.595 1.156 3.593.2 4.178-1.409a2.32 2.32 0 0 0-.323-2.181L-3.6 2.912a3 3 0 0 0-2.4-1.2h-1.854q-.148-.96-.146-2" style="display:block" transform="matrix(25 0 0 25 500 507.2)"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

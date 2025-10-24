@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="width:100%;height:100%;transform:translate3d(0,0,0);content-visibility:visible" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="a">
+      <path d="M0 0h24v24H0z"/>
+    </clipPath>
+    <clipPath id="b">
+      <path d="M0 0h600v600H0z"/>
+    </clipPath>
+    <clipPath id="c">
+      <path d="M0 0h1000v1000H0z"/>
+    </clipPath>
+    <mask id="d">
+      <path fill="#fff" d="M200 200h600v600H200z"/>
+      <path d="M1025.22-87.204 853.697 87.75s-63.937 67.482-14.56 117.112C893 259 957.68 191.056 957.68 191.056l171.523-174.954S1212-66 1160.215-115.554c-51.434-49.218-134.995 28.35-134.995 28.35"/>
+      <path fill="#fff" d="M698 405h-56v74h56z"/>
+    </mask>
+  </defs>
+  <g clip-path="url(#a)">
+    <g clip-path="url(#b)" style="display:block" transform="rotate(.012)scale(.04)">
+      <g clip-path="url(#c)" style="display:block" transform="translate(-200 -200)">
+        <g mask="url(#d)" style="display:block">
+          <path fill="#888888" d="M600 349a100 100 0 0 0-200 0v99a100 100 0 0 0 200 0z"/>
+          <path fill="none" stroke="#3a3a3a" stroke-linecap="round" stroke-width="50" d="M675 448a175 175 0 1 1-350 0"/>
+          <path fill="#3a3a3a" d="M525 623a12.5 12.5 0 0 0-12.5-12.5h-25A12.5 12.5 0 0 0 475 623v100a12.5 12.5 0 0 0 12.5 12.5h25A12.5 12.5 0 0 0 525 723z"/>
+          <path fill="#3a3a3a" d="M425 698a25 25 0 0 0 0 50h150a25 25 0 0 0 0-50z"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
