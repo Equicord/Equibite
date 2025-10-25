@@ -11,3 +11,7 @@ export const isMac = (): boolean => getUserAgent().toLowerCase().includes('mac')
 // Check if the OS is Linux
 export const isLinux = (): boolean =>
     getUserAgent().toLowerCase().includes('linux')
+
+// Check if the OS is Android
+export const isAndroid = (): boolean =>
+    getUserAgent().toLowerCase().includes('android')

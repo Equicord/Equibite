@@ -11,7 +11,7 @@ import {
     faWindows,
     IconDefinition,
 } from '@fortawesome/free-brands-svg-icons'
-import { isLinux, isMac, isWindows } from '@utils/navigator'
+import { isAndroid, isLinux, isMac, isWindows } from '@utils/navigator'
 import { AlertCircle, DownloadIcon, MonitorCheck, Package } from 'lucide-solid'
 import Fa from 'solid-fa'
 
@@ -28,6 +28,8 @@ interface Platform {
     downloads: Download[]
     isCurrent: boolean
     warning?: string
+    subtext?: string
+    subsection?: Download[]
 }
 
 interface Section {
@@ -177,12 +179,33 @@ const EquidroidPlatforms: Platform[] = [
         icon: faAndroid,
         downloads: [
             {
-                text: 'Releases',
+                text: 'Equidroid',
                 href: 'https://github.com/Equicord/Equidroid/releases',
+                note: 'Not recommended for actual use',
                 prioritize: true,
             },
+            {
+                text: 'VendroidEnhanced',
+                href: 'https://vendroid.nin0.dev',
+                note: 'If you still want an experience like Equidroid but better use this',
+            },
         ],
-        isCurrent: false,
+        isCurrent: isAndroid(),
+        subtext: 'Alternatives to Equidroid',
+        subsection: [
+            {
+                text: 'Revenge',
+                href: 'https://github.com/revenge-mod/revenge-manager/releases',
+            },
+            {
+                text: 'Kettu',
+                href: 'https://github.com/C0C0B01/KettuManager/releases',
+            },
+            {
+                text: 'Aliucord',
+                href: 'https://github.com/Aliucord/Manager/releases',
+            }
+        ]
     },
 ]
 
@@ -208,12 +231,8 @@ const OtherOfferings = [
         href: 'https://github.com/SpikeHD/Dorion',
     },
     {
-        name: 'VendroidEnhanced',
-        href: 'https://github.com/VendroidEnhanced/Vendroid',
-    },
-    {
         name: 'Shelter',
-        href: 'https://shelter.uwu.network/',
+        href: 'https://shelter.uwu.network',
     },
 ]
 
@@ -248,7 +267,7 @@ const Sections: Section[] = [
         githubUrl: 'https://github.com/Equicord/Equidroid',
         platforms: EquidroidPlatforms,
         globalWarning:
-            "iOS not supported and unlikely to ever be supported. Please don't actually use Equidroid - use Revenge or Aliucord instead. Due to current limitations, we cannot provide support for Equidroid.",
+            "iOS not supported and unlikely to ever be supported. Please don't actually use Equidroid - use Revenge, Kettu, or Aliucord instead. Due to current limitations, we cannot provide support for Equidroid.",
     },
 ]
 
@@ -334,6 +353,45 @@ export default function Download() {
 
                                     <div class="inline-flex items-center flex-wrap gap-3">
                                         {platform.downloads.map((download) => (
+                                            <div class="relative flex-1 flex flex-col gap-1">
+                                                <a
+                                                    href={download.href}
+                                                    target="_blank"
+                                                    class="w-full"
+                                                >
+                                                    <Button
+                                                        variant={
+                                                            platform.isCurrent
+                                                                ? download.prioritize
+                                                                    ? 'primary'
+                                                                    : 'secondary'
+                                                                : 'secondary'
+                                                        }
+                                                        class="w-full"
+                                                        icon={
+                                                            <DownloadIcon
+                                                                size={14}
+                                                            />
+                                                        }
+                                                    >
+                                                        {download.text}
+                                                    </Button>
+                                                </a>
+                                                {download.note && (
+                                                     <span class="absolute bottom-0 text-xs text-neutral-400 text-center w-full translate-y-full">
+                                                        {download.note}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <p class="text-neutral-300 text-sm">
+                                        {platform.subtext}
+                                    </p>
+
+                                    <div class="inline-flex items-center flex-wrap gap-3">
+                                        {platform.subsection?.map((download) => (
                                             <div class="flex-1 flex flex-col gap-1">
                                                 <a
                                                     href={download.href}
