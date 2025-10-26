@@ -34,13 +34,8 @@ function capitalizeArtist(str: string): string {
 
 function formatTitle(name: string): string {
     const base = name.replace(/\.[^/.]+$/, '')
-
-    if (/^hue_\d+$/.test(base)) {
-        const num = parseInt(base.split('_')[1], 10)
-        return `Hue ${num}`
-    }
-
     const parts = base.split('-')
+
     if (parts.length === 2) {
         return `${capitalizeWords(splitCamelCase(parts[0]))} by ${capitalizeArtist(parts[1])}`
     }
@@ -64,15 +59,13 @@ async function fetchImagesRecursive(
 
     for (const item of data) {
         if (item.type === 'file' && item.download_url) {
-            const isHue = /^hue_\d+\.png$/.test(item.name)
             const title = formatTitle(item.name)
-            const folder = isHue ? 'Hue Variations' : currentFolder
 
-            if (!folders.has(folder)) {
-                folders.set(folder, [])
+            if (!folders.has(currentFolder)) {
+                folders.set(currentFolder, [])
             }
 
-            folders.get(folder)!.push({ title, url: item.download_url })
+            folders.get(currentFolder)!.push({ title, url: item.download_url })
         } else if (item.type === 'dir') {
             const subFolders = await fetchImagesRecursive(item.url, item.name)
             subFolders.forEach(({ folder, images }) => {
@@ -82,14 +75,6 @@ async function fetchImagesRecursive(
                 folders.get(folder)!.push(...images)
             })
         }
-    }
-
-    if (folders.has('Hue Variations')) {
-        folders.get('Hue Variations')!.sort((a, b) => {
-            const aNum = parseInt(a.title.replace('Hue ', ''), 10)
-            const bNum = parseInt(b.title.replace('Hue ', ''), 10)
-            return aNum - bNum
-        })
     }
 
     return Array.from(folders.entries()).map(([folder, images]) => ({
@@ -102,13 +87,11 @@ export default function Icons() {
     const [folders, setFolders] = createSignal<FolderImages[]>([])
 
     onMount(async () => {
-        const images = await fetchImagesRecursive(
-            'https://api.github.com/repos/Equicord/Equibored/contents/images',
-        )
+        const images = await fetchImagesRecursive('https://api.github.com/repos/Equicord/Equibored/contents/images')
 
         images.sort((a, b) => {
-            if (a.folder === 'Hue Variations') return 1
-            if (b.folder === 'Hue Variations') return -1
+            if (a.folder === 'equicord') return -1
+            if (b.folder === 'equicord') return 1
             return a.folder.localeCompare(b.folder)
         })
 
