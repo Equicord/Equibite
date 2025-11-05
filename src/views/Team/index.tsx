@@ -117,7 +117,9 @@ function UserCard({ userData }: { userData: LanyardUser }) {
     const u = userData.discord_user
 
     const avatar = u.avatar
-        ? `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.webp?size=128`
+        ? u.avatar.startsWith("a_") 
+            ? `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.gif?size=128`
+            : `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.webp?size=128`
         : 'https://cdn.discordapp.com/embed/avatars/0.png'
 
     const decoration = u.avatar_decoration_data
