@@ -23,15 +23,17 @@ export const teamIds = [
 ].map(String)
 
 export const helperIds = [
-    516750892372852754n, // aspy
-    755144413411410060n, // drwhofan13
+    755144413411410060n, // doc
+    134050421315469313n, // rotes
+    94597845868355584n, // murphy
+    852558183087472640n, // jake
 ].map(String)
 
 export const artistIds = [
-    789872551731527690n, // foxstorm1
+    789872551731527690n, // fox
     989197238687387709n, // zunne
     1124341362955919371n, // blade0
-    1344190786476183643n, // stealtech
+    226049554972147712n, // sakyiee
 ].map(String)
 
 export const teamMembers = [...ownerIds, ...teamIds, ...helperIds, ...artistIds]
