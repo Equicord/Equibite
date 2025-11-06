@@ -18,7 +18,8 @@
         "dev": "vite",
         "build": "tsc && vite build",
         "format": "prettier --write .",
-        "lint": "prettier --check ."
+        "lint": "prettier --check .",
+        "start": "vite preview --host"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.1.12",
