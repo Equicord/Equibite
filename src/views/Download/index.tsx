@@ -124,12 +124,12 @@ const getEquibopPlatforms = (version: string): Platform[] => [
         downloads: [
             {
                 text: 'x64',
-                href: `https://github.com/Equicord/Equibop/releases/latest/download/Equibop-Setup-${version}.exe`,
+                href: `https://github.com/Equicord/Equibop/releases/download/v${version}/Equibop-Setup-${version}.exe`,
                 prioritize: true,
             },
             {
                 text: 'ARM64',
-                href: `https://github.com/Equicord/Equibop/releases/latest/download/Equibop-${version}-arm64-win.zip`,
+                href: `https://github.com/Equicord/Equibop/releases/download/v${version}/Equibop-${version}-arm64-win.zip`,
             },
         ],
         isCurrent: isWindows(),
@@ -140,12 +140,12 @@ const getEquibopPlatforms = (version: string): Platform[] => [
         downloads: [
             {
                 text: 'x86_64',
-                href: `https://github.com/Equicord/Equibop/releases/latest/download/Equibop-${version}.AppImage`,
+                href: `https://github.com/Equicord/Equibop/releases/download/v${version}/Equibop-${version}.AppImage`,
                 prioritize: true,
             },
             {
                 text: 'ARM64',
-                href: `https://github.com/Equicord/Equibop/releases/latest/download/Equibop-${version}-arm64.AppImage`,
+                href: `https://github.com/Equicord/Equibop/releases/download/v${version}/Equibop-${version}-arm64.AppImage`,
             },
             {
                 text: 'AUR',
@@ -164,7 +164,7 @@ const getEquibopPlatforms = (version: string): Platform[] => [
         downloads: [
             {
                 text: 'Universal',
-                href: `https://github.com/Equicord/Equibop/releases/latest/download/Equibop-${version}.dmg`,
+                href: `https://github.com/Equicord/Equibop/releases/download/v${version}/Equibop-${version}-universal.dmg`,
                 prioritize: true,
                 note: 'Intel & Apple Silicon',
             },
