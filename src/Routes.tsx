@@ -15,7 +15,6 @@ import PluginDetails from "@views/Plugins/Details"
 import Projects from "@views/Projects"
 import Team from "@views/Team"
 
-// Remove at some point.
 import Icons from "@views/Icons"
 
 export default function Routes() {

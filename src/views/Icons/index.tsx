@@ -230,7 +230,7 @@ export default function Icons() {
                                                 {({ title, url }) => (
                                                     <div
                                                         class={classNames(
-                                                            "group relative flex flex-col items-center gap-3 rounded-xl border border-neutral-800 bg-gradient-to-br from-neutral-900 to-neutral-950 p-4",
+                                                            "group relative flex flex-col items-center gap-3 rounded-xl border border-neutral-800 bg-linear-to-br from-neutral-900 to-neutral-950 p-4",
                                                             "hover:border-neutral-700 hover:shadow-lg hover:shadow-neutral-900/50 transition-all duration-200",
                                                         )}
                                                     >
