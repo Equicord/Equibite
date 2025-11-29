@@ -2,12 +2,10 @@ import type { DisplayImage, FolderImages } from "@/types"
 import PageBootstrap from "@components/PageBootstrap"
 import Input from "@components/UI/Input"
 import LoadingState from "@components/UI/LoadingState"
+import { CacheKeys, CacheTTL } from "@constants"
 import classNames from "classnames"
 import { Download, Image as ImageIcon, Search } from "lucide-solid"
 import { createMemo, createSignal, For, onMount, Show } from "solid-js"
-
-const ICONS_CACHE_KEY = "cachedIcons"
-const ICONS_CACHE_TTL = 1000 * 60 * 60 * 6 // 6 hours
 
 function splitCamelCase(str: string): string {
     return str
@@ -86,10 +84,10 @@ async function fetchImagesRecursiveInternal(
 
 async function fetchImagesRecursive(apiUrl: string): Promise<FolderImages[]> {
     try {
-        const cached = localStorage.getItem(ICONS_CACHE_KEY)
+        const cached = localStorage.getItem(CacheKeys.ICONS)
         if (cached) {
             const { timestamp, data } = JSON.parse(cached)
-            if (Date.now() - timestamp < ICONS_CACHE_TTL) {
+            if (Date.now() - timestamp < CacheTTL.LONG) {
                 return data
             }
         }
@@ -99,7 +97,7 @@ async function fetchImagesRecursive(apiUrl: string): Promise<FolderImages[]> {
 
     try {
         localStorage.setItem(
-            ICONS_CACHE_KEY,
+            CacheKeys.ICONS,
             JSON.stringify({ timestamp: Date.now(), data }),
         )
     } catch {}

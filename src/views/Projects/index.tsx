@@ -1,22 +1,18 @@
 import type { Repository } from "@/types"
+import PageBootstrap from "@components/PageBootstrap"
+import LoadingState from "@components/UI/LoadingState"
+import { CacheKeys, CacheTTL, LanguageColors } from "@constants"
 import { A } from "@solidjs/router"
 import { cleanDescription } from "@utils/plugin"
-import { createResource, For } from "solid-js"
-
-import PageBootstrap from "@components/PageBootstrap"
-
-import LoadingState from "@components/UI/LoadingState"
 import { Book, BookMarked, Star } from "lucide-solid"
-
-const CACHE_KEY = "cachedRepos"
-const CACHE_TTL = 1000 * 60 * 60 * 6 // 6 hours
+import { createResource, For } from "solid-js"
 
 const fetchRepos = async (): Promise<Repository[]> => {
     try {
-        const cached = localStorage.getItem(CACHE_KEY)
+        const cached = localStorage.getItem(CacheKeys.REPOS)
         if (cached) {
             const { timestamp, data } = JSON.parse(cached)
-            if (Date.now() - timestamp < CACHE_TTL) {
+            if (Date.now() - timestamp < CacheTTL.LONG) {
                 return data
             }
         }
@@ -31,21 +27,12 @@ const fetchRepos = async (): Promise<Repository[]> => {
 
     try {
         localStorage.setItem(
-            CACHE_KEY,
+            CacheKeys.REPOS,
             JSON.stringify({ timestamp: Date.now(), data }),
         )
     } catch {}
 
     return data
-}
-
-const languageColors: Record<string, string> = {
-    Rust: "bg-orange-300",
-    TypeScript: "bg-blue-500",
-    Java: "bg-amber-600",
-    JavaScript: "bg-amber-300",
-    Go: "bg-sky-400",
-    default: "bg-neutral-500",
 }
 
 const LanguageTag = (props: { lang?: string }) => {
@@ -56,7 +43,7 @@ const LanguageTag = (props: { lang?: string }) => {
             </span>
         )
 
-    const color = languageColors[props.lang] || languageColors.default
+    const color = LanguageColors[props.lang] || LanguageColors.default
 
     return (
         <span class="flex items-center gap-2 text-sm font-medium text-neutral-300">

@@ -1,4 +1,16 @@
+import PageBootstrap from "@components/PageBootstrap"
+import Input from "@components/UI/Input"
+import LoadingState from "@components/UI/LoadingState"
+import {
+    DESKTOP_PLATFORMS,
+    INITIAL_VISIBLE_COUNT,
+    LOAD_MORE_COUNT,
+    LOAD_MORE_THRESHOLD,
+} from "@constants"
 import { useSearchParams } from "@solidjs/router"
+import { fetchPlugins } from "@utils/plugin"
+import { getStored, setStored } from "@utils/storage"
+import { Puzzle, Search, SearchX } from "lucide-solid"
 import {
     createEffect,
     createMemo,
@@ -9,27 +21,11 @@ import {
     onMount,
     Show,
 } from "solid-js"
-
-import { fetchPlugins } from "@utils/plugin"
-import { getStored, setStored } from "@utils/storage"
-
-import { Puzzle, Search, SearchX } from "lucide-solid"
-
-import Input from "@components/UI/Input"
-import LoadingState from "@components/UI/LoadingState"
-
-import PageBootstrap from "@components/PageBootstrap"
 import PluginCard from "./components/PluginCard"
 import PluginPopover from "./components/PluginPopover"
 
 type PluginFilter = "all" | "equicord" | "vencord"
 type PlatformFilter = "all" | "desktop" | "web"
-
-const INITIAL_VISIBLE_COUNT = 18
-const LOAD_MORE_COUNT = 9
-const LOAD_MORE_THRESHOLD = 300
-
-const DESKTOP_PLATFORMS = ["discordDesktop", "desktop", "vesktop", "equibop"]
 
 export default function Plugins() {
     const [plugins, { refetch }] = createResource(() => fetchPlugins("all"))

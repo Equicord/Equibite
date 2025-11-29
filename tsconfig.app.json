@@ -24,6 +24,8 @@
             "@index": ["./index"],
             "@assets/*": ["./assets/*"],
             "@components/*": ["./components/*"],
+            "@constants": ["./constants"],
+            "@constants/*": ["./constants/*"],
             "@containers/*": ["./containers/*"],
             "@hooks/*": ["./hooks/*"],
             "@router/*": ["./router/*"],

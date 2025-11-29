@@ -2,45 +2,17 @@ import type { Activity, LanyardUser } from "@/types"
 import PageBootstrap from "@components/PageBootstrap"
 import LoadingState from "@components/UI/LoadingState"
 import {
+    ActivityTypes,
     artistIds,
     helperIds,
     ownerIds,
+    RoleHeaders,
+    StatusLabels,
     teamIds,
     teamMembers,
-} from "@utils/constants"
+} from "@constants"
 import { Shield } from "lucide-solid"
 import { createSignal, For, onCleanup, onMount, Show } from "solid-js"
-
-// ---- Constants ----
-const StatusColours: Record<string, string> = {
-    online: "bg-green-500",
-    idle: "bg-yellow-500",
-    dnd: "bg-red-500",
-    offline: "bg-gray-500",
-}
-
-const StatusLabels: Record<string, string> = {
-    online: "Online",
-    idle: "Away",
-    dnd: "Do Not Disturb",
-    offline: "Offline",
-}
-
-const RoleHeaders: Record<string, string> = {
-    owner: "text-purple-300",
-    team: "text-blue-300",
-    helper: "text-green-300",
-    artist: "text-pink-300",
-}
-
-const ActivityTypes: Record<number, string> = {
-    0: "Playing ",
-    1: "Streaming ",
-    2: "Listening to ",
-    3: "Watching ",
-    4: "Custom ",
-    5: "Competing in ",
-}
 
 async function fetchUsers(ids: string[]): Promise<Record<string, LanyardUser>> {
     const results = await Promise.all(

@@ -1,18 +1,16 @@
 import type { Commit } from "@/types"
 import Button from "@components/UI/Button"
+import { CacheKeys, CacheTTL } from "@constants"
 import { A } from "@solidjs/router"
 import { Check, Github, Merge, TrafficCone } from "lucide-solid"
 import { createResource, For, Show } from "solid-js"
 
-const COMMITS_CACHE_KEY = "cachedCommits"
-const COMMITS_CACHE_TTL = 1000 * 60 * 30 // 30 minutes
-
 async function fetchCommits(): Promise<Commit[]> {
     try {
-        const cached = localStorage.getItem(COMMITS_CACHE_KEY)
+        const cached = localStorage.getItem(CacheKeys.COMMITS)
         if (cached) {
             const { timestamp, data } = JSON.parse(cached)
-            if (Date.now() - timestamp < COMMITS_CACHE_TTL) {
+            if (Date.now() - timestamp < CacheTTL.SHORT) {
                 return data
             }
         }
@@ -27,7 +25,7 @@ async function fetchCommits(): Promise<Commit[]> {
 
     try {
         localStorage.setItem(
-            COMMITS_CACHE_KEY,
+            CacheKeys.COMMITS,
             JSON.stringify({ timestamp: Date.now(), data }),
         )
     } catch {}

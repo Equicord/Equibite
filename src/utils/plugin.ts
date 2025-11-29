@@ -1,5 +1,5 @@
 import type { Dev, Plugin, PluginTarget, PluginUrlFetchType } from "@/types"
-import { Urls } from "@utils/constants"
+import { Urls } from "@constants"
 
 export type { Dev, Plugin, PluginTarget, PluginUrlFetchType }
 
