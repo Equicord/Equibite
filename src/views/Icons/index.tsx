@@ -1,19 +1,10 @@
+import type { DisplayImage, FolderImages } from "@/types"
 import PageBootstrap from "@components/PageBootstrap"
 import Input from "@components/UI/Input"
 import LoadingState from "@components/UI/LoadingState"
 import classNames from "classnames"
 import { Download, Image as ImageIcon, Search } from "lucide-solid"
 import { createMemo, createSignal, For, onMount, Show } from "solid-js"
-
-interface DisplayImage {
-    title: string
-    url: string
-}
-
-interface FolderImages {
-    folder: string
-    images: DisplayImage[]
-}
 
 const ICONS_CACHE_KEY = "cachedIcons"
 const ICONS_CACHE_TTL = 1000 * 60 * 60 * 6 // 6 hours

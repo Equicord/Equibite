@@ -1,17 +1,8 @@
+import type { Commit } from "@/types"
 import Button from "@components/UI/Button"
 import { A } from "@solidjs/router"
 import { Check, Github, Merge, TrafficCone } from "lucide-solid"
 import { createResource, For, Show } from "solid-js"
-
-interface Commit {
-    sha: string
-    commit: {
-        message: string
-        author: {
-            date: string
-        }
-    }
-}
 
 const COMMITS_CACHE_KEY = "cachedCommits"
 const COMMITS_CACHE_TTL = 1000 * 60 * 30 // 30 minutes

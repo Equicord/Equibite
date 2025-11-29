@@ -1,3 +1,4 @@
+import type { Platform, Section } from "@/types"
 import PageBootstrap from "@components/PageBootstrap"
 import Button from "@components/UI/Button"
 import classNames from "classnames"
@@ -9,37 +10,11 @@ import {
     faFirefox,
     faLinux,
     faWindows,
-    IconDefinition,
 } from "@fortawesome/free-brands-svg-icons"
 import { isAndroid, isLinux, isMac, isWindows } from "@utils/navigator"
 import { AlertCircle, DownloadIcon, MonitorCheck, Package } from "lucide-solid"
 import Fa from "solid-fa"
 import { createResource } from "solid-js"
-
-interface Download {
-    text: string
-    href: string
-    prioritize?: boolean
-    note?: string
-}
-
-interface Platform {
-    icon: IconDefinition
-    title: string
-    downloads: Download[]
-    isCurrent: boolean
-    warning?: string
-    subtext?: string
-    subsection?: Download[]
-}
-
-interface Section {
-    title: string
-    description: string
-    githubUrl: string
-    platforms: Platform[]
-    globalWarning?: string
-}
 
 const EquicordPlatforms: Platform[] = [
     {

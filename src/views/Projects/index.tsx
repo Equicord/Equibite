@@ -1,3 +1,4 @@
+import type { Repository } from "@/types"
 import { A } from "@solidjs/router"
 import { cleanDescription } from "@utils/plugin"
 import { createResource, For } from "solid-js"
@@ -6,17 +7,6 @@ import PageBootstrap from "@components/PageBootstrap"
 
 import LoadingState from "@components/UI/LoadingState"
 import { Book, BookMarked, Star } from "lucide-solid"
-
-type Language = "Rust" | "TypeScript" | "Java" | "JavaScript" | "Go" | string
-
-interface Repository {
-    name: string
-    full_name: string
-    description: string
-    archived: boolean
-    stargazers_count: number
-    language: Language
-}
 
 const CACHE_KEY = "cachedRepos"
 const CACHE_TTL = 1000 * 60 * 60 * 6 // 6 hours

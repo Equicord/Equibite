@@ -1,3 +1,4 @@
+import type { Activity, LanyardUser } from "@/types"
 import PageBootstrap from "@components/PageBootstrap"
 import LoadingState from "@components/UI/LoadingState"
 import {
@@ -9,35 +10,6 @@ import {
 } from "@utils/constants"
 import { Shield } from "lucide-solid"
 import { createSignal, For, onCleanup, onMount, Show } from "solid-js"
-
-// ---- Types ----
-interface AvatarDecoration {
-    sku_id: string
-    asset: string
-    expires_at: string | null
-}
-
-interface Activity {
-    id: string
-    name: string
-    type: number
-    state?: string
-    details?: string
-}
-
-interface LanyardUser {
-    discord_user: {
-        id: string
-        username: string
-        avatar: string | null
-        discriminator: string
-        public_flags: number
-        global_name: string | null
-        avatar_decoration_data?: AvatarDecoration | null
-    }
-    discord_status: string
-    activities: Activity[]
-}
 
 // ---- Constants ----
 const StatusColours: Record<string, string> = {
@@ -156,8 +128,10 @@ function UserCard(props: { userData: LanyardUser }) {
             : null
     }
 
-    const customStatus = () => props.userData.activities.find((a) => a.type === 4)
-    const otherActivity = () => props.userData.activities.find((a) => a.type !== 4)
+    const customStatus = () =>
+        props.userData.activities.find((a) => a.type === 4)
+    const otherActivity = () =>
+        props.userData.activities.find((a) => a.type !== 4)
 
     const username = () => u().global_name ?? u().username
     const status = () =>
@@ -187,10 +161,16 @@ function UserCard(props: { userData: LanyardUser }) {
                         <div
                             class="absolute -right-1 -bottom-1 z-20 h-5 w-5 rounded-full border-2 border-neutral-900"
                             classList={{
-                                "bg-green-500": props.userData.discord_status === "online",
-                                "bg-yellow-500": props.userData.discord_status === "idle",
-                                "bg-red-500": props.userData.discord_status === "dnd",
-                                "bg-gray-500": props.userData.discord_status === "offline" || !props.userData.discord_status,
+                                "bg-green-500":
+                                    props.userData.discord_status === "online",
+                                "bg-yellow-500":
+                                    props.userData.discord_status === "idle",
+                                "bg-red-500":
+                                    props.userData.discord_status === "dnd",
+                                "bg-gray-500":
+                                    props.userData.discord_status ===
+                                        "offline" ||
+                                    !props.userData.discord_status,
                             }}
                         ></div>
                     </div>

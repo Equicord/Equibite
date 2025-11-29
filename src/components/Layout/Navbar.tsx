@@ -1,3 +1,4 @@
+import type { BrowseItem, BrowseSection, NavItem } from "@/types"
 import Button from "@components/UI/Button"
 import Popover from "@components/UI/Popover"
 import { faDiscord } from "@fortawesome/free-brands-svg-icons"
@@ -17,26 +18,7 @@ import {
     Puzzle,
 } from "lucide-solid"
 import Fa from "solid-fa"
-import { createSignal, For, onCleanup, onMount, type JSX } from "solid-js"
-
-interface NavItem {
-    text: string
-    href: string
-    external?: boolean
-}
-
-interface BrowseItem {
-    icon: () => JSX.Element
-    text: string
-    description: string
-    href: string
-    external?: boolean
-}
-
-interface BrowseSection {
-    category: string
-    items: BrowseItem[]
-}
+import { createSignal, For, onCleanup, onMount } from "solid-js"
 
 const BrowseSections: BrowseSection[] = [
     {
