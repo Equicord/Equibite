@@ -1,7 +1,8 @@
 import type { Commit } from "@/types"
 import Button from "@components/UI/Button"
-import { CacheKeys, CacheTTL } from "@constants"
+import { CacheKeys, CacheTTL, Urls } from "@constants"
 import { A } from "@solidjs/router"
+import { formatTimeAgo, truncateText } from "@utils/formatting"
 import { Check, Github, Merge, TrafficCone } from "lucide-solid"
 import { createResource, For, Show } from "solid-js"
 
@@ -16,9 +17,7 @@ async function fetchCommits(): Promise<Commit[]> {
         }
     } catch {}
 
-    const res = await fetch(
-        "https://api.github.com/repos/Equicord/Equicord/commits?per_page=4",
-    )
+    const res = await fetch(`${Urls.GITHUB_COMMITS}?per_page=4`)
     if (!res.ok) return []
 
     const data: Commit[] = await res.json()
@@ -31,27 +30,6 @@ async function fetchCommits(): Promise<Commit[]> {
     } catch {}
 
     return data
-}
-
-function formatTimeAgo(dateString: string): string {
-    const date = new Date(dateString)
-    const now = new Date()
-    const diffMs = now.getTime() - date.getTime()
-    const diffMins = Math.floor(diffMs / 60000)
-    const diffHours = Math.floor(diffMs / 3600000)
-    const diffDays = Math.floor(diffMs / 86400000)
-
-    if (diffMins < 60)
-        return `${diffMins} minute${diffMins !== 1 ? "s" : ""} ago`
-    if (diffHours < 24)
-        return `${diffHours} hour${diffHours !== 1 ? "s" : ""} ago`
-    return `${diffDays} day${diffDays !== 1 ? "s" : ""} ago`
-}
-
-function truncateMessage(message: string, maxLength = 30): string {
-    const firstLine = message.split("\n")[0]
-    if (firstLine.length <= maxLength) return firstLine
-    return firstLine.slice(0, maxLength) + "..."
 }
 
 function isMergeCommit(message: string): boolean {
@@ -76,7 +54,7 @@ function Commits() {
                         {(commit) => (
                             <div class="flex flex-col gap-1 border-b border-neutral-800 py-3 pr-6 pl-4">
                                 <span class="font-semibold">
-                                    {truncateMessage(commit.commit.message)}
+                                    {truncateText(commit.commit.message)}
                                 </span>
 
                                 <p class="flex items-center gap-2 text-sm font-medium text-neutral-400">

@@ -1,7 +1,6 @@
 import { Title } from "@solidjs/meta"
 import classNames from "classnames"
-import gsap from "gsap"
-import { type JSX, onMount, type ParentProps } from "solid-js"
+import { createSignal, type JSX, onMount, type ParentProps } from "solid-js"
 
 interface Props extends ParentProps {
     meta?: {
@@ -14,15 +13,10 @@ interface Props extends ParentProps {
 }
 
 export default function PageBootstrap(props: Props) {
-    let containerRef: HTMLDivElement | undefined
+    const [mounted, setMounted] = createSignal(false)
 
     onMount(() => {
-        gsap.from(containerRef!, {
-            opacity: 0,
-            y: 50,
-            filter: "blur(6px)",
-            duration: 0.4,
-        })
+        requestAnimationFrame(() => setMounted(true))
     })
 
     return (
@@ -31,9 +25,12 @@ export default function PageBootstrap(props: Props) {
             <div
                 class={classNames(
                     props.fullWidth ? "max-w-eq-lg" : "max-w-eq-sm",
-                    "mx-auto flex flex-col gap-6 px-6 py-12",
+                    "mx-auto flex flex-col gap-6 px-6 py-12 transition-all duration-400 ease-out",
                 )}
-                ref={containerRef}
+                classList={{
+                    "opacity-0 translate-y-12 blur-sm": !mounted(),
+                    "opacity-100 translate-y-0 blur-0": mounted(),
+                }}
             >
                 <header class="flex flex-col gap-1">
                     <h1 class="inline-flex items-center gap-2 text-3xl font-bold md:text-4xl">

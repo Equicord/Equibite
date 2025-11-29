@@ -14,5 +14,31 @@ export interface Repository {
     description: string
     archived: boolean
     stargazers_count: number
-    language: string
+    language: string | null
 }
+
+export interface GitHubContentFile {
+    type: "file"
+    name: string
+    path: string
+    sha: string
+    size: number
+    url: string
+    html_url: string
+    git_url: string
+    download_url: string
+}
+
+export interface GitHubContentDir {
+    type: "dir"
+    name: string
+    path: string
+    sha: string
+    size: number
+    url: string
+    html_url: string
+    git_url: string
+    download_url: null
+}
+
+export type GitHubContent = GitHubContentFile | GitHubContentDir

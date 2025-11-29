@@ -1,4 +1,4 @@
-import type { Activity, LanyardUser } from "@/types"
+import type { Activity, LanyardIncomingMessage, LanyardUser } from "@/types"
 import PageBootstrap from "@components/PageBootstrap"
 import LoadingState from "@components/UI/LoadingState"
 import {
@@ -10,6 +10,7 @@ import {
     StatusLabels,
     teamIds,
     teamMembers,
+    Urls,
 } from "@constants"
 import { Shield } from "lucide-solid"
 import { createSignal, For, onCleanup, onMount, Show } from "solid-js"
@@ -18,9 +19,7 @@ async function fetchUsers(ids: string[]): Promise<Record<string, LanyardUser>> {
     const results = await Promise.all(
         ids.map(async (id) => {
             try {
-                const res = await fetch(
-                    `https://lanyard.equicord.org/v1/users/${id}`,
-                )
+                const res = await fetch(`${Urls.LANYARD_API}/users/${id}`)
                 if (!res.ok) return null
 
                 const json = await res.json()
@@ -39,11 +38,11 @@ function createLanyardSocket(
     ids: string[],
     onUpdate: (userId: string, user: LanyardUser) => void,
 ): WebSocket {
-    const ws = new WebSocket("wss://lanyard.equicord.org/socket")
+    const ws = new WebSocket(Urls.LANYARD_WS)
     let heartbeatInterval: ReturnType<typeof setInterval> | null = null
 
     ws.onmessage = (event) => {
-        const message = JSON.parse(event.data)
+        const message: LanyardIncomingMessage = JSON.parse(event.data)
 
         switch (message.op) {
             case 1:
@@ -61,7 +60,7 @@ function createLanyardSocket(
 
             case 0:
                 if (message.t === "PRESENCE_UPDATE") {
-                    const user = message.d as LanyardUser
+                    const user = message.d
                     if (user.discord_user?.id) {
                         onUpdate(user.discord_user.id, user)
                     }
@@ -88,15 +87,15 @@ function UserCard(props: { userData: LanyardUser }) {
         const user = u()
         return user.avatar
             ? user.avatar.startsWith("a_")
-                ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.gif?size=128`
-                : `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.webp?size=128`
-            : "https://cdn.discordapp.com/embed/avatars/0.png"
+                ? `${Urls.DISCORD_CDN}/avatars/${user.id}/${user.avatar}.gif?size=128`
+                : `${Urls.DISCORD_CDN}/avatars/${user.id}/${user.avatar}.webp?size=128`
+            : `${Urls.DISCORD_CDN}/embed/avatars/0.png`
     }
 
     const decoration = () => {
         const user = u()
         return user.avatar_decoration_data
-            ? `https://cdn.discordapp.com/avatar-decoration-presets/${user.avatar_decoration_data.asset}.png?size=128`
+            ? `${Urls.DISCORD_CDN}/avatar-decoration-presets/${user.avatar_decoration_data.asset}.png?size=128`
             : null
     }
 
@@ -126,12 +125,16 @@ function UserCard(props: { userData: LanyardUser }) {
 
                         <img
                             src={avatar()}
+                            alt={`${username()}'s avatar`}
                             draggable={false}
+                            loading="lazy"
                             class="size-16 rounded-full border-2 border-neutral-700 select-none"
                         />
 
                         <div
                             class="absolute -right-1 -bottom-1 z-20 h-5 w-5 rounded-full border-2 border-neutral-900"
+                            role="status"
+                            aria-label={`Status: ${StatusLabels[props.userData.discord_status] || "Offline"}`}
                             classList={{
                                 "bg-green-500":
                                     props.userData.discord_status === "online",

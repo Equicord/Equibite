@@ -39,7 +39,7 @@ export default function Switch(props: Props) {
             </div>
 
             <div
-                class={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full border transition-colors ${
+                class={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full border transition-colors duration-200 ${
                     isChecked()
                         ? "border-green-500 bg-green-400"
                         : "border-neutral-800 bg-neutral-950 group-hover:bg-neutral-900"
@@ -53,7 +53,7 @@ export default function Switch(props: Props) {
                     class="peer sr-only"
                 />
                 <span
-                    class={`inline-block h-4 w-4 transform rounded-full shadow transition-all ${
+                    class={`inline-block h-4 w-4 transform rounded-full shadow transition-all duration-200 ${
                         isChecked()
                             ? "translate-x-6 bg-green-950"
                             : "translate-x-1 bg-neutral-200"

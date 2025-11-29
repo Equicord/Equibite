@@ -336,7 +336,7 @@ export default function Download() {
                                             </div>
 
                                             {platform.warning && (
-                                                <div class="flex items-start gap-2 px-3 py-2 rounded-lg bg-neutral-800/50 text-neutral-300 text-xs">
+                                                <div class="flex items-start gap-2 px-3 py-2 rounded-lg bg-yellow-950/30 border border-yellow-900/50 text-yellow-200 text-xs">
                                                     <AlertCircle
                                                         size={12}
                                                         class="mt-0.5 flex-shrink-0"
@@ -348,10 +348,10 @@ export default function Download() {
                                             )}
                                         </div>
 
-                                        <div class="inline-flex items-center flex-wrap gap-3">
+                                        <div class="inline-flex items-start flex-wrap gap-3">
                                             {platform.downloads.map(
                                                 (download) => (
-                                                    <div class="relative flex-1 flex flex-col gap-1">
+                                                    <div class="flex-1 flex flex-col gap-1.5">
                                                         <a
                                                             href={download.href}
                                                             target="_blank"
@@ -377,11 +377,10 @@ export default function Download() {
                                                                 {download.text}
                                                             </Button>
                                                         </a>
-                                                        {download.note && (
-                                                            <span class="absolute bottom-0 text-xs text-neutral-400 text-center w-full translate-y-[calc(100%+4px)]">
-                                                                {download.note}
-                                                            </span>
-                                                        )}
+                                                        <span class="text-xs text-neutral-500 text-center px-1 min-h-4">
+                                                            {download.note ??
+                                                                ""}
+                                                        </span>
                                                     </div>
                                                 ),
                                             )}
@@ -444,7 +443,7 @@ export default function Download() {
                             Third-party Discord clients and package managers
                             that support Equicord.
                         </p>
-                        <div class="flex items-start gap-2 px-4 py-3 rounded-lg bg-neutral-800/50 border border-neutral-700 text-neutral-300 text-sm">
+                        <div class="flex items-start gap-2 px-4 py-3 rounded-lg bg-yellow-950/30 border border-yellow-900/50 text-yellow-200 text-sm">
                             <AlertCircle
                                 size={16}
                                 class="mt-0.5 flex-shrink-0"

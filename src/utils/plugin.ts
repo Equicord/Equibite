@@ -9,10 +9,6 @@ export const PluginUrlKeys: PluginUrlFetchType = {
     vencord: "VENCORD_PLUGINS_URL",
 }
 
-/**
- * Fetches plugins from github.
- * @param all - Whether to fetch all plugins or only equicord plugins.
- */
 export const fetchPlugins = async (
     type: keyof PluginUrlFetchType,
 ): Promise<Plugin[]> => {
@@ -28,10 +24,6 @@ export const fetchPlugins = async (
     return response.json() as Promise<Plugin[]>
 }
 
-/**
- * Formats the authors array into a string.
- * @param authors - Array of authors.
- */
 export const formatAuthors = (authors: Dev[]): string => {
     const names = authors.map((author) => author.name)
 
@@ -47,10 +39,6 @@ export const formatAuthors = (authors: Dev[]): string => {
     }
 }
 
-/**
- * Formats the plugin target into a string.
- * @param target - Plugin target.
- */
 export const formatTarget = (target: PluginTarget): string =>
     target
         ? target
@@ -59,19 +47,12 @@ export const formatTarget = (target: PluginTarget): string =>
               .trim()
         : "all platforms"
 
-/**
- * Cleans up description text by removing punctuation and extra spaces.
- * @param text - Raw description.
- */
 export const cleanDescription = (text: string): string =>
     text
         .replace(/[!.,:;?]+/g, "")
         .replace(/\s+/g, " ")
         .trim()
 
-/**
- * Gets the availability text of a plugin based on its name, requirement status, and target.
- */
 export const getAvailabilityText = (
     name: string,
     required: boolean,

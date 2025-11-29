@@ -86,7 +86,7 @@ export default function FeaturePlugins() {
                     when={randomPlugins()}
                     fallback={
                         <>
-                            <div class="opacity-50 md:translate-y-3 lg:translate-x-24">
+                            <div class="scale-95 brightness-75 md:translate-y-3 lg:translate-x-24">
                                 <DiscordPlugin
                                     title="ShowBadgesInChat"
                                     description="Shows the message author's badges beside their name in chat. Available on all platforms."
@@ -103,7 +103,7 @@ export default function FeaturePlugins() {
                 >
                     {(pluginList) => (
                         <>
-                            <div class="opacity-50 md:translate-y-3 lg:translate-x-24">
+                            <div class="scale-95 brightness-75 md:translate-y-3 lg:translate-x-24">
                                 <DiscordPlugin
                                     title={pluginList()[0].name}
                                     description={`${cleanDescription(pluginList()[0].description)}. ${getAvailabilityText(pluginList()[0].name, pluginList()[0].required, pluginList()[0].target)}.`}

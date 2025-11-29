@@ -2,9 +2,8 @@ import type { BrowseItem, BrowseSection, NavItem } from "@/types"
 import Button from "@components/UI/Button"
 import Popover from "@components/UI/Popover"
 import { faDiscord } from "@fortawesome/free-brands-svg-icons"
-import { A } from "@solidjs/router"
+import { A, useLocation } from "@solidjs/router"
 import classNames from "classnames"
-import gsap from "gsap"
 import {
     Book,
     BookMarked,
@@ -18,7 +17,7 @@ import {
     Puzzle,
 } from "lucide-solid"
 import Fa from "solid-fa"
-import { createSignal, For, onCleanup, onMount } from "solid-js"
+import { createSignal, For, onCleanup, onMount, Show } from "solid-js"
 
 const BrowseSections: BrowseSection[] = [
     {
@@ -113,20 +112,20 @@ const DropdownItem = (props: { item: BrowseItem; onClick?: () => void }) => (
         href={props.item.href}
         target={props.item.external ? "_blank" : undefined}
         onClick={props.onClick}
-        class="relative group flex items-start opacity-60 hover:opacity-100 transition-opacity gap-3 rounded-xl p-3"
+        class="relative group flex items-start gap-3 rounded-xl p-3 text-neutral-300 hover:text-white transition-colors duration-150"
     >
         <div class="flex items-center justify-center pt-2">
             {props.item.icon()}
         </div>
 
         <div class="flex flex-1 flex-col">
-            <h4 class="font-semibold text-white">{props.item.text}</h4>
-            <p class="text-sm font-semibold text-neutral-400">
+            <h4 class="font-semibold">{props.item.text}</h4>
+            <p class="text-sm font-medium text-neutral-500 group-hover:text-neutral-400 transition-colors duration-150">
                 {props.item.description}
             </p>
         </div>
 
-        <div class="-z-10 absolute size-full inset-0 rounded-xl bg-neutral-800 opacity-0 group-hover:opacity-100 group-hover:scale-100 scale-95 transition-all" />
+        <div class="-z-10 absolute size-full inset-0 rounded-xl bg-neutral-800 opacity-0 group-hover:opacity-100 group-hover:scale-100 scale-95 transition-all duration-150" />
     </A>
 )
 
@@ -142,22 +141,14 @@ const NavLink = (props: { item: NavItem }) => (
 )
 
 export default function Navbar() {
+    const location = useLocation()
     const [showMobileMenu, setShowMobileMenu] = createSignal(false)
     const [hasScrolled, setHasScrolled] = createSignal(false)
-    let mobileMenuRef: HTMLDivElement | undefined
 
     const toggleMobileMenu = (force?: boolean) => {
         const next = force ?? !showMobileMenu()
         setShowMobileMenu(next)
         document.body.style.overflowY = next ? "hidden" : "auto"
-
-        if (mobileMenuRef)
-            gsap.to(mobileMenuRef, {
-                x: next ? 0 : 400,
-                duration: 0.3,
-                ease: "power2.out",
-                display: next ? "flex" : "none",
-            })
     }
 
     const handleScroll = () => setHasScrolled(window.scrollY > 0)
@@ -180,9 +171,10 @@ export default function Navbar() {
 
             {/* Mobile Menu */}
             <div
-                ref={mobileMenuRef}
-                class="fixed top-0 right-0 z-40 h-dvh w-80 flex-col overflow-y-scroll border-l border-l-neutral-800/50 bg-neutral-900 md:hidden"
-                style={{ display: "none" }}
+                class={classNames(
+                    "fixed top-0 right-0 z-40 h-dvh w-80 flex-col overflow-y-scroll border-l border-l-neutral-800/50 bg-neutral-900 md:hidden transition-transform duration-300 ease-out",
+                    showMobileMenu() ? "translate-x-0" : "translate-x-full",
+                )}
             >
                 <div class="flex flex-col gap-6 p-6 pt-20">
                     <For each={BrowseSections}>
@@ -224,18 +216,20 @@ export default function Navbar() {
                             )}
                         </For>
 
-                        <A
-                            href="/download"
-                            onClick={() => toggleMobileMenu(false)}
-                        >
-                            <Button
-                                icon={<Download size={16} />}
-                                variant="secondary"
-                                class="w-full justify-center"
+                        <Show when={location.pathname !== "/download"}>
+                            <A
+                                href="/download"
+                                onClick={() => toggleMobileMenu(false)}
                             >
-                                Download
-                            </Button>
-                        </A>
+                                <Button
+                                    icon={<Download size={16} />}
+                                    variant="secondary"
+                                    class="w-full justify-center"
+                                >
+                                    Download
+                                </Button>
+                            </A>
+                        </Show>
                     </div>
                 </div>
             </div>
@@ -295,15 +289,19 @@ export default function Navbar() {
                     </div>
                 </div>
 
-                <A href="/download" class="hidden md:flex">
-                    <Button icon={<Download size={16} />} variant="primary">
-                        Download
-                    </Button>
-                </A>
+                <Show when={location.pathname !== "/download"}>
+                    <A href="/download" class="hidden md:flex">
+                        <Button icon={<Download size={16} />} variant="primary">
+                            Download
+                        </Button>
+                    </A>
+                </Show>
 
                 <button
-                    class="z-50 flex size-12 flex-col items-center justify-center gap-1.5 rounded-xl md:hidden"
+                    class="z-50 flex size-12 flex-col items-center justify-center gap-1.5 rounded-xl md:hidden focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none"
                     onClick={() => toggleMobileMenu()}
+                    aria-label="Toggle menu"
+                    aria-expanded={showMobileMenu()}
                 >
                     <span
                         class={classNames(

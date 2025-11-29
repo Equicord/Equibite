@@ -1,6 +1,5 @@
 import { useLocation } from "@solidjs/router"
 import classNames from "classnames"
-import gsap from "gsap"
 import { ChevronUp } from "lucide-solid"
 import {
     Show,
@@ -25,9 +24,9 @@ export default function Popover({
     popoverClass,
 }: Props) {
     const [open, setOpen] = createSignal(false)
+    const [visible, setVisible] = createSignal(false)
     const location = useLocation()
     let containerRef: HTMLDivElement | undefined
-    let panelRef: HTMLDivElement | undefined
     let closeTimeout: number | undefined
     let prevPathname = location.pathname
 
@@ -36,26 +35,16 @@ export default function Popover({
         if (currentPath !== prevPathname) {
             prevPathname = currentPath
             if (open()) {
-                setOpen(false)
+                close()
             }
         }
     })
 
-    const animateIn = (el: HTMLElement) =>
-        gsap.fromTo(
-            el,
-            { opacity: 0, y: -5 },
-            { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" },
-        )
-
-    const animateOut = (el: HTMLElement, onComplete: () => void) =>
-        gsap.to(el, {
-            opacity: 0,
-            y: -5,
-            duration: 0.2,
-            ease: "power2.in",
-            onComplete,
-        })
+    createEffect(() => {
+        if (open()) {
+            requestAnimationFrame(() => setVisible(true))
+        }
+    })
 
     const openPopover = () => {
         if (closeTimeout) clearTimeout(closeTimeout)
@@ -64,7 +53,8 @@ export default function Popover({
 
     const close = () => {
         if (closeTimeout) clearTimeout(closeTimeout)
-        panelRef ? animateOut(panelRef, () => setOpen(false)) : setOpen(false)
+        setVisible(false)
+        setTimeout(() => setOpen(false), 200)
     }
 
     const delayedClose = () => {
@@ -72,7 +62,13 @@ export default function Popover({
         closeTimeout = window.setTimeout(close, 20)
     }
 
-    const toggle = () => setOpen((prev) => !prev)
+    const toggle = () => {
+        if (open()) {
+            close()
+        } else {
+            openPopover()
+        }
+    }
 
     const handleClickOutside = (event: MouseEvent) => {
         if (containerRef && !containerRef.contains(event.target as Node))
@@ -81,10 +77,6 @@ export default function Popover({
 
     onMount(() => document.addEventListener("click", handleClickOutside))
     onCleanup(() => document.removeEventListener("click", handleClickOutside))
-
-    createEffect(() => {
-        if (open() && panelRef) animateIn(panelRef)
-    })
 
     return (
         <div
@@ -110,9 +102,11 @@ export default function Popover({
 
             <Show when={open()}>
                 <div
-                    ref={panelRef}
                     class={classNames(
-                        "absolute z-50 mt-2 rounded-2xl border border-neutral-800 bg-neutral-900 shadow-lg p-3 opacity-0",
+                        "absolute z-50 mt-2 rounded-2xl border border-neutral-800 bg-neutral-900 shadow-lg p-3 transition-all duration-200 ease-out",
+                        visible()
+                            ? "opacity-100 translate-y-0"
+                            : "opacity-0 -translate-y-1",
                         popoverClass,
                     )}
                     onMouseEnter={hover ? openPopover : undefined}

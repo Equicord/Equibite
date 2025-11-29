@@ -9,19 +9,12 @@ type PluginFilterValue = "all" | "equicord" | "vencord" | "modified"
 type PlatformFilterValue = "all" | "desktop" | "web"
 
 interface Props {
-    // Plugin filter
     pluginFilter: () => PluginFilterValue
     setPluginFilter: (value: PluginFilterValue) => void
-
-    // Platform filter
     platformFilter: () => PlatformFilterValue
     setPlatformFilter: (value: PlatformFilterValue) => void
-
-    // Commands filter
     filterHasCommands: () => boolean
     setFilterHasCommands: (value: boolean) => void
-
-    // Compact mode
     compactMode: () => boolean
     setCompactMode: (value: boolean) => void
 }

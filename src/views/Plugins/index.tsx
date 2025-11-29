@@ -88,7 +88,6 @@ export default function Plugins() {
             })
         }
 
-        // Plugin source filter
         if (pluginFilter() === "equicord") {
             result = result.filter((plugin) =>
                 plugin.filePath.toLowerCase().startsWith("src/equicordplugins"),
@@ -99,7 +98,6 @@ export default function Plugins() {
             )
         }
 
-        // Platform filter
         if (platformFilter() === "desktop") {
             result = result.filter((plugin) =>
                 DESKTOP_PLATFORMS.includes(plugin.target ?? ""),
@@ -108,7 +106,6 @@ export default function Plugins() {
             result = result.filter((plugin) => plugin.target === "web")
         }
 
-        // Commands filter
         if (filterHasCommands()) {
             result = result.filter((plugin) => plugin.hasCommands)
         }
@@ -161,7 +158,6 @@ export default function Plugins() {
             title="Plugins"
             description={`${filteredPlugins().length} plugin${filteredPlugins().length !== 1 ? "s" : ""} found`}
         >
-            {/* Search & Filters */}
             <div class="flex items-center gap-3">
                 <Input
                     placeholder="Search plugins..."
@@ -182,7 +178,6 @@ export default function Plugins() {
                 />
             </div>
 
-            {/* Plugins List */}
             <main class="w-full">
                 <LoadingState
                     loading={plugins.loading}
@@ -222,11 +217,11 @@ export default function Plugins() {
                         </div>
 
                         <Show when={hasMorePlugins()}>
-                            <div class="mt-8 flex justify-center">
+                            <div class="mt-8 flex flex-col items-center gap-2">
+                                <div class="h-6 w-6 animate-spin rounded-full border-2 border-neutral-700 border-t-sky-500" />
                                 <p class="text-sm text-neutral-400">
                                     Showing {visiblePlugins().length} of{" "}
-                                    {filteredPlugins().length} plugins • Scroll
-                                    down to load more
+                                    {filteredPlugins().length} plugins
                                 </p>
                             </div>
                         </Show>

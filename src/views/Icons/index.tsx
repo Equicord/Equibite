@@ -1,32 +1,17 @@
-import type { DisplayImage, FolderImages } from "@/types"
+import type { DisplayImage, FolderImages, GitHubContent } from "@/types"
 import PageBootstrap from "@components/PageBootstrap"
 import Input from "@components/UI/Input"
 import LoadingState from "@components/UI/LoadingState"
-import { CacheKeys, CacheTTL } from "@constants"
+import { CacheKeys, CacheTTL, Urls } from "@constants"
+import {
+    capitalizeArtist,
+    capitalizeWords,
+    splitCamelCase,
+} from "@utils/formatting"
 import classNames from "classnames"
 import { Download, Image as ImageIcon, Search } from "lucide-solid"
 import { createMemo, createSignal, For, onMount, Show } from "solid-js"
-
-function splitCamelCase(str: string): string {
-    return str
-        .replace(/([a-z])([A-Z])/g, "$1 $2")
-        .replace(/([a-zA-Z])(\d)/g, "$1 $2")
-        .replace(/(\d)([a-zA-Z])/g, "$1 $2")
-}
-
-function capitalizeWords(str: string): string {
-    return str
-        .split(" ")
-        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-        .join(" ")
-}
-
-function capitalizeArtist(str: string): string {
-    return str
-        .split(/[\s-]+/)
-        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-        .join(" ")
-}
+import toast from "solid-toast"
 
 function formatTitle(name: string): string {
     const base = name.replace(/\.[^/.]+$/, "")
@@ -50,7 +35,7 @@ async function fetchImagesRecursiveInternal(
     const res = await fetch(apiUrl)
     if (!res.ok) return []
 
-    const data = await res.json()
+    const data: GitHubContent[] = await res.json()
     const folders = new Map<string, DisplayImage[]>()
 
     for (const item of data) {
@@ -111,9 +96,7 @@ export default function Icons() {
     const [loading, setLoading] = createSignal(true)
 
     onMount(async () => {
-        const images = await fetchImagesRecursive(
-            "https://api.github.com/repos/Equicord/Equibored/contents/images",
-        )
+        const images = await fetchImagesRecursive(Urls.GITHUB_ICONS)
 
         images.sort((a, b) => {
             if (a.folder === "equicord") return -1
@@ -157,8 +140,10 @@ export default function Icons() {
             link.click()
             document.body.removeChild(link)
             window.URL.revokeObjectURL(blobUrl)
+            toast.success(`Downloaded ${title}`)
         } catch (error) {
             console.error("Failed to download icon:", error)
+            toast.error("Failed to download icon")
         }
     }
 
@@ -238,6 +223,7 @@ export default function Icons() {
                                                             <img
                                                                 src={url}
                                                                 alt={title}
+                                                                loading="lazy"
                                                                 class="w-full h-full object-contain rounded-lg cursor-pointer"
                                                                 onClick={() =>
                                                                     window.open(
