@@ -95,10 +95,14 @@ const BrowserPlatforms: Platform[] = [
         icon: faFirefox,
         downloads: [
             {
-                text: 'Download',
-                href: 'https://github.com/Equicord/Equicord/releases/download/latest/extension-firefox.zip',
+                text: 'Add-on',
+                href: 'https://addons.mozilla.org/en-US/firefox/addon/equicord-web/',
                 prioritize: true,
-                note: 'Sideload only',
+            },
+            {
+                text: 'Zip',
+                href: 'https://github.com/Equicord/Equicord/releases/download/latest/extension-firefox.zip',
+                note: 'Requires Firefox Developer Edition',
             },
         ],
         isCurrent: false,
@@ -399,7 +403,7 @@ export default function Download() {
                                                             </Button>
                                                         </a>
                                                         {download.note && (
-                                                            <span class="absolute bottom-0 text-xs text-neutral-400 text-center w-full translate-y-full">
+                                                            <span class="absolute bottom-0 text-xs text-neutral-400 text-center w-full translate-y-[calc(100%+4px)]">
                                                                 {download.note}
                                                             </span>
                                                         )}
