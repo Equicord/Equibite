@@ -1,0 +1,47 @@
+{
+    "formatter": "prettier",
+    "format_on_save": "on",
+    "tab_size": 4,
+    "languages": {
+        "TypeScript": {
+            "formatter": "prettier"
+        },
+        "TSX": {
+            "formatter": "prettier"
+        },
+        "JavaScript": {
+            "formatter": "prettier"
+        },
+        "JSON": {
+            "formatter": "prettier"
+        },
+        "CSS": {
+            "formatter": "prettier"
+        }
+    },
+    "lsp": {
+        "tailwindcss-language-server": {
+            "settings": {
+                "tailwindCSS": {
+                    "classAttributes": ["class", "classList"],
+                    "experimental": {
+                        "classRegex": [
+                            ["class\\s*=\\s*[\"']([^\"']*)[\"']", 1],
+                            ["classList\\s*=\\s*\\{([^}]*)\\}", 1]
+                        ]
+                    },
+                    "lint": {
+                        "cssConflict": "warning",
+                        "invalidApply": "error",
+                        "invalidConfigPath": "error",
+                        "invalidScreen": "error",
+                        "invalidTailwindDirective": "error",
+                        "invalidVariant": "error",
+                        "recommendedVariantOrder": "warning",
+                        "suggestCanonicalClasses": "ignore"
+                    }
+                }
+            }
+        }
+    }
+}

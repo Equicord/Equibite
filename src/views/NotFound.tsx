@@ -24,7 +24,7 @@ export default function NotFound() {
         >
             <A href="/">
                 <Button
-                    buttonColor="secondary"
+                    variant="secondary"
                     icon={<ArrowLeft size={16} />}
                     class="text-sm"
                 >

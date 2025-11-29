@@ -1,8 +1,12 @@
 import { createSignal, type JSX, Show, splitProps } from "solid-js"
 
-interface Props extends JSX.InputHTMLAttributes<HTMLInputElement> {
+interface Props extends Omit<
+    JSX.InputHTMLAttributes<HTMLInputElement>,
+    "onChange"
+> {
     label?: string
     icon?: JSX.Element
+    onChange?: JSX.EventHandler<HTMLInputElement, Event>
 }
 
 export default function Switch(props: Props) {
@@ -15,12 +19,9 @@ export default function Switch(props: Props) {
     ])
     const [isChecked, setIsChecked] = createSignal(!!local.checked)
 
-    const handleChange = (event: Event) => {
-        const target = event.currentTarget as HTMLInputElement
-        setIsChecked(target.checked)
-        // typeof local.onChange === "function" && local.onChange(event as any)
-        // @ts-expect-error
-        local.onChange?.(event as any)
+    const handleChange: JSX.EventHandler<HTMLInputElement, Event> = (event) => {
+        setIsChecked(event.currentTarget.checked)
+        local.onChange?.(event)
     }
 
     return (
@@ -38,7 +39,7 @@ export default function Switch(props: Props) {
             </div>
 
             <div
-                class={`relative inline-flex h-6 w-11 flex-shrink-0 items-center rounded-full border transition-colors ${
+                class={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full border transition-colors ${
                     isChecked()
                         ? "border-green-500 bg-green-400"
                         : "border-neutral-800 bg-neutral-950 group-hover:bg-neutral-900"

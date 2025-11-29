@@ -24,7 +24,7 @@ import {
 import PluginCard from "./components/PluginCard"
 import PluginPopover from "./components/PluginPopover"
 
-type PluginFilter = "all" | "equicord" | "vencord"
+type PluginFilter = "all" | "equicord" | "vencord" | "modified"
 type PlatformFilter = "all" | "desktop" | "web"
 
 export default function Plugins() {

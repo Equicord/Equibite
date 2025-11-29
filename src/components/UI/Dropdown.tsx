@@ -1,22 +1,23 @@
 import { ChevronDown, ChevronUp } from "lucide-solid"
 import { For, type JSX, Show, createSignal, onCleanup, onMount } from "solid-js"
 
-interface DropdownItem {
+export interface DropdownItem<T extends string | number = string> {
     label: string
-    value?: string | number
+    value: T
     icon?: JSX.Element
-    onSelect?: () => void
 }
 
-interface Props {
+interface Props<T extends string | number = string> {
     icon?: JSX.Element
-    items: DropdownItem[]
+    items: DropdownItem<T>[]
     placeholder?: string
-    selected?: DropdownItem | null
-    onSelect?: (item: DropdownItem) => void
+    selected?: DropdownItem<T> | null
+    onSelect?: (item: DropdownItem<T>) => void
 }
 
-export default function Dropdown(props: Props) {
+export default function Dropdown<T extends string | number = string>(
+    props: Props<T>,
+) {
     const [open, setOpen] = createSignal(false)
     let containerRef: HTMLDivElement | undefined
 
@@ -29,7 +30,7 @@ export default function Dropdown(props: Props) {
         }
     }
 
-    const handleSelect = (item: DropdownItem) => {
+    const handleSelect = (item: DropdownItem<T>) => {
         props.onSelect?.(item)
         close()
     }

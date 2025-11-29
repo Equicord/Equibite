@@ -35,7 +35,10 @@ const enum PluginSource {
     Unknown = "Unknown",
 }
 
-export const getPluginSource = (props: any): PluginSource => {
+export const getPluginSource = (props: {
+    filePath: string
+    isModified: boolean
+}): PluginSource => {
     const { filePath, isModified } = props
     const lower = filePath.toLowerCase()
 
@@ -152,7 +155,7 @@ export default function PluginDetails() {
                                 {/* Header */}
                                 <header class="flex items-center justify-between">
                                     <div class="flex items-center gap-6">
-                                        <div class="flex size-16 items-center justify-center rounded-xl border border-neutral-800 bg-gradient-to-t from-neutral-900 to-neutral-800/90 outline-2 outline-offset-2 outline-neutral-600/50">
+                                        <div class="flex size-16 items-center justify-center rounded-xl border border-neutral-800 bg-linear-to-t from-neutral-900 to-neutral-800/90 outline-2 outline-offset-2 outline-neutral-600/50">
                                             <PluginSourceIcon
                                                 source={getPluginSource(
                                                     plugin(),
@@ -184,7 +187,7 @@ export default function PluginDetails() {
                                         <Button
                                             icon={<Link size={16} />}
                                             variant="secondary"
-                                            class="!px-4 !py-2.5 text-sm"
+                                            class="px-4 py-2.5 text-sm"
                                             onClick={() => copyLink(plugin())}
                                         >
                                             Copy Link
