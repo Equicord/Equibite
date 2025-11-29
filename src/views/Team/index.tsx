@@ -8,7 +8,7 @@ import {
     teamMembers,
 } from "@utils/constants"
 import { Shield } from "lucide-solid"
-import { createEffect, createSignal, For, Show } from "solid-js"
+import { createSignal, For, onCleanup, onMount, Show } from "solid-js"
 
 // ---- Types ----
 interface AvatarDecoration {
@@ -70,13 +70,6 @@ const ActivityTypes: Record<number, string> = {
     5: "Competing in ",
 }
 
-const ROLE_MAP = {
-    owners: ownerIds,
-    team: teamIds,
-    helpers: helperIds,
-    artists: artistIds,
-} as const
-
 async function fetchUsers(ids: string[]): Promise<Record<string, LanyardUser>> {
     const results = await Promise.all(
         ids.map(async (id) => {
@@ -98,41 +91,78 @@ async function fetchUsers(ids: string[]): Promise<Record<string, LanyardUser>> {
     return Object.fromEntries(filtered)
 }
 
-function getGroupedUsers(users: Record<string, LanyardUser>) {
-    const userList = Object.values(users)
+function createLanyardSocket(
+    ids: string[],
+    onUpdate: (userId: string, user: LanyardUser) => void,
+): WebSocket {
+    const ws = new WebSocket("wss://lanyard.equicord.org/socket")
+    let heartbeatInterval: ReturnType<typeof setInterval> | null = null
 
-    return Object.fromEntries(
-        Object.entries(ROLE_MAP).map(([role, ids]) => [
-            role,
-            userList.filter((u) => ids.includes(u.discord_user.id)),
-        ]),
-    ) as Record<keyof typeof ROLE_MAP, LanyardUser[]>
+    ws.onmessage = (event) => {
+        const message = JSON.parse(event.data)
+
+        switch (message.op) {
+            case 1:
+                heartbeatInterval = setInterval(() => {
+                    ws.send(JSON.stringify({ op: 3 }))
+                }, message.d.heartbeat_interval)
+
+                ws.send(
+                    JSON.stringify({
+                        op: 2,
+                        d: { subscribe_to_ids: ids },
+                    }),
+                )
+                break
+
+            case 0:
+                if (message.t === "PRESENCE_UPDATE") {
+                    const user = message.d as LanyardUser
+                    if (user.discord_user?.id) {
+                        onUpdate(user.discord_user.id, user)
+                    }
+                }
+                break
+        }
+    }
+
+    ws.onclose = () => {
+        if (heartbeatInterval) clearInterval(heartbeatInterval)
+    }
+
+    return ws
 }
 
 function getActivityLabel(activity: Activity) {
     return ActivityTypes[activity.type] ?? ""
 }
 
-function UserCard({ userData }: { userData: LanyardUser }) {
-    const u = userData.discord_user
+function UserCard(props: { userData: LanyardUser }) {
+    const u = () => props.userData.discord_user
 
-    const avatar = u.avatar
-        ? u.avatar.startsWith("a_")
-            ? `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.gif?size=128`
-            : `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.webp?size=128`
-        : "https://cdn.discordapp.com/embed/avatars/0.png"
+    const avatar = () => {
+        const user = u()
+        return user.avatar
+            ? user.avatar.startsWith("a_")
+                ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.gif?size=128`
+                : `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.webp?size=128`
+            : "https://cdn.discordapp.com/embed/avatars/0.png"
+    }
 
-    const decoration = u.avatar_decoration_data
-        ? `https://cdn.discordapp.com/avatar-decoration-presets/${u.avatar_decoration_data.asset}.png?size=128`
-        : null
+    const decoration = () => {
+        const user = u()
+        return user.avatar_decoration_data
+            ? `https://cdn.discordapp.com/avatar-decoration-presets/${user.avatar_decoration_data.asset}.png?size=128`
+            : null
+    }
 
-    const customStatus = userData.activities.find((a) => a.type === 4)
-    const otherActivity = userData.activities.find((a) => a.type !== 4)
+    const customStatus = () => props.userData.activities.find((a) => a.type === 4)
+    const otherActivity = () => props.userData.activities.find((a) => a.type !== 4)
 
-    const username = u.global_name ?? u.username
-    const status =
-        customStatus?.state ??
-        StatusLabels[userData.discord_status] ??
+    const username = () => u().global_name ?? u().username
+    const status = () =>
+        customStatus()?.state ??
+        StatusLabels[props.userData.discord_status] ??
         "Unknown"
 
     return (
@@ -140,44 +170,50 @@ function UserCard({ userData }: { userData: LanyardUser }) {
             <div class="relative z-10 flex flex-col items-center text-center">
                 <div class="relative mb-4">
                     <div class="relative">
-                        <Show when={decoration}>
+                        <Show when={decoration()}>
                             <img
-                                src={decoration!}
+                                src={decoration()!}
                                 draggable={false}
                                 class="absolute inset-0 z-10 size-16 object-fit select-none scale-115"
                             />
                         </Show>
 
                         <img
-                            src={avatar}
+                            src={avatar()}
                             draggable={false}
                             class="size-16 rounded-full border-2 border-neutral-700 select-none"
                         />
 
                         <div
-                            class={`absolute -right-1 -bottom-1 z-20 h-5 w-5 rounded-full border-2 border-neutral-900 ${StatusColours[userData.discord_status] ?? "bg-gray-500"}`}
+                            class="absolute -right-1 -bottom-1 z-20 h-5 w-5 rounded-full border-2 border-neutral-900"
+                            classList={{
+                                "bg-green-500": props.userData.discord_status === "online",
+                                "bg-yellow-500": props.userData.discord_status === "idle",
+                                "bg-red-500": props.userData.discord_status === "dnd",
+                                "bg-gray-500": props.userData.discord_status === "offline" || !props.userData.discord_status,
+                            }}
                         ></div>
                     </div>
                 </div>
 
-                <h3 class="text-lg font-semibold text-white">{username}</h3>
+                <h3 class="text-lg font-semibold text-white">{username()}</h3>
 
                 <div class="mt-3 flex flex-col gap-1 text-center">
-                    <Show when={customStatus?.state}>
+                    <Show when={customStatus()?.state}>
                         <p class="text-sm font-medium text-neutral-300">
-                            {customStatus!.state}
+                            {customStatus()!.state}
                         </p>
                     </Show>
 
-                    <Show when={otherActivity}>
+                    <Show when={otherActivity()}>
                         <p class="text-xs text-neutral-400">
-                            {getActivityLabel(otherActivity!)}
-                            {otherActivity!.details ?? otherActivity!.name}
+                            {getActivityLabel(otherActivity()!)}
+                            {otherActivity()!.details ?? otherActivity()!.name}
                         </p>
                     </Show>
 
-                    <Show when={!customStatus?.state && !otherActivity}>
-                        <p class="text-sm text-neutral-400">{status}</p>
+                    <Show when={!customStatus()?.state && !otherActivity()}>
+                        <p class="text-sm text-neutral-400">{status()}</p>
                     </Show>
                 </div>
             </div>
@@ -185,21 +221,31 @@ function UserCard({ userData }: { userData: LanyardUser }) {
     )
 }
 
-function RoleSection({
-    title,
-    users,
-    colorClass,
-}: {
+function RoleSection(props: {
     title: string
-    users: LanyardUser[]
+    userIds: string[]
+    users: Record<string, LanyardUser>
     colorClass: string
 }) {
+    const filteredUsers = () =>
+        props.userIds
+            .map((id) => props.users[id])
+            .filter((u): u is LanyardUser => !!u)
+
     return (
-        <Show when={users.length > 0}>
+        <Show when={filteredUsers().length > 0}>
             <section class="flex flex-col gap-4">
-                <h2 class={`text-xl font-bold ${colorClass}`}>{title}</h2>
+                <h2 class={`text-xl font-bold ${props.colorClass}`}>
+                    {props.title}
+                </h2>
                 <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    <For each={users}>{(u) => <UserCard userData={u} />}</For>
+                    <For each={props.userIds}>
+                        {(id) => (
+                            <Show when={props.users[id]}>
+                                <UserCard userData={props.users[id]} />
+                            </Show>
+                        )}
+                    </For>
                 </div>
             </section>
         </Show>
@@ -209,15 +255,21 @@ function RoleSection({
 export default function Teams() {
     const [users, setUsers] = createSignal<Record<string, LanyardUser>>({})
     const [loading, setLoading] = createSignal(true)
+    let ws: WebSocket | null = null
 
-    createEffect(() => {
-        fetchUsers(teamMembers).then((data) => {
-            setUsers(data)
-            setLoading(false)
+    onMount(async () => {
+        const data = await fetchUsers(teamMembers)
+        setUsers(data)
+        setLoading(false)
+
+        ws = createLanyardSocket(teamMembers, (userId, user) => {
+            setUsers((prev) => ({ ...prev, [userId]: user }))
         })
     })
 
-    const grouped = () => getGroupedUsers(users())
+    onCleanup(() => {
+        ws?.close()
+    })
 
     return (
         <PageBootstrap
@@ -234,22 +286,26 @@ export default function Teams() {
                 <div class="flex flex-col gap-8">
                     <RoleSection
                         title="Owner"
-                        users={grouped().owners}
+                        userIds={ownerIds}
+                        users={users()}
                         colorClass={RoleHeaders.owner}
                     />
                     <RoleSection
                         title="Team"
-                        users={grouped().team}
+                        userIds={teamIds}
+                        users={users()}
                         colorClass={RoleHeaders.team}
                     />
                     <RoleSection
                         title="Helpers"
-                        users={grouped().helpers}
+                        userIds={helperIds}
+                        users={users()}
                         colorClass={RoleHeaders.helper}
                     />
                     <RoleSection
                         title="Artists"
-                        users={grouped().artists}
+                        userIds={artistIds}
+                        users={users()}
                         colorClass={RoleHeaders.artist}
                     />
                 </div>
