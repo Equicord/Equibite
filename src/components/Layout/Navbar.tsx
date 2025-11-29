@@ -1,9 +1,9 @@
-import Button from '@components/UI/Button'
-import Popover from '@components/UI/Popover'
-import { faDiscord } from '@fortawesome/free-brands-svg-icons'
-import { A } from '@solidjs/router'
-import classNames from 'classnames'
-import gsap from 'gsap'
+import Button from "@components/UI/Button"
+import Popover from "@components/UI/Popover"
+import { faDiscord } from "@fortawesome/free-brands-svg-icons"
+import { A } from "@solidjs/router"
+import classNames from "classnames"
+import gsap from "gsap"
 import {
     Book,
     BookMarked,
@@ -15,9 +15,9 @@ import {
     Github,
     Paintbrush,
     Puzzle,
-} from 'lucide-solid'
-import Fa from 'solid-fa'
-import { createSignal, For, onCleanup, onMount, type JSX } from 'solid-js'
+} from "lucide-solid"
+import Fa from "solid-fa"
+import { createSignal, For, onCleanup, onMount, type JSX } from "solid-js"
 
 interface NavItem {
     text: string
@@ -40,75 +40,75 @@ interface BrowseSection {
 
 const BrowseSections: BrowseSection[] = [
     {
-        category: 'Discover',
+        category: "Discover",
         items: [
             {
                 icon: () => <Puzzle size={20} />,
-                text: 'Plugins',
+                text: "Plugins",
                 description: "List of Equicord's third-party plugins",
-                href: '/plugins',
+                href: "/plugins",
             },
             {
                 icon: () => <BookMarked size={20} />,
-                text: 'Projects',
+                text: "Projects",
                 description: "List of Equicord's active repositories",
-                href: '/projects',
+                href: "/projects",
             },
             {
                 icon: () => <CloudFog size={20} />,
-                text: 'Cloud',
+                text: "Cloud",
                 description: "About Equicord's cloud integration",
-                href: '/cloud',
+                href: "/cloud",
             },
         ],
     },
     {
-        category: 'Resources',
+        category: "Resources",
         items: [
             {
                 icon: () => <DownloadIcon size={20} />,
-                text: 'Download',
-                description: 'Download Equicord’s installer Equilotl',
-                href: '/download',
+                text: "Download",
+                description: "Download Equicord’s installer Equilotl",
+                href: "/download",
             },
             {
                 icon: () => <Book size={20} />,
-                text: 'Documentation',
-                description: 'Learn how to use Equicord',
-                href: 'https://docs.equicord.org',
+                text: "Documentation",
+                description: "Learn how to use Equicord",
+                href: "https://docs.equicord.org",
                 external: true,
             },
             {
                 icon: () => <Code size={20} />,
-                text: 'Source Code',
-                description: 'View the Equicord repository',
-                href: 'https://github.com/Equicord/Equicord',
+                text: "Source Code",
+                description: "View the Equicord repository",
+                href: "https://github.com/Equicord/Equicord",
                 external: true,
             },
         ],
     },
     {
-        category: 'Community',
+        category: "Community",
         items: [
             {
                 icon: () => <Fa icon={faDiscord} class="h-8" />,
-                text: 'Discord',
-                description: 'Join the active community on Discord',
-                href: '/discord',
+                text: "Discord",
+                description: "Join the active community on Discord",
+                href: "/discord",
                 external: true,
             },
             {
                 icon: () => <Github size={20} />,
-                text: 'GitHub',
-                description: 'Contribute to Equicord and other projects',
-                href: 'https://github.com/Equicord',
+                text: "GitHub",
+                description: "Contribute to Equicord and other projects",
+                href: "https://github.com/Equicord",
                 external: true,
             },
             {
                 icon: () => <Paintbrush size={20} />,
-                text: 'Icons',
-                description: 'Custom icons for Equicord',
-                href: '/icons',
+                text: "Icons",
+                description: "Custom icons for Equicord",
+                href: "/icons",
             },
         ],
     },
@@ -116,12 +116,12 @@ const BrowseSections: BrowseSection[] = [
 
 const NavItems: NavItem[] = [
     {
-        text: 'Team',
-        href: '/team',
+        text: "Team",
+        href: "/team",
     },
     {
-        text: 'Docs',
-        href: 'https://docs.equicord.org',
+        text: "Docs",
+        href: "https://docs.equicord.org",
         external: true,
     },
 ]
@@ -129,7 +129,7 @@ const NavItems: NavItem[] = [
 const DropdownItem = (props: { item: BrowseItem; onClick?: () => void }) => (
     <A
         href={props.item.href}
-        target={props.item.external ? '_blank' : undefined}
+        target={props.item.external ? "_blank" : undefined}
         onClick={props.onClick}
         class="relative group flex items-start opacity-60 hover:opacity-100 transition-opacity gap-3 rounded-xl p-3"
     >
@@ -151,7 +151,7 @@ const DropdownItem = (props: { item: BrowseItem; onClick?: () => void }) => (
 const NavLink = (props: { item: NavItem }) => (
     <A
         href={props.item.href}
-        target={props.item.external ? '_blank' : undefined}
+        target={props.item.external ? "_blank" : undefined}
         class="flex cursor-pointer items-center hover:bg-neutral-900 py-2 px-3 rounded-xl gap-1 font-medium text-neutral-400 transition-colors hover:text-white"
     >
         {props.item.text}
@@ -167,23 +167,23 @@ export default function Navbar() {
     const toggleMobileMenu = (force?: boolean) => {
         const next = force ?? !showMobileMenu()
         setShowMobileMenu(next)
-        document.body.style.overflowY = next ? 'hidden' : 'auto'
+        document.body.style.overflowY = next ? "hidden" : "auto"
 
         if (mobileMenuRef)
             gsap.to(mobileMenuRef, {
                 x: next ? 0 : 400,
                 duration: 0.3,
-                ease: 'power2.out',
-                display: next ? 'flex' : 'none',
+                ease: "power2.out",
+                display: next ? "flex" : "none",
             })
     }
 
     const handleScroll = () => setHasScrolled(window.scrollY > 0)
 
-    onMount(() => window.addEventListener('scroll', handleScroll))
+    onMount(() => window.addEventListener("scroll", handleScroll))
     onCleanup(() => {
-        window.removeEventListener('scroll', handleScroll)
-        document.body.style.overflowY = 'auto'
+        window.removeEventListener("scroll", handleScroll)
+        document.body.style.overflowY = "auto"
     })
 
     return (
@@ -200,7 +200,7 @@ export default function Navbar() {
             <div
                 ref={mobileMenuRef}
                 class="fixed top-0 right-0 z-40 h-dvh w-80 flex-col overflow-y-scroll border-l border-l-neutral-800/50 bg-neutral-900 md:hidden"
-                style={{ display: 'none' }}
+                style={{ display: "none" }}
             >
                 <div class="flex flex-col gap-6 p-6 pt-20">
                     <For each={BrowseSections}>
@@ -229,7 +229,7 @@ export default function Navbar() {
                                 <A
                                     href={item.href}
                                     target={
-                                        item.external ? '_blank' : undefined
+                                        item.external ? "_blank" : undefined
                                     }
                                     class="flex items-center gap-1 rounded-xl p-3 font-bold hover:bg-neutral-800/50"
                                     onClick={() => toggleMobileMenu(false)}
@@ -260,9 +260,9 @@ export default function Navbar() {
 
             <header
                 class={classNames(
-                    'max-w-eq-lg z-30 mx-auto flex items-center justify-between px-6 py-8 transition-colors',
+                    "max-w-eq-lg z-30 mx-auto flex items-center justify-between px-6 py-8 transition-colors",
                     hasScrolled() &&
-                        'sticky top-0 bg-neutral-950/90 backdrop-blur-lg',
+                        "sticky top-0 bg-neutral-950/90 backdrop-blur-lg",
                 )}
             >
                 <div class="flex items-center gap-6">
@@ -273,8 +273,8 @@ export default function Navbar() {
                         <img
                             src={
                                 Math.random() < 1 / 1_000_000
-                                    ? '/assets/icons/equicord/old/icon.png'
-                                    : '/assets/favicon.png'
+                                    ? "/assets/icons/equicord/old/icon.png"
+                                    : "/assets/favicon.png"
                             }
                             class="size-8 select-none"
                             draggable={false}
@@ -325,20 +325,20 @@ export default function Navbar() {
                 >
                     <span
                         class={classNames(
-                            showMobileMenu() && 'translate-y-2 rotate-45',
-                            'h-0.5 w-5 rounded-full bg-neutral-200 transition-all',
+                            showMobileMenu() && "translate-y-2 rotate-45",
+                            "h-0.5 w-5 rounded-full bg-neutral-200 transition-all",
                         )}
                     />
                     <span
                         class={classNames(
-                            showMobileMenu() && 'opacity-0',
-                            'h-0.5 w-5 rounded-full bg-neutral-200 transition-all',
+                            showMobileMenu() && "opacity-0",
+                            "h-0.5 w-5 rounded-full bg-neutral-200 transition-all",
                         )}
                     />
                     <span
                         class={classNames(
-                            showMobileMenu() && '-translate-y-2 -rotate-45',
-                            'h-0.5 w-5 rounded-full bg-neutral-200 transition-all',
+                            showMobileMenu() && "-translate-y-2 -rotate-45",
+                            "h-0.5 w-5 rounded-full bg-neutral-200 transition-all",
                         )}
                     />
                 </button>

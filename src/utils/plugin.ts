@@ -1,4 +1,4 @@
-import { Urls } from '@utils/constants'
+import { Urls } from "@utils/constants"
 
 export interface Dev {
     name: string
@@ -11,12 +11,12 @@ export interface Command {
 }
 
 export type PluginTarget =
-    | 'discordDesktop'
-    | 'vesktop'
-    | 'equibop'
-    | 'desktop'
-    | 'web'
-    | 'dev'
+    | "discordDesktop"
+    | "vesktop"
+    | "equibop"
+    | "desktop"
+    | "web"
+    | "dev"
     | undefined
 
 export interface Plugin {
@@ -36,15 +36,15 @@ export interface Plugin {
 }
 
 export interface PluginUrlFetchType {
-    all: 'ALL_PLUGINS_URL'
-    equicord: 'EQUICORD_PLUGINS_URL'
-    vencord: 'VENCORD_PLUGINS_URL'
+    all: "ALL_PLUGINS_URL"
+    equicord: "EQUICORD_PLUGINS_URL"
+    vencord: "VENCORD_PLUGINS_URL"
 }
 
 export const PluginUrlKeys: PluginUrlFetchType = {
-    all: 'ALL_PLUGINS_URL',
-    equicord: 'EQUICORD_PLUGINS_URL',
-    vencord: 'VENCORD_PLUGINS_URL',
+    all: "ALL_PLUGINS_URL",
+    equicord: "EQUICORD_PLUGINS_URL",
+    vencord: "VENCORD_PLUGINS_URL",
 }
 
 /**
@@ -75,13 +75,13 @@ export const formatAuthors = (authors: Dev[]): string => {
 
     switch (names.length) {
         case 0:
-            return ''
+            return ""
         case 1:
             return names[0]
         case 2:
-            return names.join(' & ')
+            return names.join(" & ")
         default:
-            return names.join(', ')
+            return names.join(", ")
     }
 }
 
@@ -92,10 +92,10 @@ export const formatAuthors = (authors: Dev[]): string => {
 export const formatTarget = (target: PluginTarget): string =>
     target
         ? target
-              .replace(/([A-Z])/g, ' $1')
+              .replace(/([A-Z])/g, " $1")
               .toLowerCase()
               .trim()
-        : 'all platforms'
+        : "all platforms"
 
 /**
  * Cleans up description text by removing punctuation and extra spaces.
@@ -103,8 +103,8 @@ export const formatTarget = (target: PluginTarget): string =>
  */
 export const cleanDescription = (text: string): string =>
     text
-        .replace(/[!.,:;?]+/g, '')
-        .replace(/\s+/g, ' ')
+        .replace(/[!.,:;?]+/g, "")
+        .replace(/\s+/g, " ")
         .trim()
 
 /**
@@ -115,7 +115,7 @@ export const getAvailabilityText = (
     required: boolean,
     target: PluginTarget,
 ): string => {
-    if (name === 'WebContextMenus') return 'Required on vesktop & equibop'
+    if (name === "WebContextMenus") return "Required on vesktop & equibop"
 
     return required
         ? `Required on ${formatTarget(target)}`

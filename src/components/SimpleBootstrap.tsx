@@ -1,6 +1,6 @@
-import { Title } from '@solidjs/meta'
-import gsap from 'gsap'
-import { type JSX, onMount, type ParentProps } from 'solid-js'
+import { Title } from "@solidjs/meta"
+import gsap from "gsap"
+import { type JSX, onMount, type ParentProps } from "solid-js"
 
 interface Props extends ParentProps {
     meta?: {
@@ -19,14 +19,14 @@ export default function SimpleBootstrap(props: Props) {
 
     onMount(() => {
         const tl = gsap.timeline({
-            defaults: { ease: 'power3.out', duration: 0.8 },
+            defaults: { ease: "power3.out", duration: 0.8 },
         })
 
         tl.from(containerRef!.children[0], {
             opacity: 0,
             y: -30,
             scale: 0.8,
-            filter: 'blur(6px)',
+            filter: "blur(6px)",
         })
 
         tl.from(
@@ -34,9 +34,9 @@ export default function SimpleBootstrap(props: Props) {
             {
                 opacity: 0,
                 y: 30,
-                filter: 'blur(6px)',
+                filter: "blur(6px)",
             },
-            '-=0.4',
+            "-=0.4",
         )
 
         if (contentRef) {
@@ -45,10 +45,10 @@ export default function SimpleBootstrap(props: Props) {
                 {
                     opacity: 0,
                     y: 20,
-                    filter: 'blur(6px)',
+                    filter: "blur(6px)",
                     stagger: 0.15,
                 },
-                '-=0.3',
+                "-=0.3",
             )
         }
     })

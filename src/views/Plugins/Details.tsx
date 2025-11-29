@@ -1,5 +1,5 @@
-import { Title } from '@solidjs/meta'
-import { A, useNavigate, useParams } from '@solidjs/router'
+import { Title } from "@solidjs/meta"
+import { A, useNavigate, useParams } from "@solidjs/router"
 import {
     createMemo,
     createResource,
@@ -8,9 +8,9 @@ import {
     Match,
     Show,
     Switch,
-} from 'solid-js'
+} from "solid-js"
 
-import { type Plugin, fetchPlugins, formatAuthors } from '@utils/plugin'
+import { type Plugin, fetchPlugins, formatAuthors } from "@utils/plugin"
 import {
     ArrowLeft,
     Braces,
@@ -21,18 +21,18 @@ import {
     Globe,
     Link,
     Notebook,
-    RotateCcw,
     Users,
-} from 'lucide-solid'
+} from "lucide-solid"
 
-import Button from '@components/UI/Button'
-import toast from 'solid-toast'
+import Button from "@components/UI/Button"
+import LoadingState from "@components/UI/LoadingState"
+import toast from "solid-toast"
 
 const enum PluginSource {
-    Equicord = 'Equicord',
-    Vencord = 'Vencord',
-    Modified = 'Modified',
-    Unknown = 'Unknown',
+    Equicord = "Equicord",
+    Vencord = "Vencord",
+    Modified = "Modified",
+    Unknown = "Unknown",
 }
 
 export const getPluginSource = (props: any): PluginSource => {
@@ -40,8 +40,8 @@ export const getPluginSource = (props: any): PluginSource => {
     const lower = filePath.toLowerCase()
 
     if (isModified) return PluginSource.Modified
-    if (lower.startsWith('src/equicordplugins')) return PluginSource.Equicord
-    if (lower.startsWith('src/plugins')) return PluginSource.Vencord
+    if (lower.startsWith("src/equicordplugins")) return PluginSource.Equicord
+    if (lower.startsWith("src/plugins")) return PluginSource.Vencord
 
     return PluginSource.Unknown
 }
@@ -52,10 +52,10 @@ interface PluginSourceProps {
 }
 
 const pluginIcons: Record<PluginSource, string> = {
-    [PluginSource.Equicord]: '/assets/icons/equicord/icon.png',
-    [PluginSource.Vencord]: '/assets/icons/vencord/icon.png',
-    [PluginSource.Modified]: '/assets/icons/equicord/modified.png',
-    [PluginSource.Unknown]: '/assets/icons/misc/userplugin.png',
+    [PluginSource.Equicord]: "/assets/icons/equicord/icon.png",
+    [PluginSource.Vencord]: "/assets/icons/vencord/icon.png",
+    [PluginSource.Modified]: "/assets/icons/equicord/modified.png",
+    [PluginSource.Unknown]: "/assets/icons/misc/userplugin.png",
 }
 
 export function PluginSourceIcon(props: PluginSourceProps) {
@@ -76,7 +76,7 @@ export default function PluginDetails() {
     const navigate = useNavigate()
 
     const [plugins, { refetch }] = createResource<Plugin[]>(() =>
-        fetchPlugins('all'),
+        fetchPlugins("all"),
     )
 
     const plugin = createMemo(() =>
@@ -86,18 +86,18 @@ export default function PluginDetails() {
         ),
     )
 
-    const [activeTab, setActiveTab] = createSignal<'overview' | 'commands'>(
-        'overview',
+    const [activeTab, setActiveTab] = createSignal<"overview" | "commands">(
+        "overview",
     )
 
     const copyLink = (plugin: Plugin) => {
         const url = `https://equicord.org/plugins/${plugin.name}`
         navigator.clipboard.writeText(url)
-        toast.success('Copied Link', {
+        toast.success("Copied Link", {
             className:
-                'border-1 !rounded-xl !bg-neutral-900 !text-white !font-medium border-neutral-800',
+                "border-1 !rounded-xl !bg-neutral-900 !text-white !font-medium border-neutral-800",
             iconTheme: {
-                secondary: 'var(--color-neutral-900)',
+                secondary: "var(--color-neutral-900)",
             },
         })
     }
@@ -107,38 +107,12 @@ export default function PluginDetails() {
             <Title>Plugins | Equicord</Title>
 
             <div class="max-w-eq-lg mx-auto flex flex-col gap-6 px-6 py-12">
-                <Show
-                    when={plugins.state === 'ready'}
-                    fallback={
-                        <div class="flex items-center justify-center py-12">
-                            <Show
-                                when={plugins.error}
-                                fallback={
-                                    <div class="flex flex-col items-center gap-2">
-                                        <div class="mx-auto h-8 w-8 animate-spin rounded-full border-b-2 border-sky-500" />
-
-                                        <p class="text-sm font-bold text-sky-200">
-                                            Loading plugin
-                                        </p>
-                                    </div>
-                                }
-                            >
-                                <div class="flex flex-col items-center gap-2">
-                                    <p class="text-sm font-bold text-red-400">
-                                        Failed to load plugin
-                                    </p>
-
-                                    <Button
-                                        variant="red"
-                                        icon={<RotateCcw size={16} />}
-                                        onClick={() => refetch()}
-                                    >
-                                        Retry
-                                    </Button>
-                                </div>
-                            </Show>
-                        </div>
-                    }
+                <LoadingState
+                    loading={plugins.state !== "ready"}
+                    error={plugins.error}
+                    loadingText="Loading plugin"
+                    errorText="Failed to load plugin"
+                    onRetry={() => refetch()}
                 >
                     <Show
                         when={plugin()}
@@ -159,7 +133,7 @@ export default function PluginDetails() {
                                     variant="secondary"
                                     class="mt-2"
                                     icon={<Globe size={16} />}
-                                    onClick={() => navigate('/plugins')}
+                                    onClick={() => navigate("/plugins")}
                                 >
                                     Browse plugins
                                 </Button>
@@ -197,7 +171,7 @@ export default function PluginDetails() {
                                                 <Users size={16} />
 
                                                 <span>
-                                                    By{' '}
+                                                    By{" "}
                                                     {formatAuthors(
                                                         plugin().authors,
                                                     )}
@@ -227,12 +201,12 @@ export default function PluginDetails() {
                                             />
                                         }
                                         variant={
-                                            activeTab() === 'overview'
-                                                ? 'primary'
-                                                : 'secondary'
+                                            activeTab() === "overview"
+                                                ? "primary"
+                                                : "secondary"
                                         }
                                         class="text-sm"
-                                        onClick={() => setActiveTab('overview')}
+                                        onClick={() => setActiveTab("overview")}
                                     >
                                         Overview
                                     </Button>
@@ -240,14 +214,14 @@ export default function PluginDetails() {
                                         icon={<Braces size={16} />}
                                         disabled={!plugin().hasCommands}
                                         variant={
-                                            activeTab() === 'commands'
-                                                ? 'primary'
-                                                : 'secondary'
+                                            activeTab() === "commands"
+                                                ? "primary"
+                                                : "secondary"
                                         }
                                         class="text-sm"
                                         onClick={() =>
                                             plugin().hasCommands &&
-                                            setActiveTab('commands')
+                                            setActiveTab("commands")
                                         }
                                     >
                                         Commands
@@ -256,21 +230,21 @@ export default function PluginDetails() {
 
                                 {/* Content */}
                                 <Switch>
-                                    <Match when={activeTab() === 'overview'}>
+                                    <Match when={activeTab() === "overview"}>
                                         <div class="flex flex-col gap-3">
                                             <h4 class="flex items-center gap-2 text-sm font-medium text-neutral-300">
-                                                <Notebook size={16} />{' '}
+                                                <Notebook size={16} />{" "}
                                                 Description
                                             </h4>
 
                                             <p class="leading-relaxed font-medium">
                                                 {plugin().description ||
-                                                    'No description available.'}
+                                                    "No description available."}
                                             </p>
                                         </div>
                                     </Match>
 
-                                    <Match when={activeTab() === 'commands'}>
+                                    <Match when={activeTab() === "commands"}>
                                         <div class="flex flex-col gap-6">
                                             <h4 class="flex items-center gap-2 text-sm font-medium text-neutral-300">
                                                 <Command size={16} />
@@ -316,7 +290,7 @@ export default function PluginDetails() {
                             </div>
                         )}
                     </Show>
-                </Show>
+                </LoadingState>
             </div>
         </>
     )

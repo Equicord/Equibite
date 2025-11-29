@@ -1,6 +1,7 @@
-import classNames from 'classnames'
-import gsap from 'gsap'
-import { ChevronUp } from 'lucide-solid'
+import { useLocation } from "@solidjs/router"
+import classNames from "classnames"
+import gsap from "gsap"
+import { ChevronUp } from "lucide-solid"
 import {
     Show,
     createEffect,
@@ -8,7 +9,7 @@ import {
     onCleanup,
     onMount,
     type JSX,
-} from 'solid-js'
+} from "solid-js"
 
 interface Props {
     trigger: JSX.Element
@@ -24,15 +25,27 @@ export default function Popover({
     popoverClass,
 }: Props) {
     const [open, setOpen] = createSignal(false)
+    const location = useLocation()
     let containerRef: HTMLDivElement | undefined
     let panelRef: HTMLDivElement | undefined
     let closeTimeout: number | undefined
+    let prevPathname = location.pathname
+
+    createEffect(() => {
+        const currentPath = location.pathname
+        if (currentPath !== prevPathname) {
+            prevPathname = currentPath
+            if (open()) {
+                setOpen(false)
+            }
+        }
+    })
 
     const animateIn = (el: HTMLElement) =>
         gsap.fromTo(
             el,
             { opacity: 0, y: -5 },
-            { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out' },
+            { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" },
         )
 
     const animateOut = (el: HTMLElement, onComplete: () => void) =>
@@ -40,7 +53,7 @@ export default function Popover({
             opacity: 0,
             y: -5,
             duration: 0.2,
-            ease: 'power2.in',
+            ease: "power2.in",
             onComplete,
         })
 
@@ -66,8 +79,8 @@ export default function Popover({
             close()
     }
 
-    onMount(() => document.addEventListener('click', handleClickOutside))
-    onCleanup(() => document.removeEventListener('click', handleClickOutside))
+    onMount(() => document.addEventListener("click", handleClickOutside))
+    onCleanup(() => document.removeEventListener("click", handleClickOutside))
 
     createEffect(() => {
         if (open() && panelRef) animateIn(panelRef)
@@ -89,8 +102,8 @@ export default function Popover({
                 <ChevronUp
                     size={16}
                     class={classNames(
-                        open() && 'rotate-180',
-                        'transition-transform',
+                        open() && "rotate-180",
+                        "transition-transform",
                     )}
                 />
             </div>
@@ -99,7 +112,7 @@ export default function Popover({
                 <div
                     ref={panelRef}
                     class={classNames(
-                        'absolute z-50 mt-2 rounded-2xl border border-neutral-800 bg-neutral-900 shadow-lg p-3 opacity-0',
+                        "absolute z-50 mt-2 rounded-2xl border border-neutral-800 bg-neutral-900 shadow-lg p-3 opacity-0",
                         popoverClass,
                     )}
                     onMouseEnter={hover ? openPopover : undefined}

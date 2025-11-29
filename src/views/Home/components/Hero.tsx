@@ -1,13 +1,13 @@
-import { A } from '@solidjs/router'
-import gsap from 'gsap'
-import { For, onMount } from 'solid-js'
+import { A } from "@solidjs/router"
+import gsap from "gsap"
+import { For, onMount } from "solid-js"
 
-import { faApple, faLinux, faWindows } from '@fortawesome/free-brands-svg-icons'
-import { Download } from 'lucide-solid'
-import Fa from 'solid-fa'
+import { faApple, faLinux, faWindows } from "@fortawesome/free-brands-svg-icons"
+import { Download } from "lucide-solid"
+import Fa from "solid-fa"
 
-import Button from '@components/UI/Button'
-import { isLinux, isMac, isWindows } from '@utils/navigator'
+import Button from "@components/UI/Button"
+import { isLinux, isMac, isWindows } from "@utils/navigator"
 
 export default function HomeHero() {
     let textRef: HTMLHeadingElement | undefined
@@ -15,37 +15,37 @@ export default function HomeHero() {
     let contentRef: HTMLDivElement | undefined
     let screenRef: HTMLImageElement | undefined
 
-    const headerWords = 'An enhanced version of Vencord'.split(' ')
+    const headerWords = "An enhanced version of Vencord".split(" ")
 
     const getPlatform = () => {
         if (isWindows()) {
             return {
-                label: 'Download for Windows',
-                href: '/download?platform=windows',
+                label: "Download for Windows",
+                href: "/download?platform=windows",
                 icon: <Fa icon={faWindows} class="!size-4" />,
             }
         }
 
         if (isMac()) {
             return {
-                label: 'Download for macOS',
-                href: '/download?platform=macos',
+                label: "Download for macOS",
+                href: "/download?platform=macos",
                 icon: <Fa icon={faApple} class="!size-4" />,
             }
         }
 
         if (isLinux()) {
             return {
-                label: 'Download for Linux',
-                href: '/download?platform=linux',
+                label: "Download for Linux",
+                href: "/download?platform=linux",
                 icon: <Fa icon={faLinux} class="!size-4" />,
             }
         }
 
         // fallback
         return {
-            label: 'Download',
-            href: '/download',
+            label: "Download",
+            href: "/download",
             icon: <Download size="16" />,
         }
     }
@@ -54,28 +54,28 @@ export default function HomeHero() {
 
     onMount(() => {
         const tl = gsap.timeline({
-            defaults: { ease: 'power3.out', duration: 1 },
+            defaults: { ease: "power3.out", duration: 1 },
         })
 
-        const words = textRef!.querySelectorAll('span')
+        const words = textRef!.querySelectorAll("span")
         const animation = {
             opacity: 0,
             y: 40,
-            filter: 'blur(8px)',
+            filter: "blur(8px)",
             stagger: 0.1,
         }
 
         tl.from(words, animation)
-        tl.from(paragraphRef!, animation, '-=0.8')
-        tl.from(contentRef!, animation, '-=0.8')
+        tl.from(paragraphRef!, animation, "-=0.8")
+        tl.from(contentRef!, animation, "-=0.8")
         tl.from(
             screenRef!,
             {
                 opacity: 0,
                 scale: 0.9,
-                filter: 'blur(12px)',
+                filter: "blur(12px)",
             },
-            '-=0.4',
+            "-=0.4",
         )
     })
 
@@ -112,8 +112,8 @@ export default function HomeHero() {
                     </A>
 
                     <span class="inline-flex items-center gap-1 text-xs font-bold text-neutral-400">
-                        Available on <Fa icon={faWindows} /> Windows,{' '}
-                        <Fa icon={faApple} /> macOS and <Fa icon={faLinux} />{' '}
+                        Available on <Fa icon={faWindows} /> Windows,{" "}
+                        <Fa icon={faApple} /> macOS and <Fa icon={faLinux} />{" "}
                         Linux.
                     </span>
                 </div>

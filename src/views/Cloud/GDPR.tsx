@@ -1,10 +1,10 @@
-import PageBootstrap from '@components/PageBootstrap'
-import { Scroll } from 'lucide-solid'
+import PageBootstrap from "@components/PageBootstrap"
+import { Scroll } from "lucide-solid"
 
 export default function CloudGDPR() {
     return (
         <PageBootstrap
-            meta={{ title: 'Cloud GDPR Policy' }}
+            meta={{ title: "Cloud GDPR Policy" }}
             icon={<Scroll />}
             fullWidth
             title="Cloud GDPR Policy"
@@ -185,13 +185,13 @@ export default function CloudGDPR() {
                         Questions?
                     </h3>
                     <p class="text-sm font-medium text-neutral-400">
-                        Contact us at{' '}
+                        Contact us at{" "}
                         <a
                             href="mailto:privacy@equicord.org"
                             class="text-blue-400 hover:text-blue-300 underline"
                         >
                             privacy@equicord.org
-                        </a>{' '}
+                        </a>{" "}
                         for any privacy-related concerns.
                     </p>
                 </div>

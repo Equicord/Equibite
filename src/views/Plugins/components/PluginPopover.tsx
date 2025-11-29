@@ -1,18 +1,18 @@
-import { Blocks, Braces, Cog, Monitor } from 'lucide-solid'
-import { createSignal, onCleanup, Show } from 'solid-js'
+import { Blocks, Braces, Cog, Monitor } from "lucide-solid"
+import { createSignal, onCleanup, Show } from "solid-js"
 
-import Button from '@components/UI/Button'
-import Dropdown from '@components/UI/Dropdown'
-import Switch from '@components/UI/Switch'
+import Button from "@components/UI/Button"
+import Dropdown from "@components/UI/Dropdown"
+import Switch from "@components/UI/Switch"
 
 interface Props {
     // Plugin filter
-    pluginFilter: () => 'all' | 'equicord' | 'vencord'
-    setPluginFilter: (value: 'all' | 'equicord' | 'vencord') => void
+    pluginFilter: () => "all" | "equicord" | "vencord"
+    setPluginFilter: (value: "all" | "equicord" | "vencord") => void
 
     // Platform filter
-    platformFilter: () => 'all' | 'desktop' | 'web'
-    setPlatformFilter: (value: 'all' | 'desktop' | 'web') => void
+    platformFilter: () => "all" | "desktop" | "web"
+    setPlatformFilter: (value: "all" | "desktop" | "web") => void
 
     // Commands filter
     filterHasCommands: () => boolean
@@ -25,26 +25,26 @@ interface Props {
 
 const Platforms = [
     {
-        label: 'All',
-        value: 'all' as const,
+        label: "All",
+        value: "all" as const,
     },
     {
-        label: 'Desktop',
-        value: 'desktop' as const,
+        label: "Desktop",
+        value: "desktop" as const,
     },
     {
-        label: 'Web',
-        value: 'web' as const,
+        label: "Web",
+        value: "web" as const,
     },
 ]
 
 const Sources = [
     {
-        label: 'All',
-        value: 'all' as const,
+        label: "All",
+        value: "all" as const,
     },
     {
-        label: 'Vencord',
+        label: "Vencord",
         icon: (
             <img
                 src="/assets/icons/vencord/icon.png"
@@ -52,10 +52,10 @@ const Sources = [
                 alt="Vencord"
             />
         ),
-        value: 'vencord' as const,
+        value: "vencord" as const,
     },
     {
-        label: 'Equicord',
+        label: "Equicord",
         icon: (
             <img
                 src="/assets/icons/equicord/icon-far.png"
@@ -63,10 +63,10 @@ const Sources = [
                 alt="Equicord"
             />
         ),
-        value: 'equicord' as const,
+        value: "equicord" as const,
     },
     {
-        label: 'Modified',
+        label: "Modified",
         icon: (
             <img
                 src="/assets/icons/equicord/modified.png"
@@ -74,7 +74,7 @@ const Sources = [
                 alt="Equicord"
             />
         ),
-        value: 'modified' as const,
+        value: "modified" as const,
     },
 ]
 
@@ -86,12 +86,12 @@ export default function PluginPopover(props: Props) {
 
     const handleClickOutside = (event: MouseEvent) => {
         const target = event.target as HTMLElement
-        if (!target.closest('.popover-container')) close()
+        if (!target.closest(".popover-container")) close()
     }
 
-    document.addEventListener('click', handleClickOutside)
+    document.addEventListener("click", handleClickOutside)
 
-    onCleanup(() => document.removeEventListener('click', handleClickOutside))
+    onCleanup(() => document.removeEventListener("click", handleClickOutside))
 
     return (
         <div class="popover-container relative inline-block">

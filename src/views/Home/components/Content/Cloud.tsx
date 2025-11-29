@@ -1,6 +1,6 @@
-import Button from '@components/UI/Button'
-import { A } from '@solidjs/router'
-import { CloudCheck, CloudDownload, CloudFog, Monitor } from 'lucide-solid'
+import Button from "@components/UI/Button"
+import { A } from "@solidjs/router"
+import { CloudCheck, CloudDownload, CloudFog, Monitor } from "lucide-solid"
 
 function Cloud() {
     return (

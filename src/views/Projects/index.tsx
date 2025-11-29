@@ -1,13 +1,13 @@
-import { A } from '@solidjs/router'
-import { cleanDescription } from '@utils/plugin'
-import { createResource, For, Show } from 'solid-js'
+import { A } from "@solidjs/router"
+import { cleanDescription } from "@utils/plugin"
+import { createResource, For } from "solid-js"
 
-import PageBootstrap from '@components/PageBootstrap'
-import Button from '@components/UI/Button'
+import PageBootstrap from "@components/PageBootstrap"
 
-import { Book, BookMarked, RotateCcw, Star } from 'lucide-solid'
+import LoadingState from "@components/UI/LoadingState"
+import { Book, BookMarked, Star } from "lucide-solid"
 
-type Language = 'Rust' | 'TypeScript' | 'Java' | 'JavaScript' | 'Go' | string
+type Language = "Rust" | "TypeScript" | "Java" | "JavaScript" | "Go" | string
 
 interface Repository {
     name: string
@@ -18,40 +18,44 @@ interface Repository {
     language: Language
 }
 
-const CACHE_KEY = 'cachedRepos'
+const CACHE_KEY = "cachedRepos"
 const CACHE_TTL = 1000 * 60 * 60 * 6 // 6 hours
 
 const fetchRepos = async (): Promise<Repository[]> => {
-    const cached = localStorage.getItem(CACHE_KEY)
-    if (cached) {
-        const { timestamp, data } = JSON.parse(cached)
-        if (Date.now() - timestamp < CACHE_TTL) {
-            return data
+    try {
+        const cached = localStorage.getItem(CACHE_KEY)
+        if (cached) {
+            const { timestamp, data } = JSON.parse(cached)
+            if (Date.now() - timestamp < CACHE_TTL) {
+                return data
+            }
         }
-    }
+    } catch {}
 
-    const res = await fetch('https://api.github.com/orgs/equicord/repos')
+    const res = await fetch("https://api.github.com/orgs/equicord/repos")
     let data: Repository[] = await res.json()
 
     data = data
         .filter((repo) => !repo.archived)
         .sort((a, b) => b.stargazers_count - a.stargazers_count)
 
-    localStorage.setItem(
-        CACHE_KEY,
-        JSON.stringify({ timestamp: Date.now(), data }),
-    )
+    try {
+        localStorage.setItem(
+            CACHE_KEY,
+            JSON.stringify({ timestamp: Date.now(), data }),
+        )
+    } catch {}
 
     return data
 }
 
 const languageColors: Record<string, string> = {
-    Rust: 'bg-orange-300',
-    TypeScript: 'bg-blue-500',
-    Java: 'bg-amber-600',
-    JavaScript: 'bg-amber-300',
-    Go: 'bg-sky-400',
-    default: 'bg-neutral-500',
+    Rust: "bg-orange-300",
+    TypeScript: "bg-blue-500",
+    Java: "bg-amber-600",
+    JavaScript: "bg-amber-300",
+    Go: "bg-sky-400",
+    default: "bg-neutral-500",
 }
 
 const LanguageTag = (props: { lang?: string }) => {
@@ -76,49 +80,24 @@ export default function Projects() {
 
     return (
         <PageBootstrap
-            meta={{ title: 'Projects' }}
+            meta={{ title: "Projects" }}
             icon={<BookMarked />}
             fullWidth
             title="Projects"
             description="List of Equicord's active repositories."
         >
             <div class="flex items-center flex-wrap gap-6">
-                <Show
-                    when={!repos.loading && !repos.error}
-                    fallback={
-                        <div class="flex items-center justify-center py-12">
-                            <Show
-                                when={repos.error}
-                                fallback={
-                                    <div class="flex flex-col items-center gap-2">
-                                        <div class="mx-auto h-8 w-8 animate-spin rounded-full border-b-2 border-sky-500"></div>
-                                        <p class="text-sm font-bold text-sky-200">
-                                            Loading repositories
-                                        </p>
-                                    </div>
-                                }
-                            >
-                                <div class="flex flex-col items-center gap-2">
-                                    <p class="text-sm font-bold text-red-400">
-                                        Failed to load repositories
-                                    </p>
-
-                                    <Button
-                                        variant="red"
-                                        icon={<RotateCcw size={16} />}
-                                        onClick={() => refetch()}
-                                    >
-                                        Retry
-                                    </Button>
-                                </div>
-                            </Show>
-                        </div>
-                    }
+                <LoadingState
+                    loading={repos.loading}
+                    error={repos.error}
+                    loadingText="Loading repositories"
+                    errorText="Failed to load repositories"
+                    onRetry={() => refetch()}
                 >
                     <For each={repos()}>
                         {(repo) => (
                             <A
-                                href={'https://github.com/' + repo.full_name}
+                                href={"https://github.com/" + repo.full_name}
                                 target="_blank"
                                 class="flex-1 min-w-full sm:min-w-96 flex flex-col justify-between gap-6 h-52 py-6 px-6 rounded-xl bg-gradient-to-br from-neutral-900 to-neutral-950 border border-neutral-800 transition-transform active:scale-[.98]"
                             >
@@ -147,7 +126,7 @@ export default function Projects() {
 
                                     <p class="text-sm font-medium text-neutral-300">
                                         {cleanDescription(repo.description) ||
-                                            'No description'}
+                                            "No description"}
                                     </p>
                                 </div>
 
@@ -155,7 +134,7 @@ export default function Projects() {
                             </A>
                         )}
                     </For>
-                </Show>
+                </LoadingState>
             </div>
         </PageBootstrap>
     )

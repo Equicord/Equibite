@@ -1,7 +1,7 @@
-import { Title } from '@solidjs/meta'
-import classNames from 'classnames'
-import gsap from 'gsap'
-import { type JSX, onMount, type ParentProps } from 'solid-js'
+import { Title } from "@solidjs/meta"
+import classNames from "classnames"
+import gsap from "gsap"
+import { type JSX, onMount, type ParentProps } from "solid-js"
 
 interface Props extends ParentProps {
     meta?: {
@@ -20,7 +20,7 @@ export default function PageBootstrap(props: Props) {
         gsap.from(containerRef!, {
             opacity: 0,
             y: 50,
-            filter: 'blur(6px)',
+            filter: "blur(6px)",
             duration: 0.4,
         })
     })
@@ -30,8 +30,8 @@ export default function PageBootstrap(props: Props) {
             {props.meta?.title && <Title>{props.meta.title} | Equicord</Title>}
             <div
                 class={classNames(
-                    props.fullWidth ? 'max-w-eq-lg' : 'max-w-eq-sm',
-                    'mx-auto flex flex-col gap-6 px-6 py-12',
+                    props.fullWidth ? "max-w-eq-lg" : "max-w-eq-sm",
+                    "mx-auto flex flex-col gap-6 px-6 py-12",
                 )}
                 ref={containerRef}
             >

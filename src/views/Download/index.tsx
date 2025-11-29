@@ -1,6 +1,6 @@
-import PageBootstrap from '@components/PageBootstrap'
-import Button from '@components/UI/Button'
-import classNames from 'classnames'
+import PageBootstrap from "@components/PageBootstrap"
+import Button from "@components/UI/Button"
+import classNames from "classnames"
 
 import {
     faAndroid,
@@ -10,11 +10,11 @@ import {
     faLinux,
     faWindows,
     IconDefinition,
-} from '@fortawesome/free-brands-svg-icons'
-import { isAndroid, isLinux, isMac, isWindows } from '@utils/navigator'
-import { AlertCircle, DownloadIcon, MonitorCheck, Package } from 'lucide-solid'
-import Fa from 'solid-fa'
-import { createResource } from 'solid-js'
+} from "@fortawesome/free-brands-svg-icons"
+import { isAndroid, isLinux, isMac, isWindows } from "@utils/navigator"
+import { AlertCircle, DownloadIcon, MonitorCheck, Package } from "lucide-solid"
+import Fa from "solid-fa"
+import { createResource } from "solid-js"
 
 interface Download {
     text: string
@@ -43,45 +43,44 @@ interface Section {
 
 const EquicordPlatforms: Platform[] = [
     {
-        title: 'Windows',
+        title: "Windows",
         icon: faWindows,
         downloads: [
             {
-                text: 'GUI',
-                href: 'https://github.com/Equicord/Equilotl/releases/latest/download/Equilotl.exe',
+                text: "GUI",
+                href: "https://github.com/Equicord/Equilotl/releases/latest/download/Equilotl.exe",
                 prioritize: true,
             },
             {
-                text: 'CLI',
-                href: 'https://github.com/Equicord/Equilotl/releases/latest/download/EquilotlCli.exe',
+                text: "CLI",
+                href: "https://github.com/Equicord/Equilotl/releases/latest/download/EquilotlCli.exe",
             },
         ],
         isCurrent: isWindows(),
     },
     {
-        title: 'Linux',
+        title: "Linux",
         icon: faLinux,
         downloads: [
             {
-                text: 'CLI',
-                href: 'https://github.com/Equicord/Equilotl/releases/latest/download/EquilotlCli-Linux',
+                text: "CLI",
+                href: "https://github.com/Equicord/Equilotl/releases/latest/download/EquilotlCli-Linux",
                 prioritize: true,
             },
             {
-                text: 'AUR',
-                href: 'https://aur.archlinux.org/packages/equicord-installer-bin',
+                text: "AUR",
+                href: "https://aur.archlinux.org/packages/equicord-installer-bin",
             },
         ],
         isCurrent: isLinux(),
-        warning: 'GUI version not available on Linux',
     },
     {
-        title: 'MacOS',
+        title: "MacOS",
         icon: faApple,
         downloads: [
             {
-                text: 'GUI',
-                href: 'https://github.com/Equicord/Equilotl/releases/latest/download/Equilotl.MacOS.zip',
+                text: "GUI",
+                href: "https://github.com/Equicord/Equilotl/releases/latest/download/Equilotl.MacOS.zip",
                 prioritize: true,
             },
         ],
@@ -91,29 +90,29 @@ const EquicordPlatforms: Platform[] = [
 
 const BrowserPlatforms: Platform[] = [
     {
-        title: 'Firefox',
+        title: "Firefox",
         icon: faFirefox,
         downloads: [
             {
-                text: 'Add-on',
-                href: 'https://addons.mozilla.org/en-US/firefox/addon/equicord-web/',
+                text: "Add-on",
+                href: "https://addons.mozilla.org/en-US/firefox/addon/equicord-web/",
                 prioritize: true,
             },
             {
-                text: 'Zip',
-                href: 'https://github.com/Equicord/Equicord/releases/download/latest/extension-firefox.zip',
-                note: 'Requires Firefox Developer Edition',
+                text: "Zip",
+                href: "https://github.com/Equicord/Equicord/releases/download/latest/extension-firefox.zip",
+                note: "Requires Firefox Developer Edition",
             },
         ],
         isCurrent: false,
     },
     {
-        title: 'Chrome',
+        title: "Chrome",
         icon: faChrome,
         downloads: [
             {
-                text: 'Web Store',
-                href: 'https://chromewebstore.google.com/detail/equicord-web/mcambpfmpjnncfoodejdmehedbkjepmi',
+                text: "Web Store",
+                href: "https://chromewebstore.google.com/detail/equicord-web/mcambpfmpjnncfoodejdmehedbkjepmi",
                 prioritize: true,
             },
         ],
@@ -123,91 +122,92 @@ const BrowserPlatforms: Platform[] = [
 
 const getEquibopPlatforms = (version: string): Platform[] => [
     {
-        title: 'Windows',
+        title: "Windows",
         icon: faWindows,
         downloads: [
             {
-                text: 'x64',
+                text: "x64",
                 href: `https://github.com/Equicord/Equibop/releases/download/v${version}/Equibop-Setup-${version}.exe`,
                 prioritize: true,
             },
             {
-                text: 'ARM64',
+                text: "ARM64",
                 href: `https://github.com/Equicord/Equibop/releases/download/v${version}/Equibop-${version}-arm64-win.zip`,
             },
         ],
         isCurrent: isWindows(),
     },
     {
-        title: 'Linux',
+        title: "Linux",
         icon: faLinux,
         downloads: [
             {
-                text: 'x86_64',
+                text: "x86_64",
                 href: `https://github.com/Equicord/Equibop/releases/download/v${version}/Equibop-${version}.AppImage`,
                 prioritize: true,
             },
             {
-                text: 'ARM64',
+                text: "ARM64",
                 href: `https://github.com/Equicord/Equibop/releases/download/v${version}/Equibop-${version}-arm64.AppImage`,
             },
             {
-                text: 'AUR',
-                href: 'https://aur.archlinux.org/packages?O=0&K=equibop',
+                text: "AUR",
+                href: "https://aur.archlinux.org/packages?O=0&K=equibop",
             },
             {
-                text: 'Flathub',
-                href: 'https://flathub.org/apps/io.github.equicord.equibop',
+                text: "Flathub",
+                href: "https://flathub.org/apps/io.github.equicord.equibop",
             },
         ],
         isCurrent: isLinux(),
     },
     {
-        title: 'MacOS',
+        title: "MacOS",
         icon: faApple,
         downloads: [
             {
-                text: 'Universal',
+                text: "Universal",
                 href: `https://github.com/Equicord/Equibop/releases/download/v${version}/Equibop-${version}-universal.dmg`,
                 prioritize: true,
-                note: 'Intel & Apple Silicon',
+                note: "Intel & Apple Silicon",
             },
         ],
         isCurrent: isMac(),
+        warning: "Currently not signed",
     },
 ]
 
 const EquidroidPlatforms: Platform[] = [
     {
-        title: 'Android',
+        title: "Android",
         icon: faAndroid,
         downloads: [
             {
-                text: 'Equidroid',
-                href: 'https://github.com/Equicord/Equidroid/releases',
-                note: 'Not recommended for actual use',
+                text: "Equidroid",
+                href: "https://github.com/Equicord/Equidroid/releases",
+                note: "Not recommended for actual use",
                 prioritize: true,
             },
             {
-                text: 'VendroidEnhanced',
-                href: 'https://vendroid.nin0.dev',
-                note: 'If you still want an experience like Equidroid but better use this',
+                text: "VendroidEnhanced",
+                href: "https://vendroid.nin0.dev",
+                note: "If you still want an experience like Equidroid but better use this",
             },
         ],
         isCurrent: isAndroid(),
-        subtext: 'Alternatives to Equidroid',
+        subtext: "Alternatives to Equidroid",
         subsection: [
             {
-                text: 'Revenge',
-                href: 'https://github.com/revenge-mod/revenge-manager/releases',
+                text: "Revenge",
+                href: "https://github.com/revenge-mod/revenge-manager/releases",
             },
             {
-                text: 'Kettu',
-                href: 'https://github.com/C0C0B01/KettuManager/releases',
+                text: "Kettu",
+                href: "https://github.com/C0C0B01/KettuManager/releases",
             },
             {
-                text: 'Aliucord',
-                href: 'https://github.com/Aliucord/Manager/releases',
+                text: "Aliucord",
+                href: "https://github.com/Aliucord/Manager/releases",
             },
         ],
     },
@@ -215,60 +215,60 @@ const EquidroidPlatforms: Platform[] = [
 
 const OtherOfferings = [
     {
-        name: 'NixOS - Equicord',
-        href: 'https://search.nixos.org/packages?channel=unstable&show=equicord&from=0&size=50&sort=relevance&type=packages&query=Equicord',
+        name: "NixOS - Equicord",
+        href: "https://search.nixos.org/packages?channel=unstable&show=equicord&from=0&size=50&sort=relevance&type=packages&query=Equicord",
     },
     {
-        name: 'NixOS - Equibop',
-        href: 'https://search.nixos.org/packages?channel=unstable&show=equibop&from=0&size=50&sort=relevance&type=packages&query=Equibop',
+        name: "NixOS - Equibop",
+        href: "https://search.nixos.org/packages?channel=unstable&show=equibop&from=0&size=50&sort=relevance&type=packages&query=Equibop",
     },
     {
-        name: 'Legcord',
-        href: 'https://github.com/Legcord/Legcord',
+        name: "Legcord",
+        href: "https://github.com/Legcord/Legcord",
     },
     {
-        name: 'Goofcord',
-        href: 'https://github.com/Milkshiift/GoofCord',
+        name: "Goofcord",
+        href: "https://github.com/Milkshiift/GoofCord",
     },
     {
-        name: 'Dorion',
-        href: 'https://github.com/SpikeHD/Dorion',
+        name: "Dorion",
+        href: "https://github.com/SpikeHD/Dorion",
     },
     {
-        name: 'Shelter',
-        href: 'https://shelter.uwu.network',
+        name: "Shelter",
+        href: "https://shelter.uwu.network",
     },
 ]
 
 const getSections = (version: string): Section[] => [
     {
-        title: 'Equicord',
+        title: "Equicord",
         description:
-            'An enhanced version of Vencord with more of 100+ extra plugins.',
-        githubUrl: 'https://github.com/Equicord/Equicord',
+            "An enhanced version of Vencord with more of 100+ extra plugins.",
+        githubUrl: "https://github.com/Equicord/Equicord",
         platforms: EquicordPlatforms,
     },
     {
-        title: 'Browser Extensions',
+        title: "Browser Extensions",
         description:
             "Equicord won't be providing support for extensions whether official sources or sideloaded.",
-        githubUrl: '',
+        githubUrl: "",
         platforms: BrowserPlatforms,
         globalWarning:
-            'Safari not supported (Apple restrictions). Edge/Opera may work via sideload but are not officially supported.',
+            "Safari not supported (Apple restrictions). Edge/Opera may work via sideload but are not officially supported.",
     },
     {
-        title: 'Equibop',
+        title: "Equibop",
         description:
-            'A Vesktop fork aiming to give you a snappier Discord experience with additional plugins, custom splashes, and extra features.',
-        githubUrl: 'https://github.com/Equicord/Equibop',
+            "A Vesktop fork aiming to give you a snappier Discord experience with additional plugins, custom splashes, and extra features.",
+        githubUrl: "https://github.com/Equicord/Equibop",
         platforms: getEquibopPlatforms(version),
     },
     {
-        title: 'Equidroid',
+        title: "Equidroid",
         description:
-            'An enhanced version of Vendroid with more of 100+ extra plugins.',
-        githubUrl: 'https://github.com/Equicord/Equidroid',
+            "An enhanced version of Vendroid with more of 100+ extra plugins.",
+        githubUrl: "https://github.com/Equicord/Equidroid",
         platforms: EquidroidPlatforms,
         globalWarning:
             "iOS not supported and unlikely to ever be supported. Please don't actually use Equidroid - use Revenge, Kettu, or Aliucord instead. Due to current limitations, we cannot provide support for Equidroid.",
@@ -277,12 +277,12 @@ const getSections = (version: string): Section[] => [
 
 async function fetchEquibopVersion(): Promise<string> {
     try {
-        const response = await fetch('/version')
+        const response = await fetch("/version")
         const version = await response.text()
         return version.trim()
     } catch (error) {
-        console.error('Failed to fetch Equibop version:', error)
-        return '3.0.4'
+        console.error("Failed to fetch Equibop version:", error)
+        return "3.1.3"
     }
 }
 
@@ -291,7 +291,7 @@ export default function Download() {
 
     return (
         <PageBootstrap
-            meta={{ title: 'Download' }}
+            meta={{ title: "Download" }}
             icon={<DownloadIcon />}
             fullWidth
             title="Download"
@@ -334,10 +334,10 @@ export default function Download() {
                                 {section.platforms.map((platform) => (
                                     <div
                                         class={classNames(
-                                            'flex-1 xs:min-w-80 flex flex-col justify-between gap-4 py-6 px-6 rounded-xl border border-neutral-800',
+                                            "flex-1 xs:min-w-80 flex flex-col justify-between gap-4 py-6 px-6 rounded-xl border border-neutral-800",
                                             platform.isCurrent
-                                                ? 'bg-gradient-to-tl from-neutral-900 to-green-950'
-                                                : 'bg-gradient-to-br from-neutral-900 to-neutral-950',
+                                                ? "bg-gradient-to-tl from-neutral-900 to-green-950"
+                                                : "bg-gradient-to-br from-neutral-900 to-neutral-950",
                                         )}
                                     >
                                         <div class="flex flex-col gap-3">
@@ -386,9 +386,9 @@ export default function Download() {
                                                                 variant={
                                                                     platform.isCurrent
                                                                         ? download.prioritize
-                                                                            ? 'primary'
-                                                                            : 'secondary'
-                                                                        : 'secondary'
+                                                                            ? "primary"
+                                                                            : "secondary"
+                                                                        : "secondary"
                                                                 }
                                                                 class="w-full"
                                                                 icon={
@@ -428,9 +428,9 @@ export default function Download() {
                                                                 variant={
                                                                     platform.isCurrent
                                                                         ? download.prioritize
-                                                                            ? 'primary'
-                                                                            : 'secondary'
-                                                                        : 'secondary'
+                                                                            ? "primary"
+                                                                            : "secondary"
+                                                                        : "secondary"
                                                                 }
                                                                 class="w-full"
                                                                 icon={

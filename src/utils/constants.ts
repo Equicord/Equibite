@@ -1,14 +1,14 @@
 export const Urls = {
     ALL_PLUGINS_URL:
-        'https://raw.githubusercontent.com/Equicord/Equibored/main/plugins.json',
+        "https://raw.githubusercontent.com/Equicord/Equibored/main/plugins.json",
     EQUICORD_PLUGINS_URL:
-        'https://raw.githubusercontent.com/Equicord/Equibored/main/equicordplugins.json',
+        "https://raw.githubusercontent.com/Equicord/Equibored/main/equicordplugins.json",
     VENCORD_PLUGINS_URL:
-        'https://raw.githubusercontent.com/Equicord/Equibored/main/vencordplugins.json',
-    DISCORD_URL: '/discord',
-    GITHUB_URL: 'https://github.com/equicord',
-    DISCORD_API: 'https://discord.com/api/v10',
-    DISCORD_CDN: 'https://cdn.discordapp.com',
+        "https://raw.githubusercontent.com/Equicord/Equibored/main/vencordplugins.json",
+    DISCORD_URL: "/discord",
+    GITHUB_URL: "https://github.com/equicord",
+    DISCORD_API: "https://discord.com/api/v10",
+    DISCORD_CDN: "https://cdn.discordapp.com",
 }
 
 export const ownerIds = [

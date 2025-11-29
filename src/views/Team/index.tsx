@@ -1,13 +1,14 @@
-import PageBootstrap from '@components/PageBootstrap'
+import PageBootstrap from "@components/PageBootstrap"
+import LoadingState from "@components/UI/LoadingState"
 import {
     artistIds,
     helperIds,
     ownerIds,
     teamIds,
     teamMembers,
-} from '@utils/constants'
-import { Shield } from 'lucide-solid'
-import { createEffect, createSignal, For, Show } from 'solid-js'
+} from "@utils/constants"
+import { Shield } from "lucide-solid"
+import { createEffect, createSignal, For, Show } from "solid-js"
 
 // ---- Types ----
 interface AvatarDecoration {
@@ -40,33 +41,33 @@ interface LanyardUser {
 
 // ---- Constants ----
 const StatusColours: Record<string, string> = {
-    online: 'bg-green-500',
-    idle: 'bg-yellow-500',
-    dnd: 'bg-red-500',
-    offline: 'bg-gray-500',
+    online: "bg-green-500",
+    idle: "bg-yellow-500",
+    dnd: "bg-red-500",
+    offline: "bg-gray-500",
 }
 
 const StatusLabels: Record<string, string> = {
-    online: 'Online',
-    idle: 'Away',
-    dnd: 'Do Not Disturb',
-    offline: 'Offline',
+    online: "Online",
+    idle: "Away",
+    dnd: "Do Not Disturb",
+    offline: "Offline",
 }
 
 const RoleHeaders: Record<string, string> = {
-    owner: 'text-purple-300',
-    team: 'text-blue-300',
-    helper: 'text-green-300',
-    artist: 'text-pink-300',
+    owner: "text-purple-300",
+    team: "text-blue-300",
+    helper: "text-green-300",
+    artist: "text-pink-300",
 }
 
 const ActivityTypes: Record<number, string> = {
-    0: 'Playing ',
-    1: 'Streaming ',
-    2: 'Listening to ',
-    3: 'Watching ',
-    4: 'Custom ',
-    5: 'Competing in ',
+    0: "Playing ",
+    1: "Streaming ",
+    2: "Listening to ",
+    3: "Watching ",
+    4: "Custom ",
+    5: "Competing in ",
 }
 
 const ROLE_MAP = {
@@ -86,7 +87,6 @@ async function fetchUsers(ids: string[]): Promise<Record<string, LanyardUser>> {
                 if (!res.ok) return null
 
                 const json = await res.json()
-
                 return json.success ? [id, json.data as LanyardUser] : null
             } catch {
                 return null
@@ -110,17 +110,17 @@ function getGroupedUsers(users: Record<string, LanyardUser>) {
 }
 
 function getActivityLabel(activity: Activity) {
-    return ActivityTypes[activity.type] ?? ''
+    return ActivityTypes[activity.type] ?? ""
 }
 
 function UserCard({ userData }: { userData: LanyardUser }) {
     const u = userData.discord_user
 
     const avatar = u.avatar
-        ? u.avatar.startsWith("a_") 
+        ? u.avatar.startsWith("a_")
             ? `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.gif?size=128`
             : `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.webp?size=128`
-        : 'https://cdn.discordapp.com/embed/avatars/0.png'
+        : "https://cdn.discordapp.com/embed/avatars/0.png"
 
     const decoration = u.avatar_decoration_data
         ? `https://cdn.discordapp.com/avatar-decoration-presets/${u.avatar_decoration_data.asset}.png?size=128`
@@ -133,7 +133,7 @@ function UserCard({ userData }: { userData: LanyardUser }) {
     const status =
         customStatus?.state ??
         StatusLabels[userData.discord_status] ??
-        'Unknown'
+        "Unknown"
 
     return (
         <div class="group relative overflow-hidden rounded-xl border border-neutral-800 bg-gradient-to-br from-neutral-900 to-neutral-950 p-6">
@@ -155,7 +155,7 @@ function UserCard({ userData }: { userData: LanyardUser }) {
                         />
 
                         <div
-                            class={`absolute -right-1 -bottom-1 z-20 h-5 w-5 rounded-full border-2 border-neutral-900 ${StatusColours[userData.discord_status] ?? 'bg-gray-500'}`}
+                            class={`absolute -right-1 -bottom-1 z-20 h-5 w-5 rounded-full border-2 border-neutral-900 ${StatusColours[userData.discord_status] ?? "bg-gray-500"}`}
                         ></div>
                     </div>
                 </div>
@@ -221,22 +221,16 @@ export default function Teams() {
 
     return (
         <PageBootstrap
-            meta={{ title: 'Team' }}
+            meta={{ title: "Team" }}
             fullWidth
             icon={<Shield />}
             title="Meet the Team"
             description="The amazing people behind Equicord"
         >
-            <Show when={loading()}>
-                <div class="flex flex-col items-center gap-2">
-                    <div class="mx-auto h-8 w-8 animate-spin rounded-full border-b-2 border-sky-500" />
-                    <p class="text-sm font-bold text-sky-200">
-                        Loading team members
-                    </p>
-                </div>
-            </Show>
-
-            <Show when={!loading()}>
+            <LoadingState
+                loading={loading()}
+                loadingText="Loading team members"
+            >
                 <div class="flex flex-col gap-8">
                     <RoleSection
                         title="Owner"
@@ -259,7 +253,7 @@ export default function Teams() {
                         colorClass={RoleHeaders.artist}
                     />
                 </div>
-            </Show>
+            </LoadingState>
         </PageBootstrap>
     )
 }

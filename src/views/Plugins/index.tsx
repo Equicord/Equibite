@@ -1,4 +1,4 @@
-import { useSearchParams } from '@solidjs/router'
+import { useSearchParams } from "@solidjs/router"
 import {
     createEffect,
     createMemo,
@@ -8,56 +8,56 @@ import {
     onCleanup,
     onMount,
     Show,
-} from 'solid-js'
+} from "solid-js"
 
-import { fetchPlugins } from '@utils/plugin'
-import { getStored, setStored } from '@utils/storage'
+import { fetchPlugins } from "@utils/plugin"
+import { getStored, setStored } from "@utils/storage"
 
-import { Puzzle, RotateCcw, Search, SearchX } from 'lucide-solid'
+import { Puzzle, Search, SearchX } from "lucide-solid"
 
-import Button from '@components/UI/Button'
-import Input from '@components/UI/Input'
+import Input from "@components/UI/Input"
+import LoadingState from "@components/UI/LoadingState"
 
-import PageBootstrap from '@components/PageBootstrap'
-import PluginCard from './components/PluginCard'
-import PluginPopover from './components/PluginPopover'
+import PageBootstrap from "@components/PageBootstrap"
+import PluginCard from "./components/PluginCard"
+import PluginPopover from "./components/PluginPopover"
 
-type PluginFilter = 'all' | 'equicord' | 'vencord'
-type PlatformFilter = 'all' | 'desktop' | 'web'
+type PluginFilter = "all" | "equicord" | "vencord"
+type PlatformFilter = "all" | "desktop" | "web"
 
 const INITIAL_VISIBLE_COUNT = 18
 const LOAD_MORE_COUNT = 9
 const LOAD_MORE_THRESHOLD = 300
 
-const DESKTOP_PLATFORMS = ['discordDesktop', 'desktop', 'vesktop', 'equibop']
+const DESKTOP_PLATFORMS = ["discordDesktop", "desktop", "vesktop", "equibop"]
 
 export default function Plugins() {
-    const [plugins, { refetch }] = createResource(() => fetchPlugins('all'))
+    const [plugins, { refetch }] = createResource(() => fetchPlugins("all"))
     const [searchParams, setSearchParams] = useSearchParams()
-    const [search, setSearch] = createSignal(searchParams.search || '')
+    const [search, setSearch] = createSignal(searchParams.search || "")
 
     const [compactMode, setCompactMode] = createSignal(
-        getStored<boolean>('compactMode', true),
+        getStored<boolean>("compactMode", true),
     )
     const [pluginFilter, setPluginFilter] = createSignal<PluginFilter>(
-        (searchParams.source as PluginFilter) || 'all',
+        (searchParams.source as PluginFilter) || "all",
     )
     const [platformFilter, setPlatformFilter] = createSignal<PlatformFilter>(
-        (searchParams.platform as PlatformFilter) || 'all',
+        (searchParams.platform as PlatformFilter) || "all",
     )
     const [filterHasCommands, setFilterHasCommands] = createSignal(
-        searchParams.commands === 'true',
+        searchParams.commands === "true",
     )
 
     const [visibleCount, setVisibleCount] = createSignal(INITIAL_VISIBLE_COUNT)
 
     createEffect(() => {
-        setStored('compactMode', compactMode())
+        setStored("compactMode", compactMode())
         setSearchParams({
             search: search() || undefined,
-            source: pluginFilter() !== 'all' ? pluginFilter() : undefined,
-            platform: platformFilter() !== 'all' ? platformFilter() : undefined,
-            commands: filterHasCommands() ? 'true' : undefined,
+            source: pluginFilter() !== "all" ? pluginFilter() : undefined,
+            platform: platformFilter() !== "all" ? platformFilter() : undefined,
+            commands: filterHasCommands() ? "true" : undefined,
         })
     })
 
@@ -75,8 +75,8 @@ export default function Plugins() {
         const searchQuery = search()
         const query = (
             Array.isArray(searchQuery)
-                ? (searchQuery[0] ?? '')
-                : (searchQuery ?? '')
+                ? (searchQuery[0] ?? "")
+                : (searchQuery ?? "")
         )
             .toLowerCase()
             .trim()
@@ -93,23 +93,23 @@ export default function Plugins() {
         }
 
         // Plugin source filter
-        if (pluginFilter() === 'equicord') {
+        if (pluginFilter() === "equicord") {
             result = result.filter((plugin) =>
-                plugin.filePath.toLowerCase().startsWith('src/equicordplugins'),
+                plugin.filePath.toLowerCase().startsWith("src/equicordplugins"),
             )
-        } else if (pluginFilter() === 'vencord') {
+        } else if (pluginFilter() === "vencord") {
             result = result.filter((plugin) =>
-                plugin.filePath.toLowerCase().startsWith('src/plugins'),
+                plugin.filePath.toLowerCase().startsWith("src/plugins"),
             )
         }
 
         // Platform filter
-        if (platformFilter() === 'desktop') {
+        if (platformFilter() === "desktop") {
             result = result.filter((plugin) =>
-                DESKTOP_PLATFORMS.includes(plugin.target ?? ''),
+                DESKTOP_PLATFORMS.includes(plugin.target ?? ""),
             )
-        } else if (platformFilter() === 'web') {
-            result = result.filter((plugin) => plugin.target === 'web')
+        } else if (platformFilter() === "web") {
+            result = result.filter((plugin) => plugin.target === "web")
         }
 
         // Commands filter
@@ -128,33 +128,42 @@ export default function Plugins() {
         () => visibleCount() < filteredPlugins().length,
     )
 
-    const handleScroll = () => {
-        const { innerHeight, scrollY } = window
-        const { offsetHeight } = document.body
+    let scrollTimeout: ReturnType<typeof setTimeout> | null = null
 
-        if (
-            innerHeight + scrollY >= offsetHeight - LOAD_MORE_THRESHOLD &&
-            hasMorePlugins()
-        ) {
-            setVisibleCount((count) => count + LOAD_MORE_COUNT)
-        }
+    const handleScroll = () => {
+        if (scrollTimeout) return
+
+        scrollTimeout = setTimeout(() => {
+            scrollTimeout = null
+
+            const { innerHeight, scrollY } = window
+            const { offsetHeight } = document.body
+
+            if (
+                innerHeight + scrollY >= offsetHeight - LOAD_MORE_THRESHOLD &&
+                hasMorePlugins()
+            ) {
+                setVisibleCount((count) => count + LOAD_MORE_COUNT)
+            }
+        }, 100)
     }
 
     onMount(() => {
-        window.addEventListener('scroll', handleScroll, { passive: true })
+        window.addEventListener("scroll", handleScroll, { passive: true })
     })
 
     onCleanup(() => {
-        window.removeEventListener('scroll', handleScroll)
+        window.removeEventListener("scroll", handleScroll)
+        if (scrollTimeout) clearTimeout(scrollTimeout)
     })
 
     return (
         <PageBootstrap
-            meta={{ title: 'Plugins' }}
+            meta={{ title: "Plugins" }}
             fullWidth
             icon={<Puzzle />}
             title="Plugins"
-            description={`${filteredPlugins().length} plugin${filteredPlugins().length !== 1 ? 's' : ''} found`}
+            description={`${filteredPlugins().length} plugin${filteredPlugins().length !== 1 ? "s" : ""} found`}
         >
             {/* Search & Filters */}
             <div class="flex items-center gap-3">
@@ -179,37 +188,12 @@ export default function Plugins() {
 
             {/* Plugins List */}
             <main class="w-full">
-                <Show
-                    when={!plugins.loading && !plugins.error}
-                    fallback={
-                        <div class="flex items-center justify-center py-12">
-                            <Show
-                                when={plugins.error}
-                                fallback={
-                                    <div class="flex flex-col items-center gap-2">
-                                        <div class="mx-auto h-8 w-8 animate-spin rounded-full border-b-2 border-sky-500"></div>
-
-                                        <p class="text-sm font-bold text-sky-200">
-                                            Loading plugins
-                                        </p>
-                                    </div>
-                                }
-                            >
-                                <div class="flex flex-col items-center gap-2">
-                                    <p class="text-sm font-bold text-red-400">
-                                        Failed to load plugins
-                                    </p>
-                                    <Button
-                                        variant="red"
-                                        icon={<RotateCcw size={16} />}
-                                        onClick={() => refetch()}
-                                    >
-                                        Retry
-                                    </Button>
-                                </div>
-                            </Show>
-                        </div>
-                    }
+                <LoadingState
+                    loading={plugins.loading}
+                    error={plugins.error}
+                    loadingText="Loading plugins"
+                    errorText="Failed to load plugins"
+                    onRetry={() => refetch()}
                 >
                     <Show
                         when={filteredPlugins().length > 0}
@@ -233,7 +217,7 @@ export default function Plugins() {
                                 {(plugin) => (
                                     <PluginCard
                                         variant={
-                                            compactMode() ? 'compact' : 'normal'
+                                            compactMode() ? "compact" : "normal"
                                         }
                                         {...plugin}
                                     />
@@ -244,14 +228,14 @@ export default function Plugins() {
                         <Show when={hasMorePlugins()}>
                             <div class="mt-8 flex justify-center">
                                 <p class="text-sm text-neutral-400">
-                                    Showing {visiblePlugins().length} of{' '}
+                                    Showing {visiblePlugins().length} of{" "}
                                     {filteredPlugins().length} plugins • Scroll
                                     down to load more
                                 </p>
                             </div>
                         </Show>
                     </Show>
-                </Show>
+                </LoadingState>
             </main>
         </PageBootstrap>
     )

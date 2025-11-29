@@ -1,5 +1,5 @@
-import { ChevronDown, ChevronUp } from 'lucide-solid'
-import { For, type JSX, Show, createSignal, onCleanup, onMount } from 'solid-js'
+import { ChevronDown, ChevronUp } from "lucide-solid"
+import { For, type JSX, Show, createSignal, onCleanup, onMount } from "solid-js"
 
 interface DropdownItem {
     label: string
@@ -35,23 +35,23 @@ export default function Dropdown(props: Props) {
     }
 
     onMount(() => {
-        document.addEventListener('click', handleClickOutside)
+        document.addEventListener("click", handleClickOutside)
     })
 
     onCleanup(() => {
-        document.removeEventListener('click', handleClickOutside)
+        document.removeEventListener("click", handleClickOutside)
     })
 
     return (
         <div ref={containerRef} class="relative w-full">
             <button
                 onClick={toggle}
-                class={`flex w-full cursor-pointer items-center gap-1 justify-between rounded-lg border border-neutral-800 px-3 py-3 font-medium transition-colors hover:bg-neutral-900 focus:outline-none ${open() ? 'bg-neutral-900 text-white' : 'bg-neutral-950 text-neutral-400'}`}
+                class={`flex w-full cursor-pointer items-center gap-1 justify-between rounded-lg border border-neutral-800 px-3 py-3 font-medium transition-colors hover:bg-neutral-900 focus:outline-none ${open() ? "bg-neutral-900 text-white" : "bg-neutral-950 text-neutral-400"}`}
             >
                 <div class="flex flex-1 justify-between items-center gap-1">
                     <span class="flex items-center gap-1">
                         <Show when={props.icon}>{props.icon}</Show>
-                        {props.placeholder ?? 'Select option'}
+                        {props.placeholder ?? "Select option"}
                     </span>
 
                     <Show when={props.selected}>

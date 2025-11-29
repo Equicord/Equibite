@@ -1,7 +1,7 @@
-import tailwind from '@tailwindcss/vite'
-import { defineConfig } from 'vite'
-import solid from 'vite-plugin-solid'
-import paths from 'vite-tsconfig-paths'
+import tailwind from "@tailwindcss/vite"
+import { defineConfig } from "vite"
+import solid from "vite-plugin-solid"
+import paths from "vite-tsconfig-paths"
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,6 +11,6 @@ export default defineConfig({
     plugins: [solid(), paths(), tailwind()],
     // build: { sourcemap: true } - ???,
     preview: {
-        allowedHosts: ['equicord.org'],
+        allowedHosts: ["equicord.org"],
     },
 })

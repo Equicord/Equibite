@@ -1,11 +1,11 @@
-import PageBootstrap from '@components/PageBootstrap'
-import { A } from '@solidjs/router'
-import { Scroll } from 'lucide-solid'
+import PageBootstrap from "@components/PageBootstrap"
+import { A } from "@solidjs/router"
+import { Scroll } from "lucide-solid"
 
 export default function CloudPolicy() {
     return (
         <PageBootstrap
-            meta={{ title: 'Cloud Privacy Policy' }}
+            meta={{ title: "Cloud Privacy Policy" }}
             icon={<Scroll />}
             fullWidth
             title="Cloud Policy"
@@ -31,7 +31,7 @@ export default function CloudPolicy() {
                         We take your privacy seriously and collect as little
                         information as possible, using it only for purposes
                         absolutely necessary to provide our services. Learn more
-                        in our{' '}
+                        in our{" "}
                         <A
                             href="/cloud/gdpr"
                             class="text-blue-400 hover:text-blue-300 underline"
@@ -117,7 +117,7 @@ export default function CloudPolicy() {
                                 •
                             </span>
                             <span class="font-medium text-neutral-300">
-                                Email us at{' '}
+                                Email us at{" "}
                                 <a
                                     href="mailto:privacy@equicord.org"
                                     class="text-blue-400 hover:text-blue-300 underline"
@@ -148,23 +148,23 @@ export default function CloudPolicy() {
                         Questions About Your Privacy?
                     </h3>
                     <p class="text-sm font-medium text-neutral-400 mb-3">
-                        Contact us at{' '}
+                        Contact us at{" "}
                         <a
                             href="mailto:privacy@equicord.org"
                             class="text-blue-400 hover:text-blue-300 underline"
                         >
                             privacy@equicord.org
-                        </a>{' '}
+                        </a>{" "}
                         for any privacy concerns.
                     </p>
                     <p class="text-xs text-neutral-500">
-                        Also see our{' '}
+                        Also see our{" "}
                         <A
                             href="/cloud/gdpr"
                             class="text-blue-400 hover:text-blue-300 underline"
                         >
                             GDPR policy
-                        </A>{' '}
+                        </A>{" "}
                         for additional legal information.
                     </p>
                 </div>
