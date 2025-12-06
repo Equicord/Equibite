@@ -7,6 +7,7 @@ import {
     faAndroid,
     faApple,
     faChrome,
+    faEdge,
     faFirefox,
     faLinux,
     faWindows,
@@ -89,6 +90,26 @@ const BrowserPlatforms: Platform[] = [
                 text: "Web Store",
                 href: "https://chromewebstore.google.com/detail/equicord-web/mcambpfmpjnncfoodejdmehedbkjepmi",
                 prioritize: true,
+            },
+            {
+                text: "Zip",
+                href: "https://github.com/Equicord/Equicord/releases/download/latest/extension-chrome.zip",
+            },
+        ],
+        isCurrent: false,
+    },
+    {
+        title: "Edge",
+        icon: faEdge,
+        downloads: [
+            {
+                text: "Add-ons",
+                href: "https://microsoftedge.microsoft.com/addons/detail/equicord-web/nelknkpngcgdndlgikhfmldidjdjljgd",
+                prioritize: true,
+            },
+            {
+                text: "Zip",
+                href: "https://github.com/Equicord/Equicord/releases/download/latest/extension-chrome.zip",
             },
         ],
         isCurrent: false,
@@ -230,7 +251,7 @@ const getSections = (version: string): Section[] => [
         githubUrl: "",
         platforms: BrowserPlatforms,
         globalWarning:
-            "Safari not supported (Apple restrictions). Edge/Opera may work via sideload but are not officially supported.",
+            "Safari not supported (Apple restrictions). Opera may work via sideload but is not officially supported.",
     },
     {
         title: "Equibop",
