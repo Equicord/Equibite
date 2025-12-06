@@ -1,6 +1,5 @@
-import { Title } from '@solidjs/meta'
-import gsap from 'gsap'
-import { type JSX, onMount, type ParentProps } from 'solid-js'
+import { Title } from "@solidjs/meta"
+import { createSignal, type JSX, onMount, type ParentProps } from "solid-js"
 
 interface Props extends ParentProps {
     meta?: {
@@ -10,63 +9,45 @@ interface Props extends ParentProps {
     title: string
 }
 
-/**
- * Build a simple UI that includes an icon, text and buttons.
- */
 export default function SimpleBootstrap(props: Props) {
-    let containerRef: HTMLDivElement | undefined
-    let contentRef: HTMLDivElement | undefined
+    const [mounted, setMounted] = createSignal(false)
 
     onMount(() => {
-        const tl = gsap.timeline({
-            defaults: { ease: 'power3.out', duration: 0.8 },
-        })
-
-        tl.from(containerRef!.children[0], {
-            opacity: 0,
-            y: -30,
-            scale: 0.8,
-            filter: 'blur(6px)',
-        })
-
-        tl.from(
-            containerRef!.children[1],
-            {
-                opacity: 0,
-                y: 30,
-                filter: 'blur(6px)',
-            },
-            '-=0.4',
-        )
-
-        if (contentRef) {
-            tl.from(
-                contentRef!.children,
-                {
-                    opacity: 0,
-                    y: 20,
-                    filter: 'blur(6px)',
-                    stagger: 0.15,
-                },
-                '-=0.3',
-            )
-        }
+        requestAnimationFrame(() => setMounted(true))
     })
 
     return (
         <>
             {props.meta?.title && <Title>{props.meta.title}</Title>}
-            <div
-                ref={containerRef}
-                class="flex w-full flex-col items-center justify-center gap-2 pt-32"
-            >
-                {props.icon}
+            <div class="flex w-full flex-col items-center justify-center gap-2 pt-32">
+                <div
+                    class="transition-all duration-700 ease-out"
+                    classList={{
+                        "opacity-0 -translate-y-8 scale-90 blur-sm": !mounted(),
+                        "opacity-100 translate-y-0 scale-100 blur-0": mounted(),
+                    }}
+                >
+                    {props.icon}
+                </div>
 
-                <h2 class="text-lg font-medium">{props.title}</h2>
+                <h2
+                    class="text-lg font-medium transition-all duration-700 ease-out"
+                    classList={{
+                        "opacity-0 translate-y-8 blur-sm": !mounted(),
+                        "opacity-100 translate-y-0 blur-0": mounted(),
+                    }}
+                    style={{ "transition-delay": "150ms" }}
+                >
+                    {props.title}
+                </h2>
 
                 <div
-                    ref={contentRef}
-                    class="flex items-center gap-2 max-sm:flex-col"
+                    class="flex items-center gap-2 max-sm:flex-col transition-all duration-700 ease-out"
+                    classList={{
+                        "opacity-0 translate-y-5 blur-sm": !mounted(),
+                        "opacity-100 translate-y-0 blur-0": mounted(),
+                    }}
+                    style={{ "transition-delay": "300ms" }}
                 >
                     {props.children}
                 </div>

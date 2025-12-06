@@ -1,8 +1,8 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
     /* Fonts */
-    --font-sans: 'Satoshi', sans-serif;
+    --font-sans: "Satoshi", sans-serif;
 
     /* Spacing */
     --spacing-eq-lg: 1400px;

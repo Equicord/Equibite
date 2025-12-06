@@ -1,8 +1,8 @@
 packages:
-    - '**'
+    - "**"
 
 onlyBuiltDependencies:
-    - '@tailwindcss/oxide'
+    - "@tailwindcss/oxide"
     - esbuild
 
 patchedDependencies:

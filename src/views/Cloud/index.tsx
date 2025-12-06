@@ -1,12 +1,12 @@
-import PageBootstrap from '@components/PageBootstrap'
-import Button from '@components/UI/Button'
-import { A } from '@solidjs/router'
-import { CloudFog, Link, Rabbit, RefreshCcw, Scroll } from 'lucide-solid'
+import PageBootstrap from "@components/PageBootstrap"
+import Button from "@components/UI/Button"
+import { A } from "@solidjs/router"
+import { CloudFog, Link, Rabbit, RefreshCcw, Scroll } from "lucide-solid"
 
 export default function Cloud() {
     return (
         <PageBootstrap
-            meta={{ title: 'Cloud' }}
+            meta={{ title: "Cloud" }}
             icon={<CloudFog />}
             fullWidth
             title="Cloud"
@@ -51,7 +51,7 @@ export default function Cloud() {
 
                 <p class="font-medium text-neutral-400">
                     To use our cloud, all you need to do is change the backend
-                    url in the cloud tab to{' '}
+                    url in the cloud tab to{" "}
                     <code class="bg-neutral-800 text-neutral-100 px-2 py-1 rounded border border-neutral-700 font-mono">
                         https://cloud.equicord.org
                     </code>

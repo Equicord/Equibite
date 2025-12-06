@@ -3,7 +3,7 @@
         "prettier-plugin-tailwindcss",
         "prettier-plugin-organize-imports"
     ],
-    "singleQuote": true,
+    "singleQuote": false,
     "tabWidth": 4,
     "semi": false,
     "bracketSpacing": true

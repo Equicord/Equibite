@@ -1,15 +1,11 @@
-import classNames from 'classnames'
-import type { LucideProps } from 'lucide-solid'
-import type { Component } from 'solid-js'
+import classNames from "classnames"
+import type { LucideProps } from "lucide-solid"
+import type { Component } from "solid-js"
 
 interface Props {
-    // Custom Class
     customClass?: string
-    // Icon
     icon: Component<LucideProps>
-    // Title
     title: string
-    // Excerpt
     excerpt: string
 }
 
@@ -23,7 +19,7 @@ export default function Card({
         <div
             class={classNames(
                 customClass,
-                'flex w-full flex-col gap-1 rounded-2xl bg-neutral-900 p-6',
+                "flex w-full flex-col gap-2 rounded-2xl bg-neutral-900 p-6",
             )}
         >
             <div class="flex items-center gap-3">
@@ -32,7 +28,7 @@ export default function Card({
                     {title}
                 </span>
             </div>
-            <p class="pt-1.5 text-sm font-medium text-neutral-400">{excerpt}</p>
+            <p class="text-sm font-medium text-neutral-400">{excerpt}</p>
         </div>
     )
 }
