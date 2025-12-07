@@ -12,7 +12,7 @@ import {
     faLinux,
     faWindows,
 } from "@fortawesome/free-brands-svg-icons"
-import { isAndroid, isLinux, isMac, isWindows } from "@utils/navigator"
+import { isAndroid, isIOS, isLinux, isMac, isWindows } from "@utils/navigator"
 import { AlertCircle, DownloadIcon, MonitorCheck, Package } from "lucide-solid"
 import Fa from "solid-fa"
 import { createResource } from "solid-js"
@@ -174,7 +174,7 @@ const getEquibopPlatforms = (version: string): Platform[] => [
             },
         ],
         isCurrent: isMac(),
-        warning: "Currently not signed",
+        warning: "Currently not signed due to financial reasons.",
     },
 ]
 
@@ -201,20 +201,44 @@ const EquidroidPlatforms: Platform[] = [
             {
                 text: "Kettu",
                 href: "https://github.com/C0C0B01/KettuManager/releases",
-                note: "Built on Discord's React Native Revision"
+                note: "Built on the React Native Revision"
             },
             {
                 text: "Revenge",
                 href: "https://github.com/revenge-mod/revenge-manager/releases",
-                note: "Built on Discord's React Native Revision"
+                note: "Built on the React Native Revision"
             },
             {
                 text: "Aliucord",
                 href: "https://github.com/Aliucord/Manager/releases",
-                note: "Built on Discord's Kotlin Revision"
+                note: "Built on the Kotlin Revision"
             },
         ],
     },
+    {
+        title: "IOS",
+        icon: faApple,
+        downloads: [
+            {
+                text: "None Currently",
+                href: ""
+            }
+        ],
+        isCurrent: isIOS(),
+        subtext: "Alternatives for IOS",
+        subsection: [
+            {
+                text: "BTLoader",
+                href: "https://github.com/CloudySn0w/BTLoader/releases",
+                note: "Built on the React Native Revision"
+            },
+            {
+                text: "Jailbroken Kettu",
+                href: "https://github.com/C0C0B01/KettuTweak/releases",
+                note: "Built on the React Native Revision"
+            },
+        ],
+    }
 ]
 
 const OtherOfferings = [
@@ -275,7 +299,7 @@ const getSections = (version: string): Section[] => [
         githubUrl: "https://github.com/Equicord/Equidroid",
         platforms: EquidroidPlatforms,
         globalWarning:
-            "iOS not supported and unlikely to ever be supported. Please don't actually use Equidroid - use Revenge, Kettu, or Aliucord instead. Due to current limitations, we cannot provide support for Equidroid.",
+            "iOS isn't supported and unlikely to ever be supported. Please don't actually use Equidroid - use Kettu, Revenge, or Aliucord instead. Due to current limitations, we cannot provide support for Equidroid.",
     },
 ]
 
