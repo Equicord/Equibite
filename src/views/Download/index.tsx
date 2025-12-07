@@ -259,7 +259,7 @@ const getSections = (version: string): Section[] => [
         githubUrl: "",
         platforms: BrowserPlatforms,
         globalWarning:
-            "Safari not supported (Apple restrictions). Opera may work via sideload but is not officially supported.",
+            "Safari not supported (Apple restrictions). Opera may work via sideloading but is not officially supported.",
     },
     {
         title: "Equibop",
