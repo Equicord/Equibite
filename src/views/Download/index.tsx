@@ -64,7 +64,7 @@ const EquicordPlatforms: Platform[] = [
         downloads: [
             {
                 text: 'GUI',
-                href: 'https://github.com/Equicord/Equilotl/releases/download/latest/Equilotl-x11',
+                href: 'https://github.com/Equicord/Equilotl/releases/latest/download/Equilotl-x11',
                 prioritize: true,
                 note: 'Snap is not supported; runs on X11',
             },
