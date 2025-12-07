@@ -63,9 +63,14 @@ const EquicordPlatforms: Platform[] = [
         icon: faLinux,
         downloads: [
             {
+                text: 'GUI',
+                href: 'https://github.com/Equicord/Equilotl/releases/download/latest/Equilotl-x11',
+                prioritize: true,
+                note: 'Snap is not supported; runs on X11',
+            },
+            {
                 text: 'CLI',
                 href: 'https://github.com/Equicord/Equilotl/releases/latest/download/EquilotlCli-Linux',
-                prioritize: true,
             },
             {
                 text: 'AUR',
@@ -73,7 +78,6 @@ const EquicordPlatforms: Platform[] = [
             },
         ],
         isCurrent: isLinux(),
-        warning: 'GUI version not available on Linux',
     },
     {
         title: 'MacOS',
