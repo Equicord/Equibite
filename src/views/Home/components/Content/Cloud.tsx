@@ -38,7 +38,7 @@ export default function FeatureCloud() {
                     </span>
 
                     <p class="font-medium text-neutral-400">
-                        Sync your settings anytime with our dedicated Vencord
+                        Sync your settings anytime with our dedicated Equicord
                         cloud instance for seamless experience across devices.
                     </p>
 
