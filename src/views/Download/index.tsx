@@ -42,7 +42,7 @@ const EquicordPlatforms: Platform[] = [
                 text: "GUI",
                 href: "https://github.com/Equicord/Equilotl/releases/latest/download/Equilotl-x11",
                 prioritize: true,
-                note: "Snap is not supported; runs on X11",
+                note: "X11 only",
             },
             {
                 text: "CLI",
@@ -75,7 +75,7 @@ const BrowserPlatforms: Platform[] = [
         icon: faFirefox,
         downloads: [
             {
-                text: "Add-on",
+                text: "Extension",
                 href: "https://addons.mozilla.org/en-US/firefox/addon/equicord-web/",
                 prioritize: true,
             },
@@ -92,7 +92,7 @@ const BrowserPlatforms: Platform[] = [
         icon: faChrome,
         downloads: [
             {
-                text: "Web Store",
+                text: "Extension",
                 href: "https://chromewebstore.google.com/detail/equicord-web/mcambpfmpjnncfoodejdmehedbkjepmi",
                 prioritize: true,
             },
@@ -108,7 +108,7 @@ const BrowserPlatforms: Platform[] = [
         icon: faEdge,
         downloads: [
             {
-                text: "Add-ons",
+                text: "Extension",
                 href: "https://microsoftedge.microsoft.com/addons/detail/equicord-web/nelknkpngcgdndlgikhfmldidjdjljgd",
                 prioritize: true,
             },
@@ -143,7 +143,7 @@ const getEquibopPlatforms = (version: string): Platform[] => [
         icon: faLinux,
         downloads: [
             {
-                text: "x86_64",
+                text: "x64",
                 href: `https://github.com/Equicord/Equibop/releases/download/v${version}/Equibop-${version}.AppImage`,
                 prioritize: true,
             },
@@ -199,16 +199,19 @@ const EquidroidPlatforms: Platform[] = [
         subtext: "Alternatives to Equidroid",
         subsection: [
             {
-                text: "Revenge",
-                href: "https://github.com/revenge-mod/revenge-manager/releases",
-            },
-            {
                 text: "Kettu",
                 href: "https://github.com/C0C0B01/KettuManager/releases",
+                note: "Built on Discord's React Native Revision"
+            },
+            {
+                text: "Revenge",
+                href: "https://github.com/revenge-mod/revenge-manager/releases",
+                note: "Built on Discord's React Native Revision"
             },
             {
                 text: "Aliucord",
                 href: "https://github.com/Aliucord/Manager/releases",
+                note: "Built on Discord's Kotlin Revision"
             },
         ],
     },
