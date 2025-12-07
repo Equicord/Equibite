@@ -230,12 +230,12 @@ const EquidroidPlatforms: Platform[] = [
             {
                 text: "BTLoader",
                 href: "https://github.com/CloudySn0w/BTLoader/releases",
-                note: "Built on the React Native Revision"
+                note: "Use if Non-Jailbroken"
             },
             {
-                text: "Jailbroken Kettu",
+                text: "Kettu",
                 href: "https://github.com/C0C0B01/KettuTweak/releases",
-                note: "Built on the React Native Revision"
+                note: "Use if Jailbroken"
             },
         ],
     }
