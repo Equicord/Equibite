@@ -82,8 +82,17 @@ export default function HomeHero() {
                     }}
                     style={{ "transition-delay": "400ms" }}
                 >
-                    A fork that has everything you need: third-party plugins and
-                    more.
+                    A fork that offers a wider selection of plugins from the community.
+                </p>
+                <p
+                    class="text-xs font-semibold text-neutral-400 transition-all duration-700 ease-out"
+                    classList={{
+                        "opacity-0 translate-y-10 blur-sm": !mounted(),
+                        "opacity-100 translate-y-0 blur-0": mounted(),
+                    }}
+                    style={{ "transition-delay": "400ms" }}
+                >
+                    The unstable fork of Vencord.
                 </p>
 
                 <div

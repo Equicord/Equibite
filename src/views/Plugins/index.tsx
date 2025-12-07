@@ -25,7 +25,7 @@ import PluginCard from "./components/PluginCard"
 import PluginPopover from "./components/PluginPopover"
 
 type PluginFilter = "all" | "equicord" | "vencord" | "modified"
-type PlatformFilter = "all" | "desktop" | "web"
+type PlatformFilter = "all" | "dev" | "web" | "desktop" | "discordDesktop" | "equibop"
 
 export default function Plugins() {
     const [plugins, { refetch }] = createResource(() => fetchPlugins("all"))
@@ -88,22 +88,48 @@ export default function Plugins() {
             })
         }
 
-        if (pluginFilter() === "equicord") {
-            result = result.filter((plugin) =>
-                plugin.filePath.toLowerCase().startsWith("src/equicordplugins"),
-            )
-        } else if (pluginFilter() === "vencord") {
-            result = result.filter((plugin) =>
-                plugin.filePath.toLowerCase().startsWith("src/plugins"),
-            )
+        switch (pluginFilter()) {
+            case "equicord": {
+                result = result.filter((plugin) =>
+                    plugin.filePath.toLowerCase().startsWith("src/equicordplugins"),
+                )
+                break;
+            }
+            case "vencord": {
+                result = result.filter((plugin) =>
+                    plugin.filePath.toLowerCase().startsWith("src/plugins"),
+                )
+                break;
+            }
+            case "modified": {
+                result = result.filter((plugin) =>
+                    plugin.isModified,
+                )
+                break;
+            }
         }
 
-        if (platformFilter() === "desktop") {
-            result = result.filter((plugin) =>
-                DESKTOP_PLATFORMS.includes(plugin.target ?? ""),
-            )
-        } else if (platformFilter() === "web") {
-            result = result.filter((plugin) => plugin.target === "web")
+        switch (platformFilter()) {
+            case "desktop": {
+                result = result.filter((plugin) => plugin.target === "desktop")
+                break;
+            }
+            case "dev": {
+                result = result.filter((plugin) => plugin.target === "dev")
+                break;
+            }
+            case "discordDesktop": {
+                result = result.filter((plugin) => plugin.target === "discordDesktop")
+                break;
+            }
+            case "equibop": {
+                result = result.filter((plugin) => plugin.target === "equibop")
+                break;
+            }
+            case "web": {
+                result = result.filter((plugin) => plugin.target === "web")
+                break;
+            }
         }
 
         if (filterHasCommands()) {
