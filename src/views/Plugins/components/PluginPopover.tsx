@@ -1,50 +1,46 @@
-import { Blocks, Braces, Cog, Monitor } from 'lucide-solid'
-import { createSignal, onCleanup, Show } from 'solid-js'
+import { Blocks, Braces, Cog, Monitor } from "lucide-solid"
+import { createSignal, onCleanup, Show } from "solid-js"
 
-import Button from '@components/UI/Button'
-import Dropdown from '@components/UI/Dropdown'
-import Switch from '@components/UI/Switch'
+import Button from "@components/UI/Button"
+import Dropdown from "@components/UI/Dropdown"
+import Switch from "@components/UI/Switch"
+
+type PluginFilterValue = "all" | "equicord" | "vencord" | "modified"
+type PlatformFilterValue = "all" | "desktop" | "web"
 
 interface Props {
-    // Plugin filter
-    pluginFilter: () => 'all' | 'equicord' | 'vencord'
-    setPluginFilter: (value: 'all' | 'equicord' | 'vencord') => void
-
-    // Platform filter
-    platformFilter: () => 'all' | 'desktop' | 'web'
-    setPlatformFilter: (value: 'all' | 'desktop' | 'web') => void
-
-    // Commands filter
+    pluginFilter: () => PluginFilterValue
+    setPluginFilter: (value: PluginFilterValue) => void
+    platformFilter: () => PlatformFilterValue
+    setPlatformFilter: (value: PlatformFilterValue) => void
     filterHasCommands: () => boolean
     setFilterHasCommands: (value: boolean) => void
-
-    // Compact mode
     compactMode: () => boolean
     setCompactMode: (value: boolean) => void
 }
 
 const Platforms = [
     {
-        label: 'All',
-        value: 'all' as const,
+        label: "All",
+        value: "all" as const,
     },
     {
-        label: 'Desktop',
-        value: 'desktop' as const,
+        label: "Desktop",
+        value: "desktop" as const,
     },
     {
-        label: 'Web',
-        value: 'web' as const,
+        label: "Web",
+        value: "web" as const,
     },
 ]
 
 const Sources = [
     {
-        label: 'All',
-        value: 'all' as const,
+        label: "All",
+        value: "all" as const,
     },
     {
-        label: 'Vencord',
+        label: "Vencord",
         icon: (
             <img
                 src="/assets/icons/vencord/icon.png"
@@ -52,10 +48,10 @@ const Sources = [
                 alt="Vencord"
             />
         ),
-        value: 'vencord' as const,
+        value: "vencord" as const,
     },
     {
-        label: 'Equicord',
+        label: "Equicord",
         icon: (
             <img
                 src="/assets/icons/equicord/icon-far.png"
@@ -63,10 +59,10 @@ const Sources = [
                 alt="Equicord"
             />
         ),
-        value: 'equicord' as const,
+        value: "equicord" as const,
     },
     {
-        label: 'Modified',
+        label: "Modified",
         icon: (
             <img
                 src="/assets/icons/equicord/modified.png"
@@ -74,7 +70,7 @@ const Sources = [
                 alt="Equicord"
             />
         ),
-        value: 'modified' as const,
+        value: "modified" as const,
     },
 ]
 
@@ -86,12 +82,12 @@ export default function PluginPopover(props: Props) {
 
     const handleClickOutside = (event: MouseEvent) => {
         const target = event.target as HTMLElement
-        if (!target.closest('.popover-container')) close()
+        if (!target.closest(".popover-container")) close()
     }
 
-    document.addEventListener('click', handleClickOutside)
+    document.addEventListener("click", handleClickOutside)
 
-    onCleanup(() => document.removeEventListener('click', handleClickOutside))
+    onCleanup(() => document.removeEventListener("click", handleClickOutside))
 
     return (
         <div class="popover-container relative inline-block">
@@ -123,7 +119,7 @@ export default function PluginPopover(props: Props) {
                         }
                     />
 
-                    <Dropdown
+                    <Dropdown<PluginFilterValue>
                         icon={<Blocks size={16} />}
                         items={Sources.map((item) => ({
                             icon: item.icon,
@@ -135,13 +131,11 @@ export default function PluginPopover(props: Props) {
                                 (item) => item.value === props.pluginFilter(),
                             ) ?? null
                         }
-                        onSelect={(item) =>
-                            props.setPluginFilter(item.value as any)
-                        }
+                        onSelect={(item) => props.setPluginFilter(item.value)}
                         placeholder="Source"
                     />
 
-                    <Dropdown
+                    <Dropdown<PlatformFilterValue>
                         icon={<Monitor size={16} />}
                         items={Platforms.map((item) => ({
                             label: item.label,
@@ -152,9 +146,7 @@ export default function PluginPopover(props: Props) {
                                 (item) => item.value === props.platformFilter(),
                             ) ?? null
                         }
-                        onSelect={(item) =>
-                            props.setPlatformFilter(item.value as any)
-                        }
+                        onSelect={(item) => props.setPlatformFilter(item.value)}
                         placeholder="Platform"
                     />
                 </div>
