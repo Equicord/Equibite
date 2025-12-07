@@ -12,7 +12,7 @@ import {
     faLinux,
     faWindows,
 } from "@fortawesome/free-brands-svg-icons"
-import { isAndroid, isIOS, isLinux, isMac, isWindows } from "@utils/navigator"
+import { isAndroid, isChromeOS, isIOS, isLinux, isMac, isWindows } from "@utils/navigator"
 import { AlertCircle, DownloadIcon, MonitorCheck, Package } from "lucide-solid"
 import Fa from "solid-fa"
 import { createResource } from "solid-js"
@@ -101,7 +101,7 @@ const BrowserPlatforms: Platform[] = [
                 href: "https://github.com/Equicord/Equicord/releases/download/latest/extension-chrome.zip",
             },
         ],
-        isCurrent: false,
+        isCurrent: isChromeOS(),
     },
     {
         title: "Edge",
