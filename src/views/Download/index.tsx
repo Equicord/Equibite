@@ -1,7 +1,7 @@
-import type { Platform, Section } from "@/types"
-import PageBootstrap from "@components/PageBootstrap"
-import Button from "@components/UI/Button"
-import classNames from "classnames"
+import type { Platform, Section } from "@/types";
+import PageBootstrap from "@components/PageBootstrap";
+import Button from "@components/UI/Button";
+import classNames from "classnames";
 
 import {
     faAndroid,
@@ -11,11 +11,11 @@ import {
     faFirefox,
     faLinux,
     faWindows,
-} from "@fortawesome/free-brands-svg-icons"
-import { isAndroid, isLinux, isMac, isWindows } from "@utils/navigator"
-import { AlertCircle, DownloadIcon, MonitorCheck, Package } from "lucide-solid"
-import Fa from "solid-fa"
-import { createResource } from "solid-js"
+} from "@fortawesome/free-brands-svg-icons";
+import { isAndroid, isLinux, isMac, isWindows } from "@utils/navigator";
+import { AlertCircle, DownloadIcon, MonitorCheck, Package } from "lucide-solid";
+import Fa from "solid-fa";
+import { createResource } from "solid-js";
 
 const EquicordPlatforms: Platform[] = [
     {
@@ -39,9 +39,14 @@ const EquicordPlatforms: Platform[] = [
         icon: faLinux,
         downloads: [
             {
+                text: "GUI",
+                href: "https://github.com/Equicord/Equilotl/releases/latest/download/Equilotl-x11",
+                prioritize: true,
+                note: "Snap is not supported; runs on X11",
+            },
+            {
                 text: "CLI",
                 href: "https://github.com/Equicord/Equilotl/releases/latest/download/EquilotlCli-Linux",
-                prioritize: true,
             },
             {
                 text: "AUR",
@@ -62,7 +67,7 @@ const EquicordPlatforms: Platform[] = [
         ],
         isCurrent: isMac(),
     },
-]
+];
 
 const BrowserPlatforms: Platform[] = [
     {
@@ -114,7 +119,7 @@ const BrowserPlatforms: Platform[] = [
         ],
         isCurrent: false,
     },
-]
+];
 
 const getEquibopPlatforms = (version: string): Platform[] => [
     {
@@ -171,7 +176,7 @@ const getEquibopPlatforms = (version: string): Platform[] => [
         isCurrent: isMac(),
         warning: "Currently not signed",
     },
-]
+];
 
 const EquidroidPlatforms: Platform[] = [
     {
@@ -207,7 +212,7 @@ const EquidroidPlatforms: Platform[] = [
             },
         ],
     },
-]
+];
 
 const OtherOfferings = [
     {
@@ -234,7 +239,7 @@ const OtherOfferings = [
         name: "Shelter",
         href: "https://shelter.uwu.network",
     },
-]
+];
 
 const getSections = (version: string): Section[] => [
     {
@@ -269,21 +274,21 @@ const getSections = (version: string): Section[] => [
         globalWarning:
             "iOS not supported and unlikely to ever be supported. Please don't actually use Equidroid - use Revenge, Kettu, or Aliucord instead. Due to current limitations, we cannot provide support for Equidroid.",
     },
-]
+];
 
 async function fetchEquibopVersion(): Promise<string> {
     try {
-        const response = await fetch("/version")
-        const version = await response.text()
-        return version.trim()
+        const response = await fetch("/version");
+        const version = await response.text();
+        return version.trim();
     } catch (error) {
-        console.error("Failed to fetch Equibop version:", error)
-        return "3.1.3"
+        console.error("Failed to fetch Equibop version:", error);
+        return "3.1.3";
     }
 }
 
 export default function Download() {
-    const [version] = createResource(fetchEquibopVersion)
+    const [version] = createResource(fetchEquibopVersion);
 
     return (
         <PageBootstrap
@@ -492,5 +497,5 @@ export default function Download() {
                 </div>
             </div>
         </PageBootstrap>
-    )
+    );
 }
