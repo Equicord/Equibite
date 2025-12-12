@@ -21,6 +21,7 @@ RUN corepack enable
 
 COPY package*.json pnpm-*.yaml ./
 COPY patches ./patches
+COPY vite.config.ts ./vite.config.ts
 RUN pnpm install --prod --frozen-lockfile
 COPY --from=build /app/dist ./dist
 
