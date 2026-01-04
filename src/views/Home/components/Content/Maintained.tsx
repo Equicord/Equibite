@@ -11,7 +11,7 @@ async function fetchCommits(): Promise<Commit[]> {
         const cached = localStorage.getItem(CacheKeys.COMMITS)
         if (cached) {
             const { timestamp, data } = JSON.parse(cached)
-            if (Date.now() - timestamp < CacheTTL.SHORT) {
+            if (Date.now() - timestamp < CacheTTL.HALFHOUR) {
                 return data
             }
         }

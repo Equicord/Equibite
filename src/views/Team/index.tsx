@@ -3,17 +3,51 @@ import PageBootstrap from "@components/PageBootstrap"
 import LoadingState from "@components/UI/LoadingState"
 import {
     ActivityTypes,
-    artistIds,
-    helperIds,
-    ownerIds,
+    CacheTTL,
     RoleHeaders,
     StatusLabels,
-    teamIds,
-    teamMembers,
     Urls,
 } from "@constants"
 import { Shield } from "lucide-solid"
 import { createSignal, For, onCleanup, onMount, Show } from "solid-js"
+
+type TeamResponse = {
+    owners: string[]
+    team: string[]
+    helpers: string[]
+    artists: string[]
+};
+
+const TEAM_URL = "https://raw.githubusercontent.com/Equicord/Equibite/refs/heads/main/public/team.json";
+let cachedTeam: TeamResponse | null = null;
+let lastFetch = 0;
+
+export async function fetchTeam(): Promise<TeamResponse> {
+    const now = Date.now();
+
+    if (cachedTeam && now - lastFetch < CacheTTL.HOUR) {
+        return cachedTeam;
+    }
+
+    try {
+        const res = await fetch(TEAM_URL);
+        if (!res.ok) throw new Error("Fetch failed");
+
+        cachedTeam = await res.json();
+        lastFetch = now;
+    } catch (err) {
+        console.error("Team fetch failed:", err);
+    }
+
+    return (
+        cachedTeam ?? {
+            owners: [],
+            team: [],
+            helpers: [],
+            artists: []
+        }
+    );
+}
 
 async function fetchUsers(ids: string[]): Promise<Record<string, LanyardUser>> {
     const results = await Promise.all(
@@ -210,16 +244,33 @@ function RoleSection(props: {
 export default function Teams() {
     const [users, setUsers] = createSignal<Record<string, LanyardUser>>({})
     const [loading, setLoading] = createSignal(true)
+    const [team, setTeam] = createSignal<TeamResponse | null>(null)
+
     let ws: WebSocket | null = null
 
     onMount(async () => {
-        const data = await fetchUsers(teamMembers)
-        setUsers(data)
-        setLoading(false)
+        try {
+            const teamData = await fetchTeam()
+            setTeam(teamData)
 
-        ws = createLanyardSocket(teamMembers, (userId, user) => {
-            setUsers((prev) => ({ ...prev, [userId]: user }))
-        })
+            const allIds = [
+                ...teamData.owners,
+                ...teamData.team,
+                ...teamData.helpers,
+                ...teamData.artists,
+            ]
+
+            const data = await fetchUsers(allIds)
+            setUsers(data)
+            setLoading(false)
+
+            ws = createLanyardSocket(allIds, (userId, user) => {
+                setUsers((prev) => ({ ...prev, [userId]: user }))
+            })
+        } catch (err) {
+            console.error("Failed to load team:", err)
+            setLoading(false)
+        }
     })
 
     onCleanup(() => {
@@ -238,32 +289,36 @@ export default function Teams() {
                 loading={loading()}
                 loadingText="Loading team members"
             >
-                <div class="flex flex-col gap-8">
-                    <RoleSection
-                        title="Owner"
-                        userIds={ownerIds}
-                        users={users()}
-                        colorClass={RoleHeaders.owner}
-                    />
-                    <RoleSection
-                        title="Team"
-                        userIds={teamIds}
-                        users={users()}
-                        colorClass={RoleHeaders.team}
-                    />
-                    <RoleSection
-                        title="Helpers"
-                        userIds={helperIds}
-                        users={users()}
-                        colorClass={RoleHeaders.helper}
-                    />
-                    <RoleSection
-                        title="Artists"
-                        userIds={artistIds}
-                        users={users()}
-                        colorClass={RoleHeaders.artist}
-                    />
-                </div>
+                <Show when={team()}>
+                    {(t) => (
+                        <div class="flex flex-col gap-8">
+                            <RoleSection
+                                title="Owner"
+                                userIds={t().owners}
+                                users={users()}
+                                colorClass={RoleHeaders.owner}
+                            />
+                            <RoleSection
+                                title="Team"
+                                userIds={t().team}
+                                users={users()}
+                                colorClass={RoleHeaders.team}
+                            />
+                            <RoleSection
+                                title="Helpers"
+                                userIds={t().helpers}
+                                users={users()}
+                                colorClass={RoleHeaders.helper}
+                            />
+                            <RoleSection
+                                title="Artists"
+                                userIds={t().artists}
+                                users={users()}
+                                colorClass={RoleHeaders.artist}
+                            />
+                        </div>
+                    )}
+                </Show>
             </LoadingState>
         </PageBootstrap>
     )

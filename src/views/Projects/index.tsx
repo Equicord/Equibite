@@ -13,7 +13,7 @@ const fetchRepos = async (): Promise<Repository[]> => {
         const cached = localStorage.getItem(CacheKeys.REPOS)
         if (cached) {
             const { timestamp, data } = JSON.parse(cached)
-            if (Date.now() - timestamp < CacheTTL.LONG) {
+            if (Date.now() - timestamp < CacheTTL.SIXHOURS) {
                 return data
             }
         }

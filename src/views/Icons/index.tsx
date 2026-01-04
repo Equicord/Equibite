@@ -72,7 +72,7 @@ async function fetchImagesRecursive(apiUrl: string): Promise<FolderImages[]> {
         const cached = localStorage.getItem(CacheKeys.ICONS)
         if (cached) {
             const { timestamp, data } = JSON.parse(cached)
-            if (Date.now() - timestamp < CacheTTL.LONG) {
+            if (Date.now() - timestamp < CacheTTL.SIXHOURS) {
                 return data
             }
         }

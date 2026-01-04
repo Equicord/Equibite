@@ -16,6 +16,11 @@ import { isAndroid, isChromeOS, isIOS, isLinux, isMac, isWindows } from "@utils/
 import { AlertCircle, DownloadIcon, MonitorCheck, Package } from "lucide-solid"
 import Fa from "solid-fa"
 import { createResource } from "solid-js"
+import { CacheTTL } from "@/constants"
+
+const VERSION_URL = "https://raw.githubusercontent.com/Equicord/Equibite/refs/heads/main/public/version";
+let cachedVersion = "3.1.5";
+let lastFetch = 0;
 
 const EquicordPlatforms: Platform[] = [
     {
@@ -303,15 +308,22 @@ const getSections = (version: string): Section[] => [
     },
 ]
 
-async function fetchEquibopVersion(): Promise<string> {
+export async function fetchEquibopVersion(){
+    const now = Date.now();
+
+    if (now - lastFetch < CacheTTL.HOUR) return cachedVersion;
+
     try {
-        const response = await fetch("/version")
-        const version = await response.text()
-        return version.trim()
-    } catch (error) {
-        console.error("Failed to fetch Equibop version:", error)
-        return "3.1.3"
+        const res = await fetch(VERSION_URL);
+        if (!res.ok) throw new Error("Fetch failed");
+
+        cachedVersion = (await res.text()).trim();
+        lastFetch = now;
+    } catch (err) {
+        console.error("Version fetch failed:", err);
     }
+
+    return cachedVersion;
 }
 
 export default function Download() {
