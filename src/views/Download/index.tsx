@@ -3,7 +3,7 @@ import PageBootstrap from "@components/PageBootstrap"
 import Button from "@components/UI/Button"
 import classNames from "classnames"
 
-import { CacheTTL } from "@/constants"
+import { CacheKeys, CacheTTL, Urls } from "@/constants"
 import {
     faAndroid,
     faApple,
@@ -24,11 +24,6 @@ import {
 import { AlertCircle, DownloadIcon, MonitorCheck, Package } from "lucide-solid"
 import Fa from "solid-fa"
 import { createResource } from "solid-js"
-
-const VERSION_URL =
-    "https://raw.githubusercontent.com/Equicord/Equibite/refs/heads/main/public/version"
-let cachedVersion = "3.1.5"
-let lastFetch = 0
 
 const EquicordPlatforms: Platform[] = [
     {
@@ -316,22 +311,28 @@ const getSections = (version: string): Section[] => [
     },
 ]
 
-export async function fetchEquibopVersion() {
-    const now = Date.now()
+async function fetchEquibopVersion() {
+    try {
+        const cached = localStorage.getItem(CacheKeys.EQUIBOP)
+        if (cached) {
+            const { timestamp, data } = JSON.parse(cached)
+            if (Date.now() - timestamp < CacheTTL.HOUR) {
+                return data
+            }
+        }
+    } catch {}
 
-    if (now - lastFetch < CacheTTL.HOUR) return cachedVersion
+    const res = await fetch(Urls.EQUIBOP_VERSION_URL)
+    const data = (await res.text()).trim()
 
     try {
-        const res = await fetch(VERSION_URL)
-        if (!res.ok) throw new Error("Fetch failed")
+        localStorage.setItem(
+            CacheKeys.EQUIBOP,
+            JSON.stringify({ timestamp: Date.now(), data }),
+        )
+    } catch {}
 
-        cachedVersion = (await res.text()).trim()
-        lastFetch = now
-    } catch (err) {
-        console.error("Version fetch failed:", err)
-    }
-
-    return cachedVersion
+    return data
 }
 
 export default function Download() {

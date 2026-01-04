@@ -6,6 +6,11 @@ export const Urls = {
     VENCORD_PLUGINS_URL:
         "https://raw.githubusercontent.com/Equicord/Equibored/main/vencordplugins.json",
 
+    EQUIBOP_VERSION_URL:
+        "https://raw.githubusercontent.com/Equicord/Equibite/refs/heads/main/public/version",
+    TEAM_JSON_URL:
+        "https://raw.githubusercontent.com/Equicord/Equibite/refs/heads/main/public/team.json",
+
     DISCORD_URL: "/discord",
     DISCORD_API: "https://discord.com/api/v10",
     DISCORD_CDN: "https://cdn.discordapp.com",

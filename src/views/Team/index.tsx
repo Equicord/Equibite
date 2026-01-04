@@ -3,6 +3,7 @@ import PageBootstrap from "@components/PageBootstrap"
 import LoadingState from "@components/UI/LoadingState"
 import {
     ActivityTypes,
+    CacheKeys,
     CacheTTL,
     RoleHeaders,
     StatusLabels,
@@ -18,36 +19,28 @@ type TeamResponse = {
     artists: string[]
 }
 
-const TEAM_URL =
-    "https://raw.githubusercontent.com/Equicord/Equibite/refs/heads/main/public/team.json"
-let cachedTeam: TeamResponse | null = null
-let lastFetch = 0
+async function fetchTeam(): Promise<TeamResponse> {
+    try {
+        const cached = localStorage.getItem(CacheKeys.TEAM)
+        if (cached) {
+            const { timestamp, data } = JSON.parse(cached)
+            if (Date.now() - timestamp < CacheTTL.HOUR) {
+                return data
+            }
+        }
+    } catch {}
 
-export async function fetchTeam(): Promise<TeamResponse> {
-    const now = Date.now()
-
-    if (cachedTeam && now - lastFetch < CacheTTL.HOUR) {
-        return cachedTeam
-    }
+    const res = await fetch(Urls.TEAM_JSON_URL)
+    const data: TeamResponse = await res.json()
 
     try {
-        const res = await fetch(TEAM_URL)
-        if (!res.ok) throw new Error("Fetch failed")
+        localStorage.setItem(
+            CacheKeys.TEAM,
+            JSON.stringify({ timestamp: Date.now(), data }),
+        )
+    } catch {}
 
-        cachedTeam = await res.json()
-        lastFetch = now
-    } catch (err) {
-        console.error("Team fetch failed:", err)
-    }
-
-    return (
-        cachedTeam ?? {
-            owners: [],
-            team: [],
-            helpers: [],
-            artists: [],
-        }
-    )
+    return data
 }
 
 async function fetchUsers(ids: string[]): Promise<Record<string, LanyardUser>> {

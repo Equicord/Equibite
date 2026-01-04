@@ -2,6 +2,8 @@ export const CacheKeys = {
     ICONS: "cachedIcons",
     REPOS: "cachedRepos",
     COMMITS: "cachedCommits",
+    EQUIBOP: "cachedEquibop",
+    TEAM: "cachedTeam",
 } as const
 
 export const CacheTTL = {
