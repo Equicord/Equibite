@@ -3,6 +3,7 @@ import PageBootstrap from "@components/PageBootstrap"
 import Button from "@components/UI/Button"
 import classNames from "classnames"
 
+import { CacheTTL } from "@/constants"
 import {
     faAndroid,
     faApple,
@@ -12,15 +13,22 @@ import {
     faLinux,
     faWindows,
 } from "@fortawesome/free-brands-svg-icons"
-import { isAndroid, isChromeOS, isIOS, isLinux, isMac, isWindows } from "@utils/navigator"
+import {
+    isAndroid,
+    isChromeOS,
+    isIOS,
+    isLinux,
+    isMac,
+    isWindows,
+} from "@utils/navigator"
 import { AlertCircle, DownloadIcon, MonitorCheck, Package } from "lucide-solid"
 import Fa from "solid-fa"
 import { createResource } from "solid-js"
-import { CacheTTL } from "@/constants"
 
-const VERSION_URL = "https://raw.githubusercontent.com/Equicord/Equibite/refs/heads/main/public/version";
-let cachedVersion = "3.1.5";
-let lastFetch = 0;
+const VERSION_URL =
+    "https://raw.githubusercontent.com/Equicord/Equibite/refs/heads/main/public/version"
+let cachedVersion = "3.1.5"
+let lastFetch = 0
 
 const EquicordPlatforms: Platform[] = [
     {
@@ -206,17 +214,17 @@ const EquidroidPlatforms: Platform[] = [
             {
                 text: "Kettu",
                 href: "https://github.com/C0C0B01/KettuManager/releases",
-                note: "Built on the React Native Revision"
+                note: "Built on the React Native Revision",
             },
             {
                 text: "Revenge",
                 href: "https://github.com/revenge-mod/revenge-manager/releases",
-                note: "Built on the React Native Revision"
+                note: "Built on the React Native Revision",
             },
             {
                 text: "Aliucord",
                 href: "https://github.com/Aliucord/Manager/releases",
-                note: "Built on the Kotlin Revision"
+                note: "Built on the Kotlin Revision",
             },
         ],
     },
@@ -226,8 +234,8 @@ const EquidroidPlatforms: Platform[] = [
         downloads: [
             {
                 text: "None Currently",
-                href: ""
-            }
+                href: "",
+            },
         ],
         isCurrent: isIOS(),
         subtext: "Alternatives for IOS",
@@ -235,15 +243,15 @@ const EquidroidPlatforms: Platform[] = [
             {
                 text: "BTLoader",
                 href: "https://github.com/CloudySn0w/BTLoader/releases",
-                note: "Use if Non-Jailbroken"
+                note: "Use if Non-Jailbroken",
             },
             {
                 text: "Kettu",
                 href: "https://github.com/C0C0B01/KettuTweak/releases",
-                note: "Use if Jailbroken"
+                note: "Use if Jailbroken",
             },
         ],
-    }
+    },
 ]
 
 const OtherOfferings = [
@@ -308,22 +316,22 @@ const getSections = (version: string): Section[] => [
     },
 ]
 
-export async function fetchEquibopVersion(){
-    const now = Date.now();
+export async function fetchEquibopVersion() {
+    const now = Date.now()
 
-    if (now - lastFetch < CacheTTL.HOUR) return cachedVersion;
+    if (now - lastFetch < CacheTTL.HOUR) return cachedVersion
 
     try {
-        const res = await fetch(VERSION_URL);
-        if (!res.ok) throw new Error("Fetch failed");
+        const res = await fetch(VERSION_URL)
+        if (!res.ok) throw new Error("Fetch failed")
 
-        cachedVersion = (await res.text()).trim();
-        lastFetch = now;
+        cachedVersion = (await res.text()).trim()
+        lastFetch = now
     } catch (err) {
-        console.error("Version fetch failed:", err);
+        console.error("Version fetch failed:", err)
     }
 
-    return cachedVersion;
+    return cachedVersion
 }
 
 export default function Download() {
@@ -417,31 +425,45 @@ export default function Download() {
                                             {platform.downloads.map(
                                                 (download) => (
                                                     <div class="flex-1 flex flex-col gap-1.5">
-                                                        <a
-                                                            href={download.href}
-                                                            target="_blank"
-                                                            class="w-full"
-                                                        >
-                                                            <Button
-                                                                variant={
-                                                                    platform.isCurrent
-                                                                        ? download.prioritize
+                                                        {download.href ? (
+                                                            <a
+                                                                href={
+                                                                    download.href
+                                                                }
+                                                                target="_blank"
+                                                                class="w-full"
+                                                            >
+                                                                <Button
+                                                                    variant={
+                                                                        platform.isCurrent &&
+                                                                        download.prioritize
                                                                             ? "primary"
                                                                             : "secondary"
-                                                                        : "secondary"
-                                                                }
-                                                                class="w-full"
-                                                                icon={
-                                                                    <DownloadIcon
-                                                                        size={
-                                                                            14
-                                                                        }
-                                                                    />
-                                                                }
+                                                                    }
+                                                                    class="w-full"
+                                                                    icon={
+                                                                        <DownloadIcon
+                                                                            size={
+                                                                                14
+                                                                            }
+                                                                        />
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        download.text
+                                                                    }
+                                                                </Button>
+                                                            </a>
+                                                        ) : (
+                                                            <Button
+                                                                variant="secondary"
+                                                                class="w-full cursor-not-allowed opacity-60"
+                                                                disabled
                                                             >
                                                                 {download.text}
                                                             </Button>
-                                                        </a>
+                                                        )}
+
                                                         <span class="text-xs text-neutral-500 text-center px-1 min-h-4">
                                                             {download.note ??
                                                                 ""}

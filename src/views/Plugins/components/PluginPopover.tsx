@@ -6,7 +6,13 @@ import Dropdown from "@components/UI/Dropdown"
 import Switch from "@components/UI/Switch"
 
 type PluginFilterValue = "all" | "equicord" | "vencord" | "modified"
-type PlatformFilterValue = "all" | "dev" | "web" | "desktop" | "discordDesktop" | "equibop"
+type PlatformFilterValue =
+    | "all"
+    | "dev"
+    | "web"
+    | "desktop"
+    | "discordDesktop"
+    | "equibop"
 
 interface Props {
     pluginFilter: () => PluginFilterValue

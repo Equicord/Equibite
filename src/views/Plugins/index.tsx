@@ -2,7 +2,6 @@ import PageBootstrap from "@components/PageBootstrap"
 import Input from "@components/UI/Input"
 import LoadingState from "@components/UI/LoadingState"
 import {
-    DESKTOP_PLATFORMS,
     INITIAL_VISIBLE_COUNT,
     LOAD_MORE_COUNT,
     LOAD_MORE_THRESHOLD,
@@ -25,7 +24,13 @@ import PluginCard from "./components/PluginCard"
 import PluginPopover from "./components/PluginPopover"
 
 type PluginFilter = "all" | "equicord" | "vencord" | "modified"
-type PlatformFilter = "all" | "dev" | "web" | "desktop" | "discordDesktop" | "equibop"
+type PlatformFilter =
+    | "all"
+    | "dev"
+    | "web"
+    | "desktop"
+    | "discordDesktop"
+    | "equibop"
 
 export default function Plugins() {
     const [plugins, { refetch }] = createResource(() => fetchPlugins("all"))
@@ -91,44 +96,46 @@ export default function Plugins() {
         switch (pluginFilter()) {
             case "equicord": {
                 result = result.filter((plugin) =>
-                    plugin.filePath.toLowerCase().startsWith("src/equicordplugins"),
+                    plugin.filePath
+                        .toLowerCase()
+                        .startsWith("src/equicordplugins"),
                 )
-                break;
+                break
             }
             case "vencord": {
                 result = result.filter((plugin) =>
                     plugin.filePath.toLowerCase().startsWith("src/plugins"),
                 )
-                break;
+                break
             }
             case "modified": {
-                result = result.filter((plugin) =>
-                    plugin.isModified,
-                )
-                break;
+                result = result.filter((plugin) => plugin.isModified)
+                break
             }
         }
 
         switch (platformFilter()) {
             case "desktop": {
                 result = result.filter((plugin) => plugin.target === "desktop")
-                break;
+                break
             }
             case "dev": {
                 result = result.filter((plugin) => plugin.target === "dev")
-                break;
+                break
             }
             case "discordDesktop": {
-                result = result.filter((plugin) => plugin.target === "discordDesktop")
-                break;
+                result = result.filter(
+                    (plugin) => plugin.target === "discordDesktop",
+                )
+                break
             }
             case "equibop": {
                 result = result.filter((plugin) => plugin.target === "equibop")
-                break;
+                break
             }
             case "web": {
                 result = result.filter((plugin) => plugin.target === "web")
-                break;
+                break
             }
         }
 

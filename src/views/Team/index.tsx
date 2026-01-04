@@ -16,27 +16,28 @@ type TeamResponse = {
     team: string[]
     helpers: string[]
     artists: string[]
-};
+}
 
-const TEAM_URL = "https://raw.githubusercontent.com/Equicord/Equibite/refs/heads/main/public/team.json";
-let cachedTeam: TeamResponse | null = null;
-let lastFetch = 0;
+const TEAM_URL =
+    "https://raw.githubusercontent.com/Equicord/Equibite/refs/heads/main/public/team.json"
+let cachedTeam: TeamResponse | null = null
+let lastFetch = 0
 
 export async function fetchTeam(): Promise<TeamResponse> {
-    const now = Date.now();
+    const now = Date.now()
 
     if (cachedTeam && now - lastFetch < CacheTTL.HOUR) {
-        return cachedTeam;
+        return cachedTeam
     }
 
     try {
-        const res = await fetch(TEAM_URL);
-        if (!res.ok) throw new Error("Fetch failed");
+        const res = await fetch(TEAM_URL)
+        if (!res.ok) throw new Error("Fetch failed")
 
-        cachedTeam = await res.json();
-        lastFetch = now;
+        cachedTeam = await res.json()
+        lastFetch = now
     } catch (err) {
-        console.error("Team fetch failed:", err);
+        console.error("Team fetch failed:", err)
     }
 
     return (
@@ -44,9 +45,9 @@ export async function fetchTeam(): Promise<TeamResponse> {
             owners: [],
             team: [],
             helpers: [],
-            artists: []
+            artists: [],
         }
-    );
+    )
 }
 
 async function fetchUsers(ids: string[]): Promise<Record<string, LanyardUser>> {

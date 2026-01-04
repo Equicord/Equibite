@@ -82,7 +82,8 @@ export default function HomeHero() {
                     }}
                     style={{ "transition-delay": "400ms" }}
                 >
-                    A fork that offers a wider selection of plugins from the community.
+                    A fork that offers a wider selection of plugins from the
+                    community.
                 </p>
                 <p
                     class="text-xs font-semibold text-neutral-400 transition-all duration-700 ease-out"
