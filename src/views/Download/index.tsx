@@ -182,7 +182,6 @@ const getEquibopPlatforms = (version: string): Platform[] => [
             },
         ],
         isCurrent: isMac(),
-        warning: "Currently not signed due to financial reasons.",
     },
 ]
 
