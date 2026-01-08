@@ -1,47 +1,15 @@
-import type { Activity, LanyardIncomingMessage, LanyardUser } from "@/types"
+import type {
+    Activity,
+    LanyardIncomingMessage,
+    LanyardUser,
+    TeamResponse,
+} from "@/types"
+import { fetchTeam } from "@/utils"
 import PageBootstrap from "@components/PageBootstrap"
 import LoadingState from "@components/UI/LoadingState"
-import {
-    ActivityTypes,
-    CacheKeys,
-    CacheTTL,
-    RoleHeaders,
-    StatusLabels,
-    Urls,
-} from "@constants"
+import { ActivityTypes, RoleHeaders, StatusLabels, Urls } from "@constants"
 import { Shield } from "lucide-solid"
 import { createSignal, For, onCleanup, onMount, Show } from "solid-js"
-
-type TeamResponse = {
-    owners: string[]
-    team: string[]
-    helpers: string[]
-    artists: string[]
-}
-
-async function fetchTeam(): Promise<TeamResponse> {
-    try {
-        const cached = localStorage.getItem(CacheKeys.TEAM)
-        if (cached) {
-            const { timestamp, data } = JSON.parse(cached)
-            if (Date.now() - timestamp < CacheTTL.HOUR) {
-                return data
-            }
-        }
-    } catch {}
-
-    const res = await fetch(Urls.TEAM_JSON_URL)
-    const data: TeamResponse = await res.json()
-
-    try {
-        localStorage.setItem(
-            CacheKeys.TEAM,
-            JSON.stringify({ timestamp: Date.now(), data }),
-        )
-    } catch {}
-
-    return data
-}
 
 async function fetchUsers(ids: string[]): Promise<Record<string, LanyardUser>> {
     const results = await Promise.all(

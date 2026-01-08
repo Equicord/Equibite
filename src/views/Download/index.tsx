@@ -3,7 +3,7 @@ import PageBootstrap from "@components/PageBootstrap"
 import Button from "@components/UI/Button"
 import classNames from "classnames"
 
-import { CacheKeys, CacheTTL, Urls } from "@/constants"
+import { fetchEquibopVersion } from "@/utils"
 import {
     faAndroid,
     faApple,
@@ -309,30 +309,6 @@ const getSections = (version: string): Section[] => [
             "iOS isn't supported and unlikely to ever be supported. Please don't actually use Equidroid - use Kettu, Revenge, or Aliucord instead. Due to current limitations, we cannot provide support for Equidroid.",
     },
 ]
-
-async function fetchEquibopVersion() {
-    try {
-        const cached = localStorage.getItem(CacheKeys.EQUIBOP)
-        if (cached) {
-            const { timestamp, data } = JSON.parse(cached)
-            if (Date.now() - timestamp < CacheTTL.HOUR) {
-                return data
-            }
-        }
-    } catch {}
-
-    const res = await fetch(Urls.EQUIBOP_VERSION_URL)
-    const data = (await res.text()).trim()
-
-    try {
-        localStorage.setItem(
-            CacheKeys.EQUIBOP,
-            JSON.stringify({ timestamp: Date.now(), data }),
-        )
-    } catch {}
-
-    return data
-}
 
 export default function Download() {
     const [version] = createResource(fetchEquibopVersion)
