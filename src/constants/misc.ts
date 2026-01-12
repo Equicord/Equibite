@@ -1,4 +1,4 @@
-export const ICONS_LAST = [
+export const CLIENT_MODS = [
     "aero",
     "aliucord",
     "betterDiscord",
@@ -10,6 +10,8 @@ export const ICONS_LAST = [
     "replugged",
     "revenge",
     "shelter",
+    "suncord",
     "velocity",
+    "vencord",
     "vendetta",
 ]

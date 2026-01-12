@@ -2,7 +2,7 @@ import type { DisplayImage, FolderImages, GitHubContent } from "@/types"
 import PageBootstrap from "@components/PageBootstrap"
 import Input from "@components/UI/Input"
 import LoadingState from "@components/UI/LoadingState"
-import { CacheKeys, CacheTTL, ICONS_LAST, Urls } from "@constants"
+import { CacheKeys, CacheTTL, CLIENT_MODS, Urls } from "@constants"
 import {
     capitalizeArtist,
     capitalizeWords,
@@ -155,8 +155,8 @@ export default function Icons() {
             if (b.folder === "equicord") return 1
             if (a.folder === "") return 1
             if (b.folder === "") return -1
-            if (ICONS_LAST.includes(a.folder)) return 1
-            if (ICONS_LAST.includes(b.folder)) return -1
+            if (CLIENT_MODS.includes(a.folder)) return 1
+            if (CLIENT_MODS.includes(b.folder)) return -1
             console.log(b)
             return a.folder.localeCompare(b.folder)
         })
@@ -234,7 +234,7 @@ export default function Icons() {
                         <div class="flex flex-col gap-16">
                             <For
                                 each={filteredFolders().filter(
-                                    (f) => !ICONS_LAST.includes(f.folder),
+                                    (f) => !CLIENT_MODS.includes(f.folder),
                                 )}
                             >
                                 {({ folder, images }) => (
@@ -266,7 +266,7 @@ export default function Icons() {
                             
                             <Show
                                 when={filteredFolders().some((f) =>
-                                    ICONS_LAST.includes(f.folder),
+                                    CLIENT_MODS.includes(f.folder),
                                 )}
                             >
                                 <div class="flex flex-col gap-6">
@@ -275,7 +275,7 @@ export default function Icons() {
                                     </h2>
                                     <For
                                         each={filteredFolders().filter((f) =>
-                                            ICONS_LAST.includes(f.folder),
+                                            CLIENT_MODS.includes(f.folder),
                                         )}
                                     >
                                         {({ folder, images }) => (
