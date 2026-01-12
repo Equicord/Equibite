@@ -2,7 +2,7 @@ import type { DisplayImage, FolderImages, GitHubContent } from "@/types"
 import PageBootstrap from "@components/PageBootstrap"
 import Input from "@components/UI/Input"
 import LoadingState from "@components/UI/LoadingState"
-import { CacheKeys, CacheTTL, Urls } from "@constants"
+import { CacheKeys, CacheTTL, ICONS_LAST, Urls } from "@constants"
 import {
     capitalizeArtist,
     capitalizeWords,
@@ -90,6 +90,58 @@ async function fetchImagesRecursive(apiUrl: string): Promise<FolderImages[]> {
     return data
 }
 
+const downloadIcon = async (url: string, title: string) => {
+    try {
+        const response = await fetch(url)
+        const blob = await response.blob()
+        const blobUrl = window.URL.createObjectURL(blob)
+        const link = document.createElement("a")
+        link.href = blobUrl
+        link.download = title.replace(/\s+/g, "_") + ".png"
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        window.URL.revokeObjectURL(blobUrl)
+        toast.success(`Downloaded ${title}`)
+    } catch (error) {
+        console.error("Failed to download icon:", error)
+        toast.error("Failed to download icon")
+    }
+}
+
+function IconCard({ title, url }: { title: string; url: string }) {
+    return (
+        <div
+            class={classNames(
+                "group relative flex flex-col items-center gap-3 rounded-xl border border-neutral-800 bg-linear-to-br from-neutral-900 to-neutral-950 p-4",
+                "hover:border-neutral-700 hover:shadow-lg hover:shadow-neutral-900/50 transition-all duration-200",
+            )}
+        >
+            <div class="relative w-full aspect-square">
+                <img
+                    src={url}
+                    alt={title}
+                    loading="lazy"
+                    class="w-full h-full object-contain rounded-lg cursor-pointer"
+                    onClick={() => window.open(url, "_blank")}
+                />
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-colors duration-200 rounded-lg flex items-center justify-center">
+                    <button
+                        onClick={() => downloadIcon(url, title)}
+                        class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-2 rounded-lg bg-white/10 hover:bg-white/20 backdrop-blur-sm"
+                        title="Download icon"
+                    >
+                        <Download size={20} class="text-white" />
+                    </button>
+                </div>
+            </div>
+            <span class="text-center text-xs font-medium text-neutral-300 line-clamp-2 w-full">
+                {title}
+            </span>
+        </div>
+    )
+}
+
 export default function Icons() {
     const [folders, setFolders] = createSignal<FolderImages[]>([])
     const [searchQuery, setSearchQuery] = createSignal("")
@@ -103,6 +155,9 @@ export default function Icons() {
             if (b.folder === "equicord") return 1
             if (a.folder === "") return 1
             if (b.folder === "") return -1
+            if (ICONS_LAST.includes(a.folder)) return 1
+            if (ICONS_LAST.includes(b.folder)) return -1
+            console.log(b)
             return a.folder.localeCompare(b.folder)
         })
 
@@ -127,25 +182,6 @@ export default function Icons() {
     const totalIcons = createMemo(() => {
         return folders().reduce((acc, folder) => acc + folder.images.length, 0)
     })
-
-    const downloadIcon = async (url: string, title: string) => {
-        try {
-            const response = await fetch(url)
-            const blob = await response.blob()
-            const blobUrl = window.URL.createObjectURL(blob)
-            const link = document.createElement("a")
-            link.href = blobUrl
-            link.download = title.replace(/\s+/g, "_") + ".png"
-            document.body.appendChild(link)
-            link.click()
-            document.body.removeChild(link)
-            window.URL.revokeObjectURL(blobUrl)
-            toast.success(`Downloaded ${title}`)
-        } catch (error) {
-            console.error("Failed to download icon:", error)
-            toast.error("Failed to download icon")
-        }
-    }
 
     return (
         <PageBootstrap
@@ -196,7 +232,11 @@ export default function Icons() {
 
                     <Show when={filteredFolders().length > 0}>
                         <div class="flex flex-col gap-16">
-                            <For each={filteredFolders()}>
+                            <For
+                                each={filteredFolders().filter(
+                                    (f) => !ICONS_LAST.includes(f.folder),
+                                )}
+                            >
                                 {({ folder, images }) => (
                                     <div class="flex flex-col gap-6">
                                         <div class="flex items-center gap-3">
@@ -213,55 +253,59 @@ export default function Icons() {
                                         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
                                             <For each={images}>
                                                 {({ title, url }) => (
-                                                    <div
-                                                        class={classNames(
-                                                            "group relative flex flex-col items-center gap-3 rounded-xl border border-neutral-800 bg-linear-to-br from-neutral-900 to-neutral-950 p-4",
-                                                            "hover:border-neutral-700 hover:shadow-lg hover:shadow-neutral-900/50 transition-all duration-200",
-                                                        )}
-                                                    >
-                                                        <div class="relative w-full aspect-square">
-                                                            <img
-                                                                src={url}
-                                                                alt={title}
-                                                                loading="lazy"
-                                                                class="w-full h-full object-contain rounded-lg cursor-pointer"
-                                                                onClick={() =>
-                                                                    window.open(
-                                                                        url,
-                                                                        "_blank",
-                                                                    )
-                                                                }
-                                                            />
-                                                            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-colors duration-200 rounded-lg flex items-center justify-center">
-                                                                <button
-                                                                    onClick={() =>
-                                                                        downloadIcon(
-                                                                            url,
-                                                                            title,
-                                                                        )
-                                                                    }
-                                                                    class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-2 rounded-lg bg-white/10 hover:bg-white/20 backdrop-blur-sm"
-                                                                    title="Download icon"
-                                                                >
-                                                                    <Download
-                                                                        size={
-                                                                            20
-                                                                        }
-                                                                        class="text-white"
-                                                                    />
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                        <span class="text-center text-xs font-medium text-neutral-300 line-clamp-2 w-full">
-                                                            {title}
-                                                        </span>
-                                                    </div>
+                                                    <IconCard
+                                                        title={title}
+                                                        url={url}
+                                                    />
                                                 )}
                                             </For>
                                         </div>
                                     </div>
                                 )}
                             </For>
+                            
+                            <Show
+                                when={filteredFolders().some((f) =>
+                                    ICONS_LAST.includes(f.folder),
+                                )}
+                            >
+                                <div class="flex flex-col gap-6">
+                                    <h2 class="text-2xl font-bold">
+                                        Client Mods
+                                    </h2>
+                                    <For
+                                        each={filteredFolders().filter((f) =>
+                                            ICONS_LAST.includes(f.folder),
+                                        )}
+                                    >
+                                        {({ folder, images }) => (
+                                            <div class="flex flex-col gap-3">
+                                                <div class="flex items-center gap-3">
+                                                    <h3 class="text-xl font-semibold">
+                                                        {formatFolderName(
+                                                            folder,
+                                                        )}
+                                                    </h3>
+                                                    <span class="px-2 py-1 rounded-full bg-neutral-800 text-neutral-400 text-sm font-medium">
+                                                        {images.length}
+                                                    </span>
+                                                </div>
+
+                                                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                                                    <For each={images}>
+                                                        {({ title, url }) => (
+                                                            <IconCard
+                                                                title={title}
+                                                                url={url}
+                                                            />
+                                                        )}
+                                                    </For>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </For>
+                                </div>
+                            </Show>
                         </div>
                     </Show>
                 </LoadingState>

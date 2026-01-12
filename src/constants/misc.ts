@@ -1,0 +1,15 @@
+export const ICONS_LAST = [
+    "aero",
+    "aliucord",
+    "betterDiscord",
+    "bunny",
+    "enmity",
+    "goosemod",
+    "kettu",
+    "raincord",
+    "replugged",
+    "revenge",
+    "shelter",
+    "velocity",
+    "vendetta",
+]
