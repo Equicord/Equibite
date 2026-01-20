@@ -1,0 +1,134 @@
+[
+    {
+        "question": "How do I install Equicord?",
+        "answer": "\nWe provide a convenient **graphical installer** you can use. Or you can just grab Equicord from the **Chrome Webstore** or via **Userscript**.\n\nVisit our [download page](https://equicord.org/download) to find out more!\n",
+        "tags": [
+            "installation",
+            "install",
+            "download",
+            "installing",
+            "installer"
+        ]
+    },
+    {
+        "question": "Equicord isn't working! :(",
+        "answer": "\nThe most likely cause is that your install is outdated. Check if there's any updates. You can either do so using our inbuilt updater, or if you cannot get there due to crashes or similar, use the \"Update Equicord\" in the Installer.\n\nIf you're all up to date, try reinstalling with the installer anyway!\n\nAnd if it now still doesn't work, please let us know in our [support server](https://equicord.org/discord)\n",
+        "tags": [
+            "broken",
+            "not working",
+            "reinstall",
+            "update"
+        ]
+    },
+    {
+        "question": "Can I use this on the web version of Discord?",
+        "answer": "\nYes! We provide extensions for Chromium based browsers and a Userscript build.\n\nSee our [download page](https://equicord.org/download) for more info!\n",
+        "tags": [
+            "browser",
+            "web",
+            "firefox",
+            "chrome",
+            "extension",
+            "userscript"
+        ]
+    },
+    {
+        "question": "Is there a mobile version of Equicord?",
+        "answer": "\nEquicord only supports Desktop. \n\nInstead, we recommend the following alternatives:\n-[Kettu](<https://github.com/C0C0B01/Kettu>) ([discord server](<https://discord.gg/BuSbJR3N>)) ~ supports both android & ios. uses the latest discord app and is more maintained\n- [Revenge](<https://github.com/revenge-mod/revenge-bundle>) ([discord server](<https://discord.com/invite/ddcQf3s2Uq>)) ~ supports both android & ios. uses the latest discord mobile app\n- [Aliucord](<https://aliucord.com>) ([discord server](<https://discord.gg/EsNDvBaHVU>)) ~ android only. uses the old (now ~3 years old) version of the discord android app\n",
+        "tags": [
+            "android",
+            "ios",
+            "mobile",
+            "phone"
+        ]
+    },
+    {
+        "question": "How do I install BetterDiscord / Replugged / [insert other mod here] plugins?",
+        "answer": "\nYou can't. But chances are, it's already a Equicord plugin!\n",
+        "tags": [
+            "betterdiscord",
+            "replugged",
+            "powercord",
+            "shelter",
+            "plugins",
+            "bd",
+            "rp",
+            "custom"
+        ]
+    },
+    {
+        "question": "Will I get banned for using Equicord? Will plugin X get me banned?",
+        "answer": "\nClient modifications are against Discord's Terms of Service.\n\nHowever, Discord is pretty indifferent about them and there are no known cases of users getting banned for using client mods! So you should generally be fine as long as you don't use any plugins that implement abusive behaviour. But no worries, all inbuilt plugins are safe to use!\n\nRegardless, if your account is very important to you and it getting disabled would be a disaster for you, you should probably not use any client mods (not exclusive to Equicord), just to be safe\n\nAdditionally, make sure not to post screenshots with VencoEquicordrd in a server where you might get banned for it\n",
+        "tags": [
+            "tos",
+            "banned",
+            "terms of service"
+        ]
+    },
+    {
+        "question": "How do I migrate my Equicord Settings from Canary to Stable (or vice versa)?",
+        "answer": "\nSettings are already shared across all Discord instances on the same PC so you can just switch and they will be kept!\n",
+        "tags": [
+            "settings",
+            "migrate"
+        ]
+    },
+    {
+        "question": "Why is my Discord laggy?",
+        "answer": "\nThe most common cause of lag is poorly written CSS.\n\nTo see if this is the case for you, try temporarily disabling all themes and your QuickCSS.\n\nIf that indeed fixes the lagging, you'll have to figure out which theme / part of your QuickCSS is causing the lag.\nJust slowly remove parts of it until it doesn't lag anymore.",
+        "tags": [
+            "lag"
+        ]
+    },
+    {
+        "question": "My themes broke and now I can't open settings or disable them",
+        "answer": "\nopen the dev tools with `CTRL + Shift + i` (`Cmd + Option + i` on MacOs) and click on the \"console\" tab at the top. Then paste and run (with enter) the following code.\n\nIt will\n- disable custom css (you can turn it back on in Equicord Settings)\n- copy your current theme links to your clipboard as a backup\n- remove all themes\n\n```js\n(() => {\n    Vencord.Settings.useQuickCss = false\n    try {\n        const copy = window.copy ?? Vencord.Webpack.Common.Clipboard.copy\n        copy([...Vencord.Settings.enabledThemes,...Vencord.Settings.enabledThemeLinks].join(\"\\n\"))\n    } catch { }\n    Vencord.Settings.enabledThemes = []\n    Vencord.Settings.enabledThemeLinks = []\n})()\n```\n",
+        "tags": [
+            "themes",
+            "broken themes",
+            "themefix"
+        ]
+    },
+    {
+        "question": "Why do I get logged out after opening DevTools?",
+        "answer": "\nDiscord tries to protect you from getting scammed by \"hiding\" your token when you open DevTools, which means it deletes it from storage and only keeps it in memory in order to make it harder to obtain.\n\nIf you now close discord before closing DevTools again, your token will not be saved anywhere anymore and as a consequence you will be logged out\n\nSolution: **Close DevTools** before closing discord or better yet enable the **NoDevtoolsWarning plugin** which removes this \"feature\"\n",
+        "tags": [
+            "nodevtoolswarning",
+            "hidetoken",
+            "logout"
+        ]
+    },
+    {
+        "question": "How do I uninstall Equicord?",
+        "answer": "\nEquicord is uninstalled the same way you install it. Just use the \"Uninstall\" button instead\n",
+        "tags": [
+            "remove"
+        ]
+    },
+    {
+        "question": "What are the official websites for Equicord or Equibop?",
+        "answer": "\nThe only official websites are `equicord.org` and `equibop.org, which can be confirmed on GitHub and the installer itself. We are not\naffiliated with any other website, and any that claim to be or use our brand are malicious impersonators.\n\nIf you have downloaded software offered by these sites, remove it as soon as possible, run a malware scan,\nreinstall Discord, and change your password. Also, if possible, dispatch an intercontinental ballistic missile to\nyour hard drive for good measure.\n",
+        "tags": [
+            "unofficial",
+            "official"
+        ]
+    },
+    {
+        "question": "I see there are packages for Nix or another platform not on the website, do you support them?",
+        "answer": "\nNo. These packages are maintained by people (usually) unrelated to Equicord. We can't provide support for unofficial repackages of Equicord unless it's an actual bug in the mod itself (except when such bugs occur due to the repackage).\n\nPlease forward your support enquiries to the people who maintain these packages instead of us.\n",
+        "tags": [
+            "nix",
+            "nixos",
+            "repackaged"
+        ]
+    },
+    {
+        "question": "Does Equicord support a Windows Distro (e.g., AtlasOS, Tiny11)?",
+        "answer": "\nNo, custom distributions of Windows are not supported as they tend to remove critical system components or libraries that Equicord (or its installer) depends on.\n\nIf it works for you, great! However, we can't provide support for any issues that occur.\n",
+        "tags": [
+            "atlasos",
+            "tiny11",
+            "windistro"
+        ]
+    }
+]

@@ -10,6 +10,8 @@ export const Urls = {
         "https://raw.githubusercontent.com/Equicord/Equibite/refs/heads/main/public/version",
     TEAM_JSON_URL:
         "https://raw.githubusercontent.com/Equicord/Equibite/refs/heads/main/public/team.json",
+    FAQ_JSON_URL:
+        "https://raw.githubusercontent.com/Equicord/Equibite/refs/heads/main/public/faq.json",
 
     DISCORD_URL: "/discord",
     DISCORD_API: "https://discord.com/api/v10",
