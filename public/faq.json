@@ -1,7 +1,7 @@
 [
     {
         "question": "How do I install Equicord?",
-        "answer": "\nWe provide a convenient **graphical installer** you can use. Or you can just grab Equicord from the **Chrome Webstore** or via **Userscript**.\n\nVisit our [download page](https://equicord.org/download) to find out more!\n",
+        "answer": "\nWe provide a convenient **graphical installer** you can use. Or you can just grab Equicord from the **Chrome, FireFox, Edge Webstores** or via **Userscript**.\n\nVisit our [download page](https://equicord.org/download) to find out more!\n",
         "tags": [
             "installation",
             "install",
@@ -28,6 +28,7 @@
             "web",
             "firefox",
             "chrome",
+            "edge",
             "extension",
             "userscript"
         ]
