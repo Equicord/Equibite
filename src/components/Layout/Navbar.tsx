@@ -249,8 +249,8 @@ export default function Navbar() {
                         <img
                             src={
                                 Math.random() < 1 / 1_000_000
-                                    ? "/assets/icons/equicord/old/icon.png"
-                                    : "/assets/favicon.png"
+                                    ? "/assets/icons/equicord/icon-old.webp"
+                                    : "/assets/favicon.webp"
                             }
                             class="size-8 select-none"
                             draggable={false}

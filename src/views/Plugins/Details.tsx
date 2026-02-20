@@ -55,10 +55,10 @@ interface PluginSourceProps {
 }
 
 const pluginIcons: Record<PluginSource, string> = {
-    [PluginSource.Equicord]: "/assets/icons/equicord/icon.png",
-    [PluginSource.Vencord]: "/assets/icons/vencord/icon.png",
-    [PluginSource.Modified]: "/assets/icons/equicord/modified.png",
-    [PluginSource.Unknown]: "/assets/icons/misc/userplugin.png",
+    [PluginSource.Equicord]: "/assets/icons/equicord/icon.webp",
+    [PluginSource.Vencord]: "/assets/icons/vencord/icon.webp",
+    [PluginSource.Modified]: "/assets/icons/equicord/modified.webp",
+    [PluginSource.Unknown]: "/assets/icons/misc/userplugin.webp",
 }
 
 export function PluginSourceIcon(props: PluginSourceProps) {

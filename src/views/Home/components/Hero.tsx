@@ -119,7 +119,7 @@ export default function HomeHero() {
             </div>
 
             <img
-                src="/assets/home/settings.png"
+                src="/assets/home/settings.webp"
                 alt="Equicord Settings Interface"
                 loading="lazy"
                 class="mt-12 rounded-t-2xl mask-b-from-75% select-none transition-all duration-700 ease-out"
