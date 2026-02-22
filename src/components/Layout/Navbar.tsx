@@ -15,6 +15,7 @@ import {
     Github,
     Paintbrush,
     Puzzle,
+    Palette
 } from "lucide-solid"
 import Fa from "solid-fa"
 import { createSignal, For, onCleanup, onMount, Show } from "solid-js"
@@ -28,6 +29,12 @@ const BrowseSections: BrowseSection[] = [
                 text: "Plugins",
                 description: "List of Equicord's third-party plugins",
                 href: "/plugins",
+            },
+            {
+                icon: () => <Palette size={20}/>,
+                text: "Themes",
+                description: "Browse Equicord's theme library",
+                href: "https://themes.equicord.org/",
             },
             {
                 icon: () => <BookMarked size={20} />,
