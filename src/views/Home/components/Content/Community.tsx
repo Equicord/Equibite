@@ -6,7 +6,7 @@ import Fa from "solid-fa"
 
 export default function Community() {
     return (
-        <div class="flex flex-col gap-2 rounded-xl bg-neutral-900 p-12">
+        <div class="relative flex flex-col gap-2 overflow-hidden rounded-xl border border-neutral-900 p-12">
             <h2 class="text-xl font-bold">Join our community!</h2>
 
             <p class="font-medium text-neutral-400">
@@ -15,7 +15,7 @@ export default function Community() {
             </p>
 
             <A href="/discord" target="_blank" class="mt-6 w-fit">
-                <Button variant="primary">
+                <Button variant="secondary">
                     <Fa icon={faDiscord} class="size-8" />
                     Join Discord
                 </Button>

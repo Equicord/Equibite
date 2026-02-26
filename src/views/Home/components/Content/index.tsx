@@ -3,6 +3,7 @@ import Community from "./Community"
 import Contribute from "./Contribute"
 import FeatureMaintained from "./Maintained"
 import FeaturePlugins from "./Plugins"
+import Policy from "./Policy"
 
 export default function HomeContent() {
     return (
@@ -25,6 +26,7 @@ export default function HomeContent() {
                 <div class="flex justify-between gap-6 max-md:flex-col">
                     <Community />
                     <Contribute />
+                    <Policy />
                 </div>
             </div>
         </div>
