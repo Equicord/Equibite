@@ -185,23 +185,21 @@ export default function PluginDetails() {
                                     </div>
 
                                     <div class="flex w-fit items-center gap-2">
-                                        <Button
-                                            icon={<Code size={16} />}
-                                            variant="secondary"
-                                            class="px-4 py-2.5 text-sm"
-                                            onClick={() =>
-                                                window.open(
-                                                    `https://github.com/Equicord/Equicord/tree/main/${plugin().filePath}`,
-                                                    "_blank",
-                                                )
-                                            }
+                                        <a
+                                            href={`https://github.com/Equicord/Equicord/tree/main/${plugin().filePath}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="flex items-center justify-center gap-1 rounded-xl border px-4 py-2.5 text-sm font-bold transition-all cursor-pointer active:scale-[.95] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 border-neutral-800/50 bg-neutral-900 text-neutral-300 hover:bg-neutral-800/70 hover:text-neutral-200 focus-visible:ring-neutral-500"
                                         >
+                                            <span class="shrink-0">
+                                                <Code size={16} />
+                                            </span>
                                             View Source
-                                        </Button>
+                                        </a>
                                         <Button
                                             icon={<Link size={16} />}
                                             variant="secondary"
-                                            class="px-4 py-2.5 text-sm"
+                                            class="!px-4 !py-2.5 text-sm"
                                             onClick={() => copyLink(plugin())}
                                         >
                                             Copy Link
