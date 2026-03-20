@@ -263,7 +263,7 @@ export default function Icons() {
                                     </div>
                                 )}
                             </For>
-                            
+
                             <Show
                                 when={filteredFolders().some((f) =>
                                     CLIENT_MODS.includes(f.folder),

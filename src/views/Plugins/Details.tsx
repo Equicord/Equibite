@@ -16,6 +16,7 @@ import {
     Braces,
     ChartNoAxesColumnDecreasing,
     ChevronRight,
+    Code,
     Command,
     FileText,
     Globe,
@@ -184,6 +185,19 @@ export default function PluginDetails() {
                                     </div>
 
                                     <div class="flex w-fit items-center gap-2">
+                                        <Button
+                                            icon={<Code size={16} />}
+                                            variant="secondary"
+                                            class="px-4 py-2.5 text-sm"
+                                            onClick={() =>
+                                                window.open(
+                                                    `https://github.com/Equicord/Equicord/tree/main/${plugin().filePath}`,
+                                                    "_blank",
+                                                )
+                                            }
+                                        >
+                                            View Source
+                                        </Button>
                                         <Button
                                             icon={<Link size={16} />}
                                             variant="secondary"

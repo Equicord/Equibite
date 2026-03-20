@@ -1,8 +1,8 @@
 import RootLayout from "@components/Layout/RootLayout"
 import { MetaProvider } from "@solidjs/meta"
 import { Route, Router } from "@solidjs/router"
-import { Toaster } from "solid-toast"
 import { onCleanup } from "solid-js"
+import { Toaster } from "solid-toast"
 
 import Cloud from "@views/Cloud"
 import CloudGDPR from "@views/Cloud/GDPR"
@@ -10,29 +10,29 @@ import CloudPolicy from "@views/Cloud/Policy"
 import Discord from "@views/Discord"
 import Download from "@views/Download"
 import Home from "@views/Home"
+import Icons from "@views/Icons"
 import NotFound from "@views/NotFound"
 import Plugins from "@views/Plugins"
 import PluginDetails from "@views/Plugins/Details"
 import Projects from "@views/Projects"
 import Team from "@views/Team"
-import Icons from "@views/Icons"
 
 export default function Routes() {
     const handleError = (event: ErrorEvent) => {
-        console.error("Uncaught Error:", event.error || event.message, event);
-    };
+        console.error("Uncaught Error:", event.error || event.message, event)
+    }
 
     const handleRejection = (event: PromiseRejectionEvent) => {
-        console.error("Unhandled Promise Rejection:", event.reason);
-    };
+        console.error("Unhandled Promise Rejection:", event.reason)
+    }
 
-    window.addEventListener("error", handleError);
-    window.addEventListener("unhandledrejection", handleRejection);
+    window.addEventListener("error", handleError)
+    window.addEventListener("unhandledrejection", handleRejection)
 
     onCleanup(() => {
-        window.removeEventListener("error", handleError);
-        window.removeEventListener("unhandledrejection", handleRejection);
-    });
+        window.removeEventListener("error", handleError)
+        window.removeEventListener("unhandledrejection", handleRejection)
+    })
 
     return (
         <MetaProvider>
@@ -52,5 +52,5 @@ export default function Routes() {
                 <Route path="*" component={NotFound} />
             </Router>
         </MetaProvider>
-    );
+    )
 }
