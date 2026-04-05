@@ -91,5 +91,10 @@
         "question": "Does Equicord support a Windows Distro (e.g., AtlasOS, Tiny11)?",
         "answer": "\nNo, custom distributions of Windows are not supported as they tend to remove critical system components or libraries that Equicord (or its installer) depends on.\n\nIf it works for you, great! However, we can't provide support for any issues that occur.\n",
         "tags": ["atlasos", "tiny11", "windistro"]
+    },
+    {
+        "question": "Icons are huge / buggy / broken or settings look weird with strange CSS in the web extension",
+        "answer": "\nThis is likely caused by having both the **Vencord** and **Equicord** browser extensions enabled at the same time, which causes them to conflict with each other.\n\nThe easiest fix is to disable or remove the Vencord extension and use only the Equicord extension.\n\nYou can also try:\n- Removing and re-adding the Equicord extension\n- Reloading the Discord page\n",
+        "tags": ["icons", "huge icons", "broken icons", "conflict"]
     }
 ]
