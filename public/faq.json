@@ -100,7 +100,7 @@
     {
         "question": "The installer says \"You have a broken Discord install.\"",
         "answer": "\nYou likely do have a broken installation. Reinstalling Discord usually fixes it. If not:\n- Press `Windows + R`, type `%PROGRAMDATA%` and press Enter\n- Find the folder named after your username and open it\n- Delete any folders named Squirrel or Discord. If the folder is now empty, delete it too\n- Try opening Discord. If it doesn't start, reinstall it\n- Confirm Discord runs and the error is gone\n",
-        "tags": ["broken install", "installer", "squirrel", "programdata", "broken discord"]
+        "tags": ["broken install", "installer", "squirrel"]
     },
     {
         "question": "How do I switch to a stable build?",
