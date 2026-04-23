@@ -96,5 +96,20 @@
         "question": "Icons are huge / buggy / broken or settings look weird with strange CSS in the web extension",
         "answer": "\nThis is likely caused by having both the **Vencord** and **Equicord** browser extensions enabled at the same time, which causes them to conflict with each other.\n\nThe easiest fix is to disable or remove the Vencord extension and use only the Equicord extension.\n\nYou can also try:\n- Removing and re-adding the Equicord extension\n- Reloading the Discord page\n",
         "tags": ["icons", "huge icons", "broken icons", "conflict"]
+    },
+    {
+        "question": "The installer says \"You have a broken Discord install.\"",
+        "answer": "\nYou likely do have a broken installation. Reinstalling Discord usually fixes it. If not:\n- Press `Windows + R`, type `%PROGRAMDATA%` and press Enter\n- Find the folder named after your username and open it\n- Delete any folders named Squirrel or Discord. If the folder is now empty, delete it too\n- Try opening Discord. If it doesn't start, reinstall it\n- Confirm Discord runs and the error is gone\n",
+        "tags": ["broken install", "installer", "squirrel"]
+    },
+    {
+        "question": "How do I switch to a stable build?",
+        "answer": "\n**Equicord Users:** Just use Discord stable instead of PTB/Canary.\n\n**Equibop Users:**\n\n- **Option 1 — DevTools (Fastest):** Open DevTools with `Ctrl + Shift + I` (Windows/Linux) or `Cmd + Option + I` (macOS), paste the following into the console and press Enter:\n```js\nEquibop.Settings.store.discordBranch = 'stable';\nVesktopNative.app.relaunch();\n```\n\n- **Option 2 — Manually:** Navigate to your settings folder (`%appdata%/equibop` on Windows or `~/.config/equibop` on Linux), open `settings.json` in a text editor, find `\"discordBranch\"` and change its value to `\"stable\"`, then restart the app.\n",
+        "tags": ["stable", "ptb", "canary", "branch", "switch"]
+    },
+    {
+        "question": "How do I switch to a stable build if I'm on a dev build?",
+        "answer": "\nFirst, unpatch your current dev build, then download the official installer at <https://equicord.org/download> and use it to patch as you normally would.\n\nIf you ask for support while using a dev build, you **WILL** lose access to the channel with or without prior notice. There are already several warnings about this, [as shown here](https://discord.com/channels/1173279886065029291/1297590739911573585/1486466359335321821).\n",
+        "tags": ["dev build", "built from source"]
     }
 ]
