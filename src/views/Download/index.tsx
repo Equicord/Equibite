@@ -14,6 +14,7 @@ import {
     faWindows,
 } from "@fortawesome/free-brands-svg-icons"
 import {
+    getMacArch,
     isAndroid,
     isChromeOS,
     isIOS,
@@ -48,9 +49,20 @@ const EquicordPlatforms: Platform[] = [
         downloads: [
             {
                 text: "GUI",
-                href: "https://github.com/Equicord/Equilotl/releases/latest/download/Equilotl-x11",
+                href: "https://github.com/Equicord/Equilotl/releases/latest/download/Equilotl",
                 prioritize: true,
+                note: "Both X11 and Wayland",
+            },
+            {
+                text: "GUI",
+                href: "https://github.com/Equicord/Equilotl/releases/latest/download/Equilotl-x11",
                 note: "X11 only",
+            },
+            {
+                text: "GUI",
+                href: "https://github.com/Equicord/Equilotl/releases/latest/download/Equilotl-wayland",
+
+                note: "Wayland only",
             },
             {
                 text: "CLI",
@@ -69,8 +81,15 @@ const EquicordPlatforms: Platform[] = [
         downloads: [
             {
                 text: "GUI",
-                href: "https://github.com/Equicord/Equilotl/releases/latest/download/Equilotl.MacOS.zip",
-                prioritize: true,
+                href: "https://github.com/Equicord/Equilotl/releases/latest/download/Equilotl-darwin-arm64.zip",
+                prioritize: getMacArch() === "arm64" ? true : false,
+                note: "Apple Silicon (ARM64) Installer may work on Intel but is not recommended",
+            },
+            {
+                text: "GUI",
+                href: "https://github.com/Equicord/Equilotl/releases/latest/download/Equilotl-darwin-x64.zip",
+                prioritize: getMacArch() === "x64" ? true : false,
+                note: "Intel (X64) Installer may work on Apple Silicon but is not recommended",
             },
         ],
         isCurrent: isMac(),

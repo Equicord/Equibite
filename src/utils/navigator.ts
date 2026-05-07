@@ -6,6 +6,14 @@ export const isWindows = (): boolean =>
 export const isMac = (): boolean =>
     getUserAgent().toLowerCase().includes("macintosh")
 
+export const getMacArch = (): "arm64" | "x64" | "unknown" => {
+    const ua = getUserAgent().toLowerCase();
+    if (!isMac()) return "unknown";
+    if (ua.includes("arm") || ua.includes("aarch64")) return "arm64";
+    if (ua.includes("x86_64") || ua.includes("intel")) return "x64";
+    return "unknown";
+};
+
 export const isLinux = (): boolean =>
     getUserAgent().toLowerCase().includes("linux")
 
