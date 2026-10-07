@@ -453,6 +453,19 @@ export default function Download() {
             description="Here are your download options."
         >
             <div className="flex flex-col gap-12">
+                <div className="flex items-start gap-2 px-4 py-3 rounded-lg bg-yellow-950/30 border border-yellow-900/50 text-yellow-200 text-sm">
+                    <AlertCircle size={16} className="mt-0.5 shrink-0" />
+                    <span>
+                        Only download Equicord from the links on this page. We
+                        do not own or control the{" "}
+                        <code>discord.gg/equicord</code> vanity invite - our
+                        official Discord server can only be joined via{" "}
+                        <a href="/discord" target="_blank" className="underline">
+                            equicord.org/discord
+                        </a>.
+                    </span>
+                </div>
+
                 {sections.map(section => (
                     <div
                         key={section.title}

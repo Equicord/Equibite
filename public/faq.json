@@ -83,6 +83,11 @@
         "tags": ["unofficial", "official"]
     },
     {
+        "question": "Is discord.gg/equicord your official Discord invite?",
+        "answer": "\nNo. We do not own or control the `discord.gg/equicord` vanity invite.\n\nOur official Discord server can only be joined via [equicord.org/discord](https://equicord.org/discord).\n",
+        "tags": ["discord", "invite", "vanity", "official", "fake"]
+    },
+    {
         "question": "I see there are packages for Nix or another platform not on the website, do you support them?",
         "answer": "\nNo. These packages are maintained by people (usually) unrelated to Equicord. We can't provide support for unofficial repackages of Equicord unless it's an actual bug in the mod itself (except when such bugs occur due to the repackage).\n\nPlease forward your support enquiries to the people who maintain these packages instead of us.\n",
         "tags": ["nix", "nixos", "repackaged"]
