@@ -44,7 +44,7 @@ export default function FeatureCloud() {
 
                     <p className="font-medium text-neutral-400">
                         Sync your settings anytime with our dedicated Equicord
-                        cloud instance for seamless experience across devices.
+                        cloud instance for a seamless experience across devices.
                     </p>
 
                     <Link href="/cloud" className="mt-6 w-fit">

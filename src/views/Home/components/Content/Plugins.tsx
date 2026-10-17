@@ -13,8 +13,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface PluginProps {
-    title: string
-    description: string
+    title: string;
+    description: string;
 }
 
 function DiscordPlugin({ title, description }: PluginProps) {
@@ -91,7 +91,7 @@ export default function FeaturePlugins() {
                     </span>
 
                     <p className="font-medium text-neutral-400">
-                        Access a wide variety of plugins, including 150+ plugins
+                        Access a wide variety of plugins, including 200+ plugins
                         alongside the existing ones in Vencord.
                     </p>
                 </div>

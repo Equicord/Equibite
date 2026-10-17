@@ -68,7 +68,7 @@ export default function CloudPolicy() {
                             <p className="text-sm font-medium text-neutral-400">
                                 Your Equicord settings are securely stored on
                                 our servers, tied to only your generated hash
-                                and able to synchronized across devices.
+                                and able to synchronize across devices.
                             </p>
                         </div>
                     </div>
