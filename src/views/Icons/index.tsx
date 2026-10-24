@@ -10,59 +10,66 @@ import {
     splitCamelCase,
 } from "@utils/formatting";
 import classNames from "classnames";
-import { Download, Image as ImageIcon, Search } from "lucide-react";
+import { ChevronRight, Download, Image as ImageIcon, Search } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 
-import type { DisplayImage, FolderImages, GitHubContent } from "@/types";
+import type { DisplayImage, FolderImages } from "@/types";
 
-function formatTitle(name: string): string {
-    const base = name.replace(/\.[^/.]+$/, "");
-    const parts = base.split("-");
-
-    if (parts.length === 2) {
-        return `${capitalizeWords(splitCamelCase(parts[0]))} by ${capitalizeArtist(parts[1])}`;
-    }
-
-    return capitalizeWords(splitCamelCase(base));
+interface IconEntry {
+    name: string;
+    artist: string | null;
+    file: string;
+    url: string;
 }
 
+function formatTitle({ name, artist }: IconEntry): string {
+    const title = capitalizeWords(splitCamelCase(name));
+    return artist ? `${title} by ${capitalizeArtist(artist)}` : title;
+}
+
+const FOLDER_DISPLAY_NAMES: Record<string, string> = {
+    betterdiscord: "BetterDiscord",
+};
+
 function formatFolderName(name: string): string {
-    return capitalizeWords(splitCamelCase(name));
+    return FOLDER_DISPLAY_NAMES[name] ?? capitalizeWords(splitCamelCase(name));
+}
+
+const EQUICORD_FOLDERS = ["equicord", "equibop", "equidocs"];
+const PINNED_MODS = ["vencord", "suncord"];
+
+function folderRank(folder: string): number {
+    if (folder === "general") return 0;
+    if (folder === "equicord") return 1;
+    if (PINNED_MODS.includes(folder)) return 3;
+    if (CLIENT_MODS.includes(folder)) return 4;
+    return 2;
+}
+
+function getTopFolder(key: string): string {
+    const parts = key.split("/");
+    const folder = parts[0] === "clientmods" && parts[1] ? parts[1] : parts[0];
+    return EQUICORD_FOLDERS.includes(folder) ? "equicord" : folder;
 }
 
 async function fetchImagesRecursiveInternal(
-    apiUrl: string,
-    currentFolder = "",
+    jsonUrl: string,
 ): Promise<FolderImages[]> {
-    const res = await fetch(apiUrl);
+    const res = await fetch(jsonUrl);
     if (!res.ok) return [];
 
-    const data: GitHubContent[] = await res.json();
+    const data: Record<string, IconEntry[]> = await res.json();
     const folders = new Map<string, DisplayImage[]>();
 
-    for (const item of data) {
-        if (item.type === "file" && item.download_url) {
-            const title = formatTitle(item.name);
+    for (const [key, entries] of Object.entries(data)) {
+        const folder = getTopFolder(key);
+        if (!folders.has(folder)) folders.set(folder, []);
 
-            if (!folders.has(currentFolder)) {
-                folders.set(currentFolder, []);
-            }
-
-            folders.get(currentFolder)!.push({ title, url: item.download_url });
-        } else if (item.type === "dir") {
-            const subFolders = await fetchImagesRecursiveInternal(
-                item.url,
-                item.name,
-            );
-            subFolders.forEach(({ folder, images }) => {
-                if (!folders.has(folder)) {
-                    folders.set(folder, []);
-                }
-                folders.get(folder)!.push(...images);
-            });
-        }
+        folders
+            .get(folder)!
+            .push(...entries.map(e => ({ title: formatTitle(e), url: e.url })));
     }
 
     return Array.from(folders.entries()).map(([folder, images]) => ({
@@ -148,22 +155,47 @@ function IconCard({ title, url }: { title: string; url: string }) {
     );
 }
 
+function FolderSection({
+    folder,
+    images,
+    level = 2,
+}: FolderImages & { level?: 2 | 3 }) {
+    const Heading = level === 2 ? "h2" : "h3";
+
+    return (
+        <div className="flex flex-col gap-6">
+            <div className="flex items-center gap-3">
+                <Heading
+                    className={level === 2 ? "text-2xl font-bold" : "text-xl font-semibold"}
+                >
+                    {formatFolderName(folder)}
+                </Heading>
+                <span className="px-3 py-1 rounded-full bg-neutral-800 text-neutral-400 text-sm font-medium">
+                    {images.length}
+                </span>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                {images.map(({ title, url }) => (
+                    <IconCard key={url} title={title} url={url} />
+                ))}
+            </div>
+        </div>
+    );
+}
+
 export default function Icons() {
     const [folders, setFolders] = useState<FolderImages[]>([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchImagesRecursive(Urls.GITHUB_ICONS).then(images => {
-            images.sort((a, b) => {
-                if (a.folder === "equicord") return -1;
-                if (b.folder === "equicord") return 1;
-                if (a.folder === "") return 1;
-                if (b.folder === "") return -1;
-                if (CLIENT_MODS.includes(a.folder)) return 1;
-                if (CLIENT_MODS.includes(b.folder)) return -1;
-                return a.folder.localeCompare(b.folder);
-            });
+        fetchImagesRecursive(Urls.ICONS_JSON_URL).then(images => {
+            images.sort(
+                (a, b) =>
+                    folderRank(a.folder) - folderRank(b.folder)
+                    || a.folder.localeCompare(b.folder),
+            );
 
             setFolders(images);
             setLoading(false);
@@ -183,6 +215,11 @@ export default function Icons() {
             }))
             .filter(folder => folder.images.length > 0);
     }, [folders, searchQuery]);
+
+    const isOtherMod = (folder: string) =>
+        CLIENT_MODS.includes(folder) && !PINNED_MODS.includes(folder);
+    const mainFolders = filteredFolders.filter(f => !isOtherMod(f.folder));
+    const otherModFolders = filteredFolders.filter(f => isOtherMod(f.folder));
 
     const totalIcons = folders.reduce(
         (acc, folder) => acc + folder.images.length,
@@ -239,77 +276,45 @@ export default function Icons() {
                         </div>
                     ) : (
                         <div className="flex flex-col gap-16">
-                            {filteredFolders
-                                .filter(f => !CLIENT_MODS.includes(f.folder))
-                                .map(({ folder, images }) => (
-                                    <div
-                                        key={folder}
-                                        className="flex flex-col gap-6"
-                                    >
-                                        <div className="flex items-center gap-3">
-                                            <h2 className="text-2xl font-bold">
-                                                {folder === ""
-                                                    ? "General"
-                                                    : formatFolderName(folder)}
-                                            </h2>
-                                            <span className="px-3 py-1 rounded-full bg-neutral-800 text-neutral-400 text-sm font-medium">
-                                                {images.length}
-                                            </span>
-                                        </div>
+                            {mainFolders.map(({ folder, images }) => (
+                                <FolderSection
+                                    key={folder}
+                                    folder={folder}
+                                    images={images}
+                                />
+                            ))}
 
-                                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-                                            {images.map(({ title, url }) => (
-                                                <IconCard
-                                                    key={url}
-                                                    title={title}
-                                                    url={url}
+                            {otherModFolders.length > 0 && (
+                                <details
+                                    className="group flex flex-col gap-6"
+                                    open={searchQuery !== ""}
+                                >
+                                    <summary className="flex cursor-pointer select-none items-center gap-3 list-none [&::-webkit-details-marker]:hidden">
+                                        <ChevronRight
+                                            size={24}
+                                            className="text-neutral-400 transition-transform group-open:rotate-90"
+                                        />
+                                        <h2 className="text-2xl font-bold">
+                                            Other Client Mods
+                                        </h2>
+                                        <span className="px-3 py-1 rounded-full bg-neutral-800 text-neutral-400 text-sm font-medium">
+                                            {otherModFolders.length}
+                                        </span>
+                                    </summary>
+
+                                    <div className="mt-6 flex flex-col gap-10">
+                                        {otherModFolders.map(
+                                            ({ folder, images }) => (
+                                                <FolderSection
+                                                    key={folder}
+                                                    folder={folder}
+                                                    images={images}
+                                                    level={3}
                                                 />
-                                            ))}
-                                        </div>
+                                            ),
+                                        )}
                                     </div>
-                                ))}
-
-                            {filteredFolders.some(f =>
-                                CLIENT_MODS.includes(f.folder),
-                            ) && (
-                                <div className="flex flex-col gap-6">
-                                    <h2 className="text-2xl font-bold">
-                                        Client Mods
-                                    </h2>
-                                    {filteredFolders
-                                        .filter(f =>
-                                            CLIENT_MODS.includes(f.folder),
-                                        )
-                                        .map(({ folder, images }) => (
-                                            <div
-                                                key={folder}
-                                                className="flex flex-col gap-3"
-                                            >
-                                                <div className="flex items-center gap-3">
-                                                    <h3 className="text-xl font-semibold">
-                                                        {formatFolderName(
-                                                            folder,
-                                                        )}
-                                                    </h3>
-                                                    <span className="px-2 py-1 rounded-full bg-neutral-800 text-neutral-400 text-sm font-medium">
-                                                        {images.length}
-                                                    </span>
-                                                </div>
-
-                                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-                                                    {images.map(
-                                                        ({ title, url }) => (
-                                                            <IconCard
-                                                                key={url}
-                                                                title={title}
-                                                                url={url}
-                                                            />
-                                                        ),
-                                                    )}
-                                                </div>
-                                            </div>
-                                        ))}
-                                </div>
+                                </details>
                             )}
                         </div>
                     )}

@@ -1,7 +1,7 @@
 export const CLIENT_MODS = [
     "aero",
     "aliucord",
-    "betterDiscord",
+    "betterdiscord",
     "bunny",
     "enmity",
     "goosemod",
