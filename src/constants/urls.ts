@@ -21,6 +21,8 @@ export const Urls = {
     GITHUB_URL: "https://github.com/equicord",
     GITHUB_API: "https://api.github.com",
     GITHUB_COMMITS: "https://api.github.com/repos/Equicord/Equicord/commits",
+    EQUIBORED_RAW_URL:
+        "https://raw.githubusercontent.com/Equicord/Equibored/main",
     ICONS_JSON_URL:
         "https://raw.githubusercontent.com/Equicord/Equibored/main/icons.json",
     GITHUB_REPOS: "https://api.github.com/orgs/equicord/repos",
