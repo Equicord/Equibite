@@ -5,7 +5,7 @@ export const CacheKeys = {
 } as const;
 
 export const CacheTTL = {
-    HALFHOUR: 1000 * 60 * 30, // 30 minutes
-    HOUR: 1000 * 60 * 60, // 1 hour
-    SIXHOURS: 1000 * 60 * 60 * 6, // 6 hours
+    HALFHOUR: 1000 * 60 * 30,
+    HOUR: 1000 * 60 * 60,
+    SIXHOURS: 1000 * 60 * 60 * 6,
 } as const;
